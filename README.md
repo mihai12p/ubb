@@ -17,9 +17,9 @@
 </ul>
 
 <br>
+<a href="http://www.cs.ubbcluj.ro">
 <img src="http://www.chem.ubbcluj.ro/romana/conferinte/MEEMB/archive/pictures/ubb.gif" />
 <img src="https://www.ubbcluj.ro/images/logo/logo_cs.png" />
-<a href="http://www.cs.ubbcluj.ro">
 <p> Universitatea Babeş-Bolyai din Cluj Napoca </p>
 <p> Facultatea de Matematică și Informatică </p>
 <p> Licență în Informatică </p>

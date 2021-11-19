@@ -3,12 +3,12 @@
   <li>:open_file_folder: Semestrul 1
     <ul>
       <li>
-        <a href="https://github.com/mihai12p/ubb/asc"> 
-          :shipit:  Arhitectura sistemelor de calcul
+        <a href="https://github.com/mihai12p/ubb/tree/main/asc"> 
+          :sweat_drops:  Arhitectura sistemelor de calcul
         </a>
       </li>
       <li>
-        <a href="https://github.com/mihai12p/ubb/fp"> 
+        <a href="https://github.com/mihai12p/ubb/tree/main/fp"> 
           :snake:  Fundamentele programării
         </a>
       </li>

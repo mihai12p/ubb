@@ -14,7 +14,7 @@
       </li>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/c"> 
-          :gem:  Programare în C
+          :statue_of_liberty:  Programare în C
         </a>
       </li>
     </ul>

@@ -3,17 +3,12 @@
   <li>:open_file_folder: Semestrul 1
     <ul>
       <li>
-        <a href="https://github.com/mihai12p/Algebra"> 
-          :clubs:  Algebră
+        <a href="https://github.com/mihai12p/ubb/asc"> 
+          :shipit:  Arhitectura sistemelor de calcul
         </a>
       </li>
       <li>
-        <a href="https://github.com/mihai12p/Computational-Logic"> 
-          :trollface:  Logică Computațională
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/mihai12p/Fundamental-of-Programming"> 
+        <a href="https://github.com/mihai12p/ubb/fp"> 
           :snake:  Fundamentele programării
         </a>
       </li>

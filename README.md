@@ -1,6 +1,6 @@
 # UBB
 <ul>
-  <li>:open_file_folder: Semestrul 1
+  <li>:open_file_folder: Semestrul :one:
     <ul>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/asc"> 

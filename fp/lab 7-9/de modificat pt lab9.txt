@@ -1,1 +1,0 @@
-o noua clasa entitate gen Nota si sa fac rework la aplicatie dupa ce adaug aceasta clasa Nota (student, problema, nota)

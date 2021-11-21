@@ -112,3 +112,88 @@ def test_Task():
     assert(task2 != task3)
 
 test_Task()
+
+class Grade:
+    '''
+    Creeaza o noua nota (grade) pentru un student (student) la o anumita problema (task)
+    paramtype:            int                      Student                         Task
+    '''
+
+    def __init__(self, student, task, grade):
+        self.__student = student
+        self.__task = task
+        self.__grade = grade
+
+    def getStudent(self) -> Student:
+        return self.__student
+
+    def getTask(self) -> Task:
+        return self.__task
+
+    def getGrade(self) -> int:
+        return self.__grade
+
+    def setStudent(self, student):
+        self.__student = student
+
+    def setTask(self, task):
+        self.__task = task
+
+    def setGrade(self, grade):
+        self.__grade = grade
+
+    def __eq__(self, other) -> bool:
+        return self.__student == other.getStudent() and self.__task == other.getTask()
+
+def test_Grade():
+    student1 = Student(1001, 'Mihai Panduru', 215)
+    student2 = Student(1002, 'Alberto Mihai', 215)
+    student3 = Student(1001, 'Alberto Mihai', 215)
+
+    task1 = Task('7_2', 'Catalog', '8/11/2021')
+    task2 = Task('7_2', 'Complex', '2/3/2022')
+
+    grade1 = Grade(student1, task1, 9)
+    assert(grade1.getStudent() == student1)
+    assert(grade1.getTask() == task1)
+    assert(grade1.getGrade() == 9)
+
+    grade1.setStudent(student3)
+    grade1.setTask(task2)
+    grade1.setGrade(10)
+
+    assert(grade1.getStudent() == student3)
+    assert(grade1.getTask() == task2)
+    assert(grade1.getGrade() == 10)
+
+    grade2 = Grade(student2, task2, 9)
+    assert(grade1 != grade2)
+
+    grade2.setStudent(student3)
+    assert(grade1 == grade2)
+
+test_Grade()
+
+class DTO:
+    '''
+    Data Transfer Object
+    '''
+
+    def __init__(self, student, grade):
+        self.__student = student
+        self.__grade = grade
+
+    def getStudent(self):
+        return self.__student
+
+    def getGrade(self):
+        return self.__grade
+
+    def setStudent(self, student):
+        self.__student = student
+
+    def setGrade(self, grade):
+        self.__grade = grade
+
+    def __eq__(self, other) -> bool:
+        return self.__student == other.getStudent() and self.__grade == other.getGrade()

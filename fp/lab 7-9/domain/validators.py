@@ -1,8 +1,5 @@
-from domain.entities import Student, Task
-from utilis.dict_operations import get_key_from_dict
-
-class ValidatorException(Exception):
-    pass
+from domain.entities import Student, Task, Grade
+from exceptions.exceptions import ValidationException
 
 class StudentValidator:
     '''
@@ -28,8 +25,7 @@ class StudentValidator:
             errors.append('Grupa studentului nu poate fi mai mica ca 1.')
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
 
     def validateExisting(self, studentId, all_students = []):
         errors = []
@@ -41,8 +37,7 @@ class StudentValidator:
             errors.append('Studentul cautat nu exista.')
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
 
 def test_validateStudent():
     validator = StudentValidator()
@@ -57,14 +52,14 @@ def test_validateStudent():
         student3 = Student(1003, 'Andrei', 215)
         validator.validate(student3)
         assert False
-    except:
+    except ValidationException:
         assert True
 
     try:
         student3 = Student(0, 'Andrei Paunescu', 0)
         validator.validate(student3)
         assert False
-    except:
+    except ValidationException:
         assert True
 
 test_validateStudent()
@@ -90,8 +85,7 @@ class TaskValidator:
             errors.append('Termenul limita nu este sub forma ceruta: dd/mm/YYYY.')
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
 
     def validateExisting(self, task, all_tasks = []):
         errors = []
@@ -106,8 +100,7 @@ class TaskValidator:
                 errors.append('Problema cautata nu exista.')
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
 
 def test_validateTask():
     validator = TaskValidator()
@@ -122,48 +115,59 @@ def test_validateTask():
         task3 = Task('7 2', 'Gestionare', '8.11.2021')
         validator.validate(task3)
         assert False
-    except:
+    except ValidationException:
         assert True
 
     try:
         task3 = Task('', '', '')
         validator.validate(task3)
         assert False
-    except:
+    except ValidationException:
         assert True
 
 test_validateTask()
 
-class CommonValidator:
+class GradeValidator:
     '''
-    Valideaza multimea de probleme problemele ale studentilor (Student & Task)
-    paramtype:                                                  class    class
+    Valideaza multimea de probleme ale studentilor (Student & Task)
+    paramtype:                                       class    class
     '''
 
-    def validateAssign(self, task, all_students_tasks = []):
+    def validate(self, grade, all_grades = []):
         errors = []
 
-        for tsk in all_students_tasks:
-            if task == get_key_from_dict(tsk):
+        for grade_ in all_grades:
+            if grade == grade_: # (Grade: __eq__(self, other) -> bool)
                 errors.append('Aceasta problema este deja atribuita acestui student.')
                 break
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
 
-    def validateGrade(self, task, grade, all_students_tasks = []):
+    def validateGrade(self, gradeNumber):
         errors = []
 
-        for tsk in all_students_tasks:
-            if task == get_key_from_dict(tsk):
-                break
-        else:
-            errors.append('Aceasta problema nu este atribuita acestui student.')
-
-        if grade < 1 or grade > 10:
+        if gradeNumber < 1 or gradeNumber > 10:
             errors.append('Nota acordata trebuie sa fie intre 1 si 10 inclusiv.')
 
         if len(errors) > 0:
-            error_string = '\n    '.join(errors)
-            raise ValueError(error_string)
+            raise ValidationException(errors)
+
+def test_validateGrade():
+    validator = GradeValidator()
+
+    student1 = Student(1001, 'Mihai Panduru', 215)
+
+    task1 = Task('7_2', 'Gestionare', '8/11/2021')
+
+    grade1 = Grade(student1, task1, 5)
+
+    validator.validate(grade1)
+
+    try:
+        validator.validateGrade(12)
+        assert False
+    except ValidationException:
+        assert True
+
+test_validateGrade()

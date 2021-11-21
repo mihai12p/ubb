@@ -1,21 +1,20 @@
 from termcolor import colored
-from utilis.dict_operations import get_key_from_dict, get_firstValue_from_dict
 
 class Console:
     '''
     Coordoneaza operatiile primite de la utilizator astfel incat sa se ajunga la raspunsul dorit
     '''
 
-    def __init__(self, student_service, task_service, common_service):
+    def __init__(self, student_service, task_service, grade_service):
         '''
         __s_service = multimea ce coordoneaza multimea de studenti si validarile acestora
         __t_service = multimea ce coordoneaza multimea de probleme si validarile acestora
-        __c_service = multimea ce coordoneaza multimea de studenti si problemele atribuite acestora
+        __g_service = multimea ce coordoneaza multimea de studenti si problemele atribuite acestora
         '''
 
         self.__s_service = student_service
         self.__t_service = task_service
-        self.__c_service = common_service
+        self.__g_service = grade_service
 
     def __add_student(self):
         '''
@@ -48,8 +47,10 @@ class Console:
             return
 
         try:
+            searched_student = self.__s_service.findStudent(studentId)
+            self.__g_service.delete_tasks_for_student(searched_student)
+
             deleted_student = self.__s_service.delete_student(studentId)
-            self.__c_service.delete_student(studentId)
             print(colored('    Studentul ' + deleted_student.getStudentName() + ' cu ID-ul ' + str(deleted_student.getStudentId()) + ' a fost sters din grupa ' + str(deleted_student.getStudentGroup()) + ' cu succes.', 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -80,7 +81,6 @@ class Console:
 
         try:
             modified_student = self.__s_service.modify_student(studentId, modifiedStudentId, modifiedStudentName, modifiedStudentGroup)
-            self.__c_service.update_student(studentId, modifiedStudentId)
             print(colored('    Studentul ' + get_student.getStudentName() + ' cu ID-ul ' + str(get_student.getStudentId()) + ' din grupa ' + str(get_student.getStudentGroup()) + ' a fost modificat cu succes. (Noul ID: %s, Noul nume: %s, Noua grupa: %s)' % (modified_student.getStudentId(), modified_student.getStudentName(), modified_student.getStudentGroup()), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -96,13 +96,16 @@ class Console:
         else:
             print(colored('    Lista curenta de studenti este', 'yellow'))
             for student in students_list:
+                search_tasks_for_student = self.__g_service.findTasks(student)
                 print(colored('    ' + str(student), 'green'))
-                searched_student = self.__c_service.search_student(student.getStudentId())
-                for task in searched_student[1]:
-                    if get_firstValue_from_dict(task):
-                        print(colored('        ' + str(self.__t_service.get_copy_of_a_task(get_key_from_dict(task))), 'green'), '| Nota:', str(get_firstValue_from_dict(task)))
-                    else:
-                        print(colored('        ' + str(self.__t_service.get_copy_of_a_task(get_key_from_dict(task))), 'green'))
+                if len(search_tasks_for_student):
+                    for taskGrade in search_tasks_for_student:
+                        task = taskGrade[0]
+                        grade = taskGrade[1]
+                        if grade:
+                            print(colored('        ' + str(task), 'green'), '| Nota:', str(grade))
+                        else:
+                            print(colored('        ' + str(task), 'green'))
 
     def __search_student(self):
         '''
@@ -116,13 +119,18 @@ class Console:
             return
 
         try:
-            searched_student = self.__c_service.search_student(studentId)
-            print(colored('    ' + str(searched_student[0]), 'green'))
-            for task in searched_student[1]:
-                if get_firstValue_from_dict(task):
-                    print(colored('        ' + str(self.__t_service.get_copy_of_a_task(get_key_from_dict(task))), 'green'), '| Nota:', str(get_firstValue_from_dict(task)))
-                else:
-                    print(colored('        ' + str(self.__t_service.get_copy_of_a_task(get_key_from_dict(task))), 'green'))
+            searched_student = self.__s_service.findStudent(studentId)
+            search_tasks_for_student = self.__g_service.findTasks(searched_student)
+
+            print(colored('    ' + str(searched_student), 'green'))
+            if len(search_tasks_for_student):
+                for taskGrade in search_tasks_for_student:
+                    task = taskGrade[0]
+                    grade = taskGrade[1]
+                    if grade:
+                        print(colored('        ' + str(task), 'green'), '| Nota:', str(grade))
+                    else:
+                        print(colored('        ' + str(task), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
@@ -157,8 +165,10 @@ class Console:
             return
 
         try:
+            searched_task = self.__t_service.findTask(laboratory_task)
+            self.__g_service.delete_student_for_tasks(searched_task)
+
             deleted_task = self.__t_service.delete_task(laboratory_task)
-            self.__c_service.delete_task(laboratory_task)
             print(colored('    Problema ' + deleted_task.getLaboratory_Task() + ' cu termenul limita ' + deleted_task.getDeadline() + ' a fost stearsa cu succes.', 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -189,7 +199,6 @@ class Console:
 
         try:
             modified_task = self.__t_service.modify_task(laboratory_task, modifiedLaboratory_task, modifiedDescription, modifiedDeadline)
-            self.__c_service.update_task(laboratory_task, modifiedLaboratory_task)
             print(colored('    Problema ' + get_task.getLaboratory_Task() + ' cu termenul limita ' + get_task.getDeadline() + ' a fost modificata cu succes. (Noua problema: %s, Noua descriere: %s, Noul termen limita: %s)' % (modified_task.getLaboratory_Task(), modified_task.getDescription(), modified_task.getDeadline()), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -205,10 +214,16 @@ class Console:
         else:
             print(colored('    Lista curenta de probleme este', 'yellow'))
             for task in tasks_list:
+                search_students_for_task = self.__g_service.findStudents(task)
                 print(colored('    ' + str(task), 'green'))
-                searched_task = self.__c_service.search_task(task.getLaboratory_Task())
-                for student in searched_task[1]:
-                    print(colored('        ' + str(self.__s_service.get_copy_of_a_student(student)), 'green'))
+                if len(search_students_for_task):
+                    for studentGrade in search_students_for_task:
+                        student = studentGrade[0]
+                        grade = studentGrade[1]
+                        if grade:
+                            print(colored('        ' + str(student), 'green'), '| Nota:', str(grade))
+                        else:
+                            print(colored('        ' + str(student), 'green'))
 
     def __search_task(self):
         '''
@@ -222,14 +237,22 @@ class Console:
             return
 
         try:
-            searched_task = self.__c_service.search_task(laboratory_task)
-            print(colored('    ' + str(searched_task[0]), 'green'))
-            for student in searched_task[1]:
-                print(colored('        ' + str(self.__s_service.get_copy_of_a_student(student)), 'green'))
+            searched_task = self.__t_service.findTask(laboratory_task)
+            search_students_for_task = self.__g_service.findStudents(searched_task)
+
+            print(colored('    ' + str(searched_task), 'green'))
+            if len(search_students_for_task):
+                for studentGrade in search_students_for_task:
+                    student = studentGrade[0]
+                    grade = studentGrade[1]
+                    if grade:
+                        print(colored('        ' + str(student), 'green'), '| Nota:', str(grade))
+                    else:
+                        print(colored('        ' + str(student), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
-    def __assign_common(self):
+    def __assign_task(self):
         '''
         Atribuie o problema unui student
         '''
@@ -243,12 +266,14 @@ class Console:
             return
 
         try:
-            s_assigned = self.__c_service.assign_task(studentId, laboratory_task)
-            print(colored('    Studentului ' + s_assigned[0].getStudentName() + ' cu ID-ul ' + str(s_assigned[0].getStudentId()) + ' din grupa ' + str(s_assigned[0].getStudentGroup()) + ' i-a fost atribuita problema ' + str(s_assigned[1].getLaboratory_Task()) + ' cu succes.', 'green'))
+            student = self.__s_service.findStudent(studentId)
+            task = self.__t_service.findTask(laboratory_task)
+            t_assigned = self.__g_service.assign_task(student, task)
+            print(colored('    Studentului ' + t_assigned.getStudent().getStudentName() + ' cu ID-ul ' + str(t_assigned.getStudent().getStudentId()) + ' din grupa ' + str(t_assigned.getStudent().getStudentGroup()) + ' i-a fost atribuita problema '+ str(t_assigned.getTask().getLaboratory_Task()) + ' cu succes.', 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
-    def __evaluate_common(self):
+    def __evaluate_task(self):
         '''
         Evalueaza problema unui student
         '''
@@ -264,12 +289,14 @@ class Console:
             return
 
         try:
-            s_evaluate = self.__c_service.evaluate_task(studentId, laboratory_task, grade)
-            print(colored('    Studentului ' + s_evaluate[0].getStudentName() + ' cu ID-ul ' + str(s_evaluate[0].getStudentId()) + ' din grupa ' + str(s_evaluate[0].getStudentGroup()) + ' i-a fost evaluata problema ' + str(s_evaluate[1].getLaboratory_Task()) + ' cu nota ' + str(grade) + '.', 'green'))
+            student = self.__s_service.findStudent(studentId)
+            task = self.__t_service.findTask(laboratory_task)
+            self.__g_service.evaluate_task(student, task, grade)
+            print(colored('    Studentului ' + student.getStudentName() + ' cu ID-ul ' + str(student.getStudentId()) + ' din grupa ' + str(student.getStudentGroup()) + ' i-a fost evaluata problema ' + str(task.getLaboratory_Task()) + ' cu nota ' + str(grade) + '.', 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
-    def __generate_common(self):
+    def __generate_student(self):
         '''
         Genereaza random noi entitati Student
         '''
@@ -283,12 +310,53 @@ class Console:
         self.__count = 0
         for x in range(entitiesNumber):
             try:
-                self.__c_service.generate()
+                self.__s_service.generate()
                 self.__count += 1
             except Exception as e:
                 print(colored('    ' + str(e), 'red'))
 
         print(colored('    ' + str(self.__count) + ' noi studenti au fost generati si stocati.', 'green'))
+
+    def __statistics_1(self):
+        '''
+        Creaza statistici pentru un laborator dat
+        '''
+
+        try:
+            laboratory_task = input('    Numar laborator_numar problema: ')
+        except:
+            print(colored('    Problema (Lab_prob) (str)', 'red'))
+            return
+
+        try:
+            searched_task = self.__t_service.findTask(laboratory_task)
+            statistics = self.__g_service.statistics_students_for_task(searched_task)
+
+            print(colored('    ' + str(searched_task), 'green'))
+            if len(statistics):
+                for x in statistics:
+                    print(colored('        ' + str(x.getStudent()), 'green'), '| Nota:', str(x.getGrade()))
+            else:
+                print(colored('        Nu exista niciun astfel de student.', 'red'))
+        except Exception as e:
+            print(colored('    ' + str(e), 'red'))
+
+    def __statistics_2(self):
+        '''
+        Creaza statistici pentru toti studentii cu media notelor mai mica ca 5
+        '''
+
+        try:
+            self.__g_service.statistics_students()
+            statistics = self.__g_service.statistics_students()
+
+            if len(statistics):
+                for x in statistics:
+                    print(colored('        ' + str(x.getStudent()), 'green'), '| Media notelor:', str(x.getGrade()))
+            else:
+                print(colored('        Nu exista niciun astfel de student.', 'red'))
+        except Exception as e:
+            print(colored('    ' + str(e), 'red'))
 
     def showUI(self):
         finishedMain = False
@@ -298,7 +366,7 @@ class Console:
             if option == 'students':
                 finishedSecondary = False
                 while not finishedSecondary:
-                    print('    Optiuni disponibile: s_add, s_delete, s_update, s_show, s_search, return')
+                    print('    Optiuni disponibile: s_add, s_delete, s_update, s_show, s_search, s_generate, return')
                     option = input('    Introduceti optiunea: ').lower().strip()
                     if option == 's_add':
                         self.__add_student()
@@ -310,6 +378,8 @@ class Console:
                         self.__show_students()
                     elif option == 's_search':
                         self.__search_student()
+                    elif option == 's_generate':
+                        self.__generate_student()
                     elif option == 'return':
                         finishedSecondary = True
                     else:
@@ -336,14 +406,16 @@ class Console:
             elif option == 'common':
                 finishedSecondary = False
                 while not finishedSecondary:
-                    print('    Optiuni disponibile: assign, evaluate, generate, return')
+                    print('    Optiuni disponibile: assign, evaluate, stats1, stats2, return')
                     option = input('    Introduceti optiunea: ').lower().strip()
                     if option == 'assign':
-                        self.__assign_common()
+                        self.__assign_task()
                     elif option == 'evaluate':
-                        self.__evaluate_common()
-                    elif option == 'generate':
-                        self.__generate_common()
+                        self.__evaluate_task()
+                    elif option == 'stats1':
+                        self.__statistics_1()
+                    elif option == 'stats2':
+                        self.__statistics_2()
                     elif option == 'return':
                         finishedSecondary = True
                     else:

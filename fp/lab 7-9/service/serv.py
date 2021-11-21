@@ -1,6 +1,6 @@
-from domain.entities import Student, Task
-from domain.validators import StudentValidator, TaskValidator
-from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository
+from domain.entities import Student, Task, Grade, DTO
+from domain.validators import StudentValidator, TaskValidator, GradeValidator
+from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository
 from utilis.random_helper import randomNumber, randomString
 
 class StudentService:
@@ -16,12 +16,6 @@ class StudentService:
 
         self.__repository = repository
         self.__validator = validator
-
-    def get_repository(self):
-        return self.__repository
-
-    def get_validator(self):
-        return self.__validator
 
     def get_all_students(self) -> list[Student]:
         return self.__repository.get_all_students()
@@ -44,7 +38,7 @@ class StudentService:
 
         self.__validator.validateExisting(studentId, self.get_all_students())
 
-        student = self.__repository.get_student_by_ID(studentId)
+        student = self.__repository.findStudent(studentId)
         self.__repository.remove(student)
 
         return student
@@ -56,7 +50,7 @@ class StudentService:
 
         self.__validator.validateExisting(studentId, self.get_all_students())
 
-        student = self.__repository.get_student_by_ID(studentId)
+        student = self.__repository.findStudent(studentId)
 
         return Student(student.getStudentId(), student.getStudentName(), student.getStudentGroup())
 
@@ -69,12 +63,38 @@ class StudentService:
         self.__validator.validate(modifiedStudent, self.get_all_students())
 
         self.__validator.validateExisting(studentId, self.get_all_students())
-        student = self.__repository.get_student_by_ID(studentId)
+        student = self.__repository.findStudent(studentId)
         student.setStudentId(modifiedStudent.getStudentId())
         student.setStudentName(modifiedStudent.getStudentName())
         student.setStudentGroup(modifiedStudent.getStudentGroup())
 
         return student
+
+    def findStudent(self, studentId) -> Student:
+        '''
+        Cauta un student dupa id-ul acestuia si il returneaza
+        '''
+
+        self.__validator.validateExisting(studentId, self.get_all_students())
+        student = self.__repository.findStudent(studentId)
+
+        return student
+
+    def generate(self):
+        '''
+        Genereaza o noua entitate Student si o adauga in repository
+        '''
+
+        studentId = randomNumber()
+
+        studentFirstName = randomString()
+        studentSecondName = randomString()
+
+        studentGroup = randomNumber()
+
+        student = Student(studentId, studentFirstName + ' ' + studentSecondName, studentGroup)
+        self.__validator.validate(student, self.get_all_students())
+        self.__repository.store(student)
 
 def test_AddStudent():
     validator = StudentValidator()
@@ -142,12 +162,6 @@ class TaskService:
         self.__repository = repository
         self.__validator = validator
 
-    def get_repository(self):
-        return self.__repository
-
-    def get_validator(self):
-        return self.__validator
-
     def get_all_tasks(self) -> list[Task]:
         return self.__repository.get_all_tasks()
 
@@ -169,7 +183,7 @@ class TaskService:
 
         self.__validator.validateExisting(laboratory_task, self.get_all_tasks())
 
-        task = self.__repository.get_task_by_arg(laboratory_task)
+        task = self.__repository.findTask(laboratory_task)
         self.__repository.remove(task)
 
         return task
@@ -181,7 +195,7 @@ class TaskService:
 
         self.__validator.validateExisting(laboratory_task, self.get_all_tasks())
 
-        task = self.__repository.get_task_by_arg(laboratory_task)
+        task = self.__repository.findTask(laboratory_task)
 
         return Task(task.getLaboratory_Task(), task.getDescription(), task.getDeadline())
 
@@ -194,10 +208,20 @@ class TaskService:
         self.__validator.validate(modifiedTask, self.get_all_tasks())
 
         self.__validator.validateExisting(laboratory_task, self.get_all_tasks())
-        task = self.__repository.get_task_by_arg(laboratory_task)
+        task = self.__repository.findTask(laboratory_task)
         task.setLaboratory_Task(modifiedTask.getLaboratory_Task())
         task.setDescription(modifiedTask.getDescription())
         task.setDeadline(modifiedTask.getDeadline())
+
+        return task
+
+    def findTask(self, laboratory_task) -> Task:
+        '''
+        Cauta o problema dupa id-ul acesteia si o returneaza
+        '''
+
+        self.__validator.validateExisting(laboratory_task, self.get_all_tasks())
+        task = self.__repository.findTask(laboratory_task)
 
         return task
 
@@ -253,106 +277,185 @@ test_DeleteTask()
 test_VirtualCopyTask()
 test_UpdateTask()
 
-class CommonService:
+class GradeService:
     '''
-    Coordoneaza operatiile legate de studenti si probleme primite de la consola astfel incat sa se ajunga la raspunsul dorit
+    Coordoneaza operatiile legate de notare primite de la consola astfel incat sa se ajunga la raspunsul dorit
     '''
 
-    def __init__(self, c_repository, c_validator, s_service, t_service):
+    def __init__(self, g_repository, g_validator, s_repository, t_repository):
         '''
-        __c_repository = multimea ce se ocupa de multimea de studenti si problemele lor
-        __c_validator = multimea ce valideaza atribuirile de probleme si note
+        __g_repository = multimea ce se ocupa de multimea de studenti si problemele lor
+        __g_validator = multimea ce valideaza atribuirile de probleme si note
         __s_repository = student repository
-        __s_validator = student validator
         __t_repository = task repository
-        __t_validator = task validator
         '''
 
-        self.__c_repository = c_repository
-        self.__c_validator = c_validator
-        self.__s_repository = s_service.get_repository()
-        self.__s_validator = s_service.get_validator()
-        self.__t_repository = t_service.get_repository()
-        self.__t_validator = t_service.get_validator()
+        self.__g_repository = g_repository
+        self.__g_validator = g_validator
+        self.__s_repository = s_repository
+        self.__t_repository = t_repository
 
-    def assign_task(self, studentId, laboratory_task) -> list[Student, Task]:
+    def assign_task(self, student, task) -> Grade:
         '''
-        Atribuie o problema unui student si returneaza o lista formata din studentul si problema atribuita
+        Atribuie o problema unui student
         '''
 
-        self.__s_validator.validateExisting(studentId, self.__s_repository.get_all_students())
-        self.__t_validator.validateExisting(laboratory_task, self.__t_repository.get_all_tasks())
-        self.__c_validator.validateAssign(laboratory_task, self.__c_repository.get_student_with_tasks(studentId))
+        self.__s_repository.findStudent(student.getStudentId())
+        self.__t_repository.findTask(task.getLaboratory_Task())
 
-        self.__c_repository.store(studentId, laboratory_task)
-        student = self.__s_repository.get_student_by_ID(studentId)
-        task = self.__t_repository.get_task_by_arg(laboratory_task)
+        grade = Grade(student, task, None)
+        self.__g_validator.validate(grade, self.__g_repository.get_all_grades())
+        self.__g_repository.store(grade)
 
-        return [student, task]
+        return grade
 
-    def evaluate_task(self, studentId, laboratory_task, grade) -> list[Student, Task]:
+    def findTasks(self, student) -> list[Task]:
         '''
-        Evalueaza o problema a unui student si returneaza o lista formata din studentul si problema evaluata
-        '''
-
-        self.__s_validator.validateExisting(studentId, self.__s_repository.get_all_students())
-        self.__t_validator.validateExisting(laboratory_task, self.__t_repository.get_all_tasks())
-        self.__c_validator.validateGrade(laboratory_task, grade, self.__c_repository.get_student_with_tasks(studentId))
-
-        self.__c_repository.evaluate(studentId, laboratory_task, grade)
-        student = self.__s_repository.get_student_by_ID(studentId)
-        task = self.__t_repository.get_task_by_arg(laboratory_task)
-
-        return [student, task]
-
-    def delete_student(self, studentId):
-        self.__c_repository.removeStudent(studentId)
-
-    def delete_task(self, laboratory_task):
-        self.__c_repository.removeTask(laboratory_task)
-
-    def update_student(self, studentId, newStudentId):
-        self.__c_repository.update_student(studentId, newStudentId)
-
-    def update_task(self, laboratory_task, newLaboratory_task):
-        self.__c_repository.update_task(laboratory_task, newLaboratory_task)
-
-    def search_student(self, studentId) -> list[Student, list]:
-        '''
-        Cauta un student si daca acesta exista, il returneaza impreuna cu problemele atribuite
+        Cauta problemele unui student
         '''
 
-        self.__s_validator.validateExisting(studentId, self.__s_repository.get_all_students())
+        return self.__g_repository.findTasks(student)
 
-        student = self.__s_repository.get_student_by_ID(studentId)
-        studentTasks = self.__c_repository.get_student_with_tasks(studentId)
 
-        return [student, studentTasks]
-
-    def search_task(self, laboratory_task) -> list[Task, list]:
+    def findStudents(self, task) -> list[Student]:
         '''
-        Cauta o problema si daca aceasta exista, ii returneaza studentii atribuiti
+        Cauta studentii atribuiti unei probleme
         '''
 
-        self.__t_validator.validateExisting(laboratory_task, self.__t_repository.get_all_tasks())
+        return self.__g_repository.findStudents(task)
 
-        task = self.__t_repository.get_task_by_arg(laboratory_task)
-        taskStudents = self.__c_repository.get_task_with_students(laboratory_task)
-
-        return [task, taskStudents]
-
-    def generate(self):
+    def delete_tasks_for_student(self, student) -> Student:
         '''
-        Genereaza o noua entitate Student si o adauga in repository
+        Sterge problemele unui student
         '''
 
-        studentId = randomNumber()
+        search_tasks_for_student = self.findTasks(student)
+        if len(search_tasks_for_student):
+            for taskGrade in search_tasks_for_student:
+                grade = self.__g_repository.findGrade(student, taskGrade[0])
+                self.__g_repository.remove(grade)
 
-        studentFirstName = randomString()
-        studentSecondName = randomString()
+        return student
 
-        studentGroup = randomNumber()
+    def delete_student_for_tasks(self, task) -> Task:
+        '''
+        Sterge studentii atribuiti unei probleme
+        '''
 
-        student = Student(studentId, studentFirstName + ' ' + studentSecondName, studentGroup)
-        self.__s_validator.validate(student, self.__s_repository.get_all_students())
-        self.__s_repository.store(student)
+        search_students_for_task = self.findStudents(task)
+        if len(search_students_for_task):
+            for studentGrade in search_students_for_task:
+                grade = self.__g_repository.findGrade(studentGrade[0], task)
+                self.__g_repository.remove(grade)
+
+        return task
+
+    def evaluate_task(self, student, task, gradeNumber) -> Grade:
+        '''
+        Evalueaza problema unui student
+        '''
+
+        self.__s_repository.findStudent(student.getStudentId())
+        self.__t_repository.findTask(task.getLaboratory_Task())
+
+        grade = self.__g_repository.findGrade(student, task)
+
+        self.__g_validator.validateGrade(gradeNumber)
+        grade.setGrade(gradeNumber)
+
+        return grade
+
+    def statistics_students_for_task(self, task):
+        '''
+        Creeaza statistica studentilor pentru o problema data
+        '''
+
+        self.__t_repository.findTask(task.getLaboratory_Task())
+
+        search_students_for_task = self.findStudents(task)
+        statistics = []
+        if len(search_students_for_task):
+            for studentGrade in search_students_for_task:
+                self.__g_repository.findGrade(studentGrade[0], task)
+                if studentGrade[1]:
+                    individual = DTO(studentGrade[0], studentGrade[1])
+                    statistics.append(individual)
+
+        sorted(statistics, key=lambda grade: grade.getGrade())
+        return sorted(statistics, key=lambda name: name.getStudent().getStudentName())
+
+    def statistics_students(self):
+        '''
+        Creeaza statistica studentilor cu media notelor de laborator mai mica ca 5
+        '''
+
+        grades = self.__g_repository.get_all_grades()
+        statistics = []
+        if len(grades):
+            for x in grades:
+                counter = 0
+                sum = 0
+                tasks = self.findTasks(x.getStudent())
+                for y in tasks:
+                    if y[1]:
+                        counter += 1
+                        sum += y[1]
+
+                if counter:
+                    average = sum / counter
+                    if average < 5.0:
+                        individual = DTO(x.getStudent().getStudentName(), average)
+                        for already in statistics:
+                            if already == individual: # (DTO: __eq__(self, other) -> bool)
+                                break
+                        else:
+                            statistics.append(individual)
+
+        return statistics
+
+def test_AssignTask():
+    validator = GradeValidator()
+    repository = InMemoryGradeRepository()
+    s_repository = InMemoryStudentRepository()
+    t_repository = InMemoryTaskRepository()
+    service = GradeService(repository, validator, s_repository, t_repository)
+
+    student1 = Student(12, 'Mihai Panduru', 215)
+
+    task1 = Task('7_2', 'Catalog', '8/11/2021')
+    task2 = Task('8_4', 'Complex', '2/3/2022')
+
+    s_repository.store(student1)
+
+    t_repository.store(task1)
+    t_repository.store(task2)
+
+    assigned_task1 = service.assign_task(student1, task1)
+    assigned_task2 = service.assign_task(student1, task2)
+
+    assert(assigned_task1.getStudent() == student1)
+    assert(assigned_task2.getTask() == task2)
+    assert(len(repository.get_all_grades()) == 2)
+
+def test_EvaluateTask():
+    validator = GradeValidator()
+    repository = InMemoryGradeRepository()
+    s_repository = InMemoryStudentRepository()
+    t_repository = InMemoryTaskRepository()
+    service = GradeService(repository, validator, s_repository, t_repository)
+
+    student1 = Student(12, 'Mihai Panduru', 215)
+
+    task1 = Task('7_2', 'Catalog', '8/11/2021')
+
+    s_repository.store(student1)
+
+    t_repository.store(task1)
+
+    service.assign_task(student1, task1)
+    evaluated_task1 = service.evaluate_task(student1, task1, 5)
+
+    assert(evaluated_task1.getGrade() == 5)
+
+test_AssignTask()
+test_EvaluateTask()

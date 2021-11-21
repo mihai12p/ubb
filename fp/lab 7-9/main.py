@@ -14,9 +14,9 @@ Creați o aplicație care permite:
         • Toți studenții cu media notelor de laborator mai mic decât 5. (nume student și notă)
 '''
 
-from domain.validators import StudentValidator, TaskValidator, CommonValidator
-from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryCommonRepository
-from service.serv import StudentService, TaskService, CommonService
+from domain.validators import StudentValidator, TaskValidator, GradeValidator
+from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository
+from service.serv import StudentService, TaskService, GradeService
 from ui.console import Console
 
 s_validator = StudentValidator()
@@ -27,14 +27,14 @@ t_validator = TaskValidator()
 t_repository = InMemoryTaskRepository()
 t_service = TaskService(t_repository, t_validator)
 
-c_validator = CommonValidator()
-c_repository = InMemoryCommonRepository()
-c_service = CommonService(c_repository, c_validator, s_service, t_service)
+g_validator = GradeValidator()
+g_repository = InMemoryGradeRepository()
+g_service = GradeService(g_repository, g_validator, s_repository, t_repository)
 
-ENABLE_SETUP = False
+ENABLE_SETUP = True
 if ENABLE_SETUP:
     def setup():
-        from domain.entities import Student, Task
+        from domain.entities import Student, Task, Grade
         student1 = Student(12, 'Mihai Panduru', 215)
         student2 = Student(22, 'Adelin Gradinaru', 217)
         student3 = Student(23, 'Alberto Mihai', 213)
@@ -53,10 +53,16 @@ if ENABLE_SETUP:
         t_repository.store(task3)
         t_repository.store(task4)
 
-        c_repository.store(student1.getStudentId(), task1.getLaboratory_Task())
-        c_repository.store(student1.getStudentId(), task4.getLaboratory_Task())
-        c_repository.store(student3.getStudentId(), task1.getLaboratory_Task())
+        grade1 = Grade(student2, task1, 6)
+        grade2 = Grade(student1, task1, 4)
+        grade3 = Grade(student3, task1, 3)
+        grade4 = Grade(student3, task2, 6.9)
+
+        g_repository.store(grade1)
+        g_repository.store(grade2)
+        g_repository.store(grade3)
+        g_repository.store(grade4)
     setup()
 
-ui = Console(s_service, t_service, c_service)
+ui = Console(s_service, t_service, g_service)
 ui.showUI()

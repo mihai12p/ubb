@@ -334,6 +334,7 @@ class Console:
 
             print(colored('    ' + str(searched_task), 'green'))
             if len(statistics):
+                print(colored('        Stundetii ordonati alfabetic dupa nume, nota la problema data sunt', 'yellow'))
                 for x in statistics:
                     print(colored('        ' + str(x.getStudent()), 'green'), '| Nota:', str(x.getGrade()))
             else:
@@ -347,14 +348,31 @@ class Console:
         '''
 
         try:
-            self.__g_service.statistics_students()
             statistics = self.__g_service.statistics_students()
 
             if len(statistics):
+                print(colored('        Toti studentii cu media notelor mai mica ca 5 sunt', 'yellow'))
                 for x in statistics:
                     print(colored('        ' + str(x.getStudent()), 'green'), '| Media notelor:', str(x.getGrade()))
             else:
                 print(colored('        Nu exista niciun astfel de student.', 'red'))
+        except Exception as e:
+            print(colored('    ' + str(e), 'red'))
+
+    def __statistics_top3(self):
+        '''
+        Creaza statistica top3 a laboratoarelor cu cele mai multe note
+        '''
+
+        try:
+            statistics = self.__g_service.statistics_top3()
+
+            if len(statistics):
+                print(colored('        Top3 laboratoare', 'yellow'))
+                for x in statistics:
+                    print(colored('        ' + 'Numar laborator_problema: ' + x.getStudent().getLaboratory_Task() + ' | Descriere: ' + x.getStudent().getDescription(), 'green'), '| Numar note:', str(x.getGrade()))
+            else:
+                print(colored('        Nu exista niciun astfel de laborator.', 'red'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
@@ -406,7 +424,7 @@ class Console:
             elif option == 'common':
                 finishedSecondary = False
                 while not finishedSecondary:
-                    print('    Optiuni disponibile: assign, evaluate, stats1, stats2, return')
+                    print('    Optiuni disponibile: assign, evaluate, stats1, stats2, t_top3, return')
                     option = input('    Introduceti optiunea: ').lower().strip()
                     if option == 'assign':
                         self.__assign_task()
@@ -416,6 +434,8 @@ class Console:
                         self.__statistics_1()
                     elif option == 'stats2':
                         self.__statistics_2()
+                    elif option == 't_top3':
+                        self.__statistics_top3()
                     elif option == 'return':
                         finishedSecondary = True
                     else:

@@ -19,6 +19,9 @@ class InMemoryStudentRepository:
     def remove(self, student):
         self.__students.remove(student)
 
+    def remove_all(self):
+        self.__students = []
+
     def update(self, student, modifiedStudent):
         for relation in self.__students:
             if relation.getStudentId() == student.getStudentId():
@@ -59,6 +62,9 @@ class InMemoryTaskRepository:
     def remove(self, task):
         self.__tasks.remove(task)
 
+    def remove_all(self):
+        self.__tasks = []
+
     def update(self, task, modifiedTask):
         for relation in self.__tasks:
             if relation.getLaboratory_Task() == task.getLaboratory_Task():
@@ -98,6 +104,9 @@ class InMemoryGradeRepository:
 
     def remove(self, grade):
         self.__grades.remove(grade)
+
+    def remove_all(self):
+        self.__grades = []
 
     def get_all_grades(self) -> list[Grade]:
         return self.__grades
@@ -192,6 +201,14 @@ class InFileStudentRepository(InMemoryStudentRepository):
         InMemoryStudentRepository.remove(self, student)
         self.__save_to_file()
 
+    def remove_all(self):
+        '''
+        Sterge toti studentii din fisier
+        '''
+
+        InMemoryStudentRepository.remove_all(self)
+        self.__save_to_file()
+
     def update(self, student, modifiedStudent):
         '''
         Actualizeaza in fisier modificarile aduse studentului
@@ -269,6 +286,14 @@ class InFileTaskRepository(InMemoryTaskRepository):
         InMemoryTaskRepository.remove(self, task)
         self.__save_to_file()
 
+    def remove_all(self):
+        '''
+        Sterge toate problemele din fisier
+        '''
+
+        InMemoryTaskRepository.remove_all(self)
+        self.__save_to_file()
+
     def update(self, task, modifiedTask):
         '''
         Actualizeaza in fisier modificarile aduse problemei
@@ -344,6 +369,14 @@ class InFileGradeRepository(InMemoryGradeRepository):
         '''
 
         InMemoryGradeRepository.remove(self, grade)
+        self.__save_to_file()
+
+    def remove_all(self):
+        '''
+        Sterge toate notele din fisier
+        '''
+
+        InMemoryGradeRepository.remove_all(self)
         self.__save_to_file()
 
     def update_student(self, student, modifiedStudent):

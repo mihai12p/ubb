@@ -14,7 +14,7 @@ Creați o aplicație care permite:
         • Toți studenții cu media notelor de laborator mai mic decât 5. (nume student și notă)
 '''
 
-import tests
+#import tests
 from domain.validators import StudentValidator, TaskValidator, GradeValidator
 from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository, \
                             InFileStudentRepository, InFileTaskRepository, InFileGradeRepository

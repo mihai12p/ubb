@@ -41,6 +41,13 @@ class StudentService:
 
         return student
 
+    def delete_all_students(self):
+        '''
+        Sterge toti studentii
+        '''
+
+        self.__repository.remove_all()
+
     def get_copy_of_a_student(self, studentId) -> Student:
         '''
         Returneaza o copie fictiva a unui student inainte de modificarea detaliilor acestuia daca acesta exista
@@ -132,6 +139,13 @@ class TaskService:
 
         return task
 
+    def delete_all_tasks(self):
+        '''
+        Sterge toate problemele
+        '''
+
+        self.__repository.remove_all()
+
     def get_copy_of_a_task(self, laboratory_task) -> Task:
         '''
         Returneaza o copie fictiva a unei probleme inainte de modificarea detaliilor acesteia daca aceasta exista
@@ -201,6 +215,13 @@ class GradeService:
         self.__g_repository.store(grade)
 
         return grade
+
+    def delete_all_grades(self):
+        '''
+        Sterge toate notele
+        '''
+
+        self.__g_repository.remove_all()
 
     def update_student(self, student, modifiedStudent):
         '''

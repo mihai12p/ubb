@@ -39,31 +39,6 @@ class StudentValidator:
         if len(errors) > 0:
             raise ValidationException(errors)
 
-def test_validateStudent():
-    validator = StudentValidator()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1002, 'Andrei Paunescu', 215)
-
-    validator.validate(student1)
-    validator.validate(student2)
-
-    try:
-        student3 = Student(1003, 'Andrei', 215)
-        validator.validate(student3)
-        assert False
-    except ValidationException:
-        assert True
-
-    try:
-        student3 = Student(0, 'Andrei Paunescu', 0)
-        validator.validate(student3)
-        assert False
-    except ValidationException:
-        assert True
-
-test_validateStudent()
-
 class TaskValidator:
     '''
     Valideaza multimea de probleme (Task)
@@ -102,31 +77,6 @@ class TaskValidator:
         if len(errors) > 0:
             raise ValidationException(errors)
 
-def test_validateTask():
-    validator = TaskValidator()
-
-    task1 = Task('7_2', 'Gestionare', '8/11/2021')
-    task2 = Task('7_3', 'Inchiriere', '8/11/2021')
-
-    validator.validate(task1)
-    validator.validate(task2)
-
-    try:
-        task3 = Task('7 2', 'Gestionare', '8.11.2021')
-        validator.validate(task3)
-        assert False
-    except ValidationException:
-        assert True
-
-    try:
-        task3 = Task('', '', '')
-        validator.validate(task3)
-        assert False
-    except ValidationException:
-        assert True
-
-test_validateTask()
-
 class GradeValidator:
     '''
     Valideaza multimea de probleme ale studentilor (Student & Task)
@@ -152,22 +102,3 @@ class GradeValidator:
 
         if len(errors) > 0:
             raise ValidationException(errors)
-
-def test_validateGrade():
-    validator = GradeValidator()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-
-    task1 = Task('7_2', 'Gestionare', '8/11/2021')
-
-    grade1 = Grade(student1, task1, 5)
-
-    validator.validate(grade1)
-
-    try:
-        validator.validateGrade(12)
-        assert False
-    except ValidationException:
-        assert True
-
-test_validateGrade()

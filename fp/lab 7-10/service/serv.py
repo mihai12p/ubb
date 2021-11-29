@@ -64,9 +64,7 @@ class StudentService:
 
         self.__validator.validateExisting(studentId, self.get_all_students())
         student = self.__repository.findStudent(studentId)
-        student.setStudentId(modifiedStudent.getStudentId())
-        student.setStudentName(modifiedStudent.getStudentName())
-        student.setStudentGroup(modifiedStudent.getStudentGroup())
+        self.__repository.update(student, modifiedStudent)
 
         return student
 
@@ -209,9 +207,7 @@ class TaskService:
 
         self.__validator.validateExisting(laboratory_task, self.get_all_tasks())
         task = self.__repository.findTask(laboratory_task)
-        task.setLaboratory_Task(modifiedTask.getLaboratory_Task())
-        task.setDescription(modifiedTask.getDescription())
-        task.setDeadline(modifiedTask.getDeadline())
+        self.__repository.update(task, modifiedTask)
 
         return task
 
@@ -306,11 +302,29 @@ class GradeService:
         self.__s_repository.findStudent(student.getStudentId())
         self.__t_repository.findTask(task.getLaboratory_Task())
 
-        grade = Grade(student, task, None)
+        grade = Grade(student.getStudentId(), task.getLaboratory_Task(), 0.0)
         self.__g_validator.validate(grade, self.__g_repository.get_all_grades())
         self.__g_repository.store(grade)
 
         return grade
+
+    def update_student(self, student, modifiedStudent):
+        '''
+        Actualizeaza in fisier modificarile aduse studentului
+
+        paramtype: Student, Student
+        '''
+
+        self.__g_repository.update_student(student, modifiedStudent)
+
+    def update_task(self, task, modifiedTask):
+        '''
+        Actualizeaza in fisier modificarile aduse problemei
+
+        paramtype: Task, Task
+        '''
+
+        self.__g_repository.update_task(task, modifiedTask)
 
     def findTasks(self, student) -> list[Task]:
         '''
@@ -318,7 +332,6 @@ class GradeService:
         '''
 
         return self.__g_repository.findTasks(student)
-
 
     def findStudents(self, task) -> list[Student]:
         '''
@@ -335,7 +348,7 @@ class GradeService:
         search_tasks_for_student = self.findTasks(student)
         if len(search_tasks_for_student):
             for taskGrade in search_tasks_for_student:
-                grade = self.__g_repository.findGrade(student, taskGrade[0])
+                grade = self.__g_repository.findGrade(student.getStudentId(), taskGrade[0])
                 self.__g_repository.remove(grade)
 
         return student
@@ -348,7 +361,7 @@ class GradeService:
         search_students_for_task = self.findStudents(task)
         if len(search_students_for_task):
             for studentGrade in search_students_for_task:
-                grade = self.__g_repository.findGrade(studentGrade[0], task)
+                grade = self.__g_repository.findGrade(studentGrade[0], task.getLaboratory_Task())
                 self.__g_repository.remove(grade)
 
         return task
@@ -364,10 +377,10 @@ class GradeService:
         self.__s_repository.findStudent(student.getStudentId())
         self.__t_repository.findTask(task.getLaboratory_Task())
 
-        grade = self.__g_repository.findGrade(student, task)
+        grade = self.__g_repository.findGrade(student.getStudentId(), task.getLaboratory_Task())
 
         self.__g_validator.validateGrade(gradeNumber)
-        grade.setGrade(gradeNumber)
+        self.__g_repository.evaluate(grade, gradeNumber)
 
         return grade
 
@@ -385,9 +398,9 @@ class GradeService:
         statistics = []
         if len(search_students_for_task):
             for studentGrade in search_students_for_task:
-                self.__g_repository.findGrade(studentGrade[0], task)
+                self.__g_repository.findGrade(studentGrade[0], task.getLaboratory_Task())
                 if studentGrade[1]:
-                    individual = DTO(studentGrade[0], studentGrade[1])
+                    individual = DTO(self.__s_repository.findStudent(studentGrade[0]), studentGrade[1])
                     statistics.append(individual)
 
         statistics = sorted(statistics, key=lambda grade: grade.getGrade())
@@ -406,7 +419,7 @@ class GradeService:
             for x in grades:
                 counter = 0
                 sum = 0
-                tasks = self.findTasks(x.getStudent())
+                tasks = self.findTasks(x)
                 for y in tasks:
                     if y[1]:
                         counter += 1
@@ -415,7 +428,7 @@ class GradeService:
                 if counter:
                     average = sum / counter
                     if average < 5.0:
-                        individual = DTO(x.getStudent().getStudentName(), average)
+                        individual = DTO(self.__s_repository.findStudent(x.getStudentId()), average)
                         for already in statistics:
                             if already == individual: # (DTO: __eq__(self, other) -> bool)
                                 break
@@ -436,13 +449,13 @@ class GradeService:
         if len(grades):
             for x in grades:
                 counter = 0
-                tasks = self.findStudents(x.getTask())
+                tasks = self.findStudents(self.__t_repository.findTask(x.getLaboratory_Task()))
                 for y in tasks:
                     if y[1]:
                         counter += 1
 
                 if counter:
-                    individual = DTO(x.getTask(), counter)
+                    individual = DTO(self.__t_repository.findTask(x.getLaboratory_Task()), counter)
                     for already in statistics:
                         if already == individual: # (DTO: __eq__(self, other) -> bool)
                             break
@@ -472,8 +485,8 @@ def test_AssignTask():
     assigned_task1 = service.assign_task(student1, task1)
     assigned_task2 = service.assign_task(student1, task2)
 
-    assert(assigned_task1.getStudent() == student1)
-    assert(assigned_task2.getTask() == task2)
+    assert(assigned_task1.getStudentId() == 12)
+    assert(assigned_task2.getLaboratory_Task() == '8_4')
     assert(len(repository.get_all_grades()) == 2)
 
 def test_EvaluateTask():
@@ -522,15 +535,15 @@ def test_statistics_students_for_task():
     t_repository.store(task3)
     t_repository.store(task4)
 
-    grade1 = Grade(student2, task1, 6)
-    grade2 = Grade(student1, task1, 4)
-    grade3 = Grade(student3, task1, 3)
-    grade4 = Grade(student3, task2, 6.9)
-    grade5 = Grade(student2, task3, 9)
-    grade6 = Grade(student2, task2, 3)
-    grade7 = Grade(student4, task2, 9)
-    grade8 = Grade(student4, task4, 10)
-    grade9 = Grade(student2, task4, 10)
+    grade1 = Grade(student2.getStudentId(), task1.getLaboratory_Task(), 6)
+    grade2 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 4)
+    grade3 = Grade(student3.getStudentId(), task1.getLaboratory_Task(), 3)
+    grade4 = Grade(student3.getStudentId(), task2.getLaboratory_Task(), 6.9)
+    grade5 = Grade(student2.getStudentId(), task3.getLaboratory_Task(), 9)
+    grade6 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 3)
+    grade7 = Grade(student4.getStudentId(), task2.getLaboratory_Task(), 9)
+    grade8 = Grade(student4.getStudentId(), task4.getLaboratory_Task(), 10)
+    grade9 = Grade(student2.getStudentId(), task4.getLaboratory_Task(), 10)
 
     repository.store(grade1)
     repository.store(grade2)
@@ -578,15 +591,15 @@ def test_statistics_students():
     t_repository.store(task3)
     t_repository.store(task4)
 
-    grade1 = Grade(student2, task1, 6)
-    grade2 = Grade(student1, task1, 4)
-    grade3 = Grade(student3, task1, 3)
-    grade4 = Grade(student3, task2, 6.9)
-    grade5 = Grade(student2, task3, 9)
-    grade6 = Grade(student2, task2, 3)
-    grade7 = Grade(student4, task2, 9)
-    grade8 = Grade(student4, task4, 10)
-    grade9 = Grade(student2, task4, 10)
+    grade1 = Grade(student2.getStudentId(), task1.getLaboratory_Task(), 6)
+    grade2 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 4)
+    grade3 = Grade(student3.getStudentId(), task1.getLaboratory_Task(), 3)
+    grade4 = Grade(student3.getStudentId(), task2.getLaboratory_Task(), 6.9)
+    grade5 = Grade(student2.getStudentId(), task3.getLaboratory_Task(), 9)
+    grade6 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 3)
+    grade7 = Grade(student4.getStudentId(), task2.getLaboratory_Task(), 9)
+    grade8 = Grade(student4.getStudentId(), task4.getLaboratory_Task(), 10)
+    grade9 = Grade(student2.getStudentId(), task4.getLaboratory_Task(), 10)
 
     repository.store(grade1)
     repository.store(grade2)
@@ -599,11 +612,11 @@ def test_statistics_students():
     repository.store(grade9)
 
     statistics = service.statistics_students()
-
+    
     assert(len(statistics) == 2)
-    assert(statistics[0].getStudent() == student1.getStudentName())
+    assert(statistics[0].getStudent() == student1)
     assert(statistics[0].getGrade() == 4.0)
-    assert(statistics[1].getStudent() == student3.getStudentName())
+    assert(statistics[1].getStudent() == student3)
     assert(statistics[1].getGrade() == 4.95)
 
 test_AssignTask()

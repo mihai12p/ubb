@@ -81,6 +81,7 @@ class Console:
 
         try:
             modified_student = self.__s_service.modify_student(studentId, modifiedStudentId, modifiedStudentName, modifiedStudentGroup)
+            self.__g_service.update_student(get_student, modified_student)
             print(colored('    Studentul ' + get_student.getStudentName() + ' cu ID-ul ' + str(get_student.getStudentId()) + ' din grupa ' + str(get_student.getStudentGroup()) + ' a fost modificat cu succes. (Noul ID: %s, Noul nume: %s, Noua grupa: %s)' % (modified_student.getStudentId(), modified_student.getStudentName(), modified_student.getStudentGroup()), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -100,7 +101,7 @@ class Console:
                 print(colored('    ' + str(student), 'green'))
                 if len(search_tasks_for_student):
                     for taskGrade in search_tasks_for_student:
-                        task = taskGrade[0]
+                        task = self.__t_service.findTask(taskGrade[0])
                         grade = taskGrade[1]
                         if grade:
                             print(colored('        ' + str(task), 'green'), '| Nota:', str(grade))
@@ -125,7 +126,7 @@ class Console:
             print(colored('    ' + str(searched_student), 'green'))
             if len(search_tasks_for_student):
                 for taskGrade in search_tasks_for_student:
-                    task = taskGrade[0]
+                    task = self.__t_service.findTask(taskGrade[0])
                     grade = taskGrade[1]
                     if grade:
                         print(colored('        ' + str(task), 'green'), '| Nota:', str(grade))
@@ -199,6 +200,7 @@ class Console:
 
         try:
             modified_task = self.__t_service.modify_task(laboratory_task, modifiedLaboratory_task, modifiedDescription, modifiedDeadline)
+            self.__g_service.update_task(get_task, modified_task)
             print(colored('    Problema ' + get_task.getLaboratory_Task() + ' cu termenul limita ' + get_task.getDeadline() + ' a fost modificata cu succes. (Noua problema: %s, Noua descriere: %s, Noul termen limita: %s)' % (modified_task.getLaboratory_Task(), modified_task.getDescription(), modified_task.getDeadline()), 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
@@ -218,7 +220,7 @@ class Console:
                 print(colored('    ' + str(task), 'green'))
                 if len(search_students_for_task):
                     for studentGrade in search_students_for_task:
-                        student = studentGrade[0]
+                        student = self.__s_service.findStudent(studentGrade[0])
                         grade = studentGrade[1]
                         if grade:
                             print(colored('        ' + str(student), 'green'), '| Nota:', str(grade))
@@ -243,7 +245,7 @@ class Console:
             print(colored('    ' + str(searched_task), 'green'))
             if len(search_students_for_task):
                 for studentGrade in search_students_for_task:
-                    student = studentGrade[0]
+                    student = self.__s_service.findStudent(studentGrade[0])
                     grade = studentGrade[1]
                     if grade:
                         print(colored('        ' + str(student), 'green'), '| Nota:', str(grade))
@@ -269,7 +271,7 @@ class Console:
             student = self.__s_service.findStudent(studentId)
             task = self.__t_service.findTask(laboratory_task)
             t_assigned = self.__g_service.assign_task(student, task)
-            print(colored('    Studentului ' + t_assigned.getStudent().getStudentName() + ' cu ID-ul ' + str(t_assigned.getStudent().getStudentId()) + ' din grupa ' + str(t_assigned.getStudent().getStudentGroup()) + ' i-a fost atribuita problema '+ str(t_assigned.getTask().getLaboratory_Task()) + ' cu succes.', 'green'))
+            print(colored('    Studentului ' + student.getStudentName() + ' cu ID-ul ' + str(student.getStudentId()) + ' din grupa ' + str(student.getStudentGroup()) + ' i-a fost atribuita problema '+ str(t_assigned.getLaboratory_Task()) + ' cu succes.', 'green'))
         except Exception as e:
             print(colored('    ' + str(e), 'red'))
 
@@ -281,11 +283,11 @@ class Console:
         try:
             studentId = int(input('    ID-ul studentului: '))
             laboratory_task = input('    Numar laborator_numar problema: ')
-            grade = int(input('    Nota: '))
+            grade = float(input('    Nota: '))
         except:
             print(colored('    ID-ul (int)', 'red'))
             print(colored('    Problema (Lab_prob) (str)', 'red'))
-            print(colored('    Nota (int)', 'red'))
+            print(colored('    Nota (float)', 'red'))
             return
 
         try:
@@ -353,7 +355,7 @@ class Console:
             if len(statistics):
                 print(colored('        Toti studentii cu media notelor mai mica ca 5 sunt', 'yellow'))
                 for x in statistics:
-                    print(colored('        ' + str(x.getStudent()), 'green'), '| Media notelor:', str(x.getGrade()))
+                    print(colored('        ' + str(x.getStudent().getStudentName()), 'green'), '| Media notelor:', str(x.getGrade()))
             else:
                 print(colored('        Nu exista niciun astfel de student.', 'red'))
         except Exception as e:

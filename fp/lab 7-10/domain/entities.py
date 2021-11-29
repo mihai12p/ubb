@@ -33,28 +33,6 @@ class Student:
     def __str__(self) -> str:
         return 'ID: ' + str(self.__studentId) + ' | Nume: ' + self.__studentName + ' | Grupa: ' + str(self.__studentGroup)
 
-def test_Student():
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    assert(student1.getStudentId() == 1001)
-    assert(student1.getStudentName() == 'Mihai Panduru')
-    assert(student1.getStudentGroup() == 215)
-
-    student1.setStudentId(1002)
-    student1.setStudentName('Andrei Paunescu')
-    student1.setStudentGroup(212)
-
-    assert(student1.getStudentId() == 1002)
-    assert(student1.getStudentName() == 'Andrei Paunescu')
-    assert(student1.getStudentGroup() == 212)
-
-    student2 = Student(1002, 'Alberto Mihai', 215)
-    assert(student1 == student2)
-
-    student3 = Student(1001, 'Alberto Mihai', 215)
-    assert(student2 != student3)
-
-test_Student()
-
 class Task:
     '''
     Creeaza o noua problema cu un ID (laboratory_task), o descriere (description) si un termen limita (deadline)
@@ -91,88 +69,37 @@ class Task:
         self.__laboratoryNumber, self.__taskNumber = self.__laboratory_task.split('_')
         return 'Laborator: ' + self.__laboratoryNumber + ' | Problema: ' + self.__taskNumber + ' | Descriere: ' + self.__description + ' | Termen limita: ' + self.__deadline
 
-def test_Task():
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    assert(task1.getLaboratory_Task() == '7_2')
-    assert(task1.getDescription() == 'Catalog')
-    assert(task1.getDeadline() == '8/11/2021')
-
-    task1.setLaboratory_Task('8_4')
-    task1.setDescription('Gestionare')
-    task1.setDeadline('3/12/2021')
-
-    assert(task1.getLaboratory_Task() == '8_4')
-    assert(task1.getDescription() == 'Gestionare')
-    assert(task1.getDeadline() == '3/12/2021')
-
-    task2 = Task('8_4', 'Complex', '2/3/2022')
-    assert(task1 == task2)
-
-    task3 = Task('7_2', 'Complex', '2/3/2022')
-    assert(task2 != task3)
-
-test_Task()
-
 class Grade:
     '''
-    Creeaza o noua nota (grade) pentru un student (student) la o anumita problema (task)
-    paramtype:            int                      Student                         Task
+    Creeaza o noua nota (grade) pentru un student (studentId) la o anumita problema (laboratory_task)
+    paramtype:           float                         int                                  str
     '''
 
-    def __init__(self, student, task, grade):
-        self.__student = student
-        self.__task = task
+    def __init__(self, studentId, laboratory_task, grade):
+        self.__student = studentId
+        self.__task = laboratory_task
         self.__grade = grade
 
-    def getStudent(self) -> Student:
+    def getStudentId(self) -> int:
         return self.__student
 
-    def getTask(self) -> Task:
+    def getLaboratory_Task(self) -> str:
         return self.__task
 
-    def getGrade(self) -> int:
+    def getGrade(self) -> float:
         return self.__grade
 
-    def setStudent(self, student):
+    def setStudentId(self, student):
         self.__student = student
 
-    def setTask(self, task):
+    def setLaboratory_Task(self, task):
         self.__task = task
 
     def setGrade(self, grade):
         self.__grade = grade
 
     def __eq__(self, other) -> bool:
-        return self.__student == other.getStudent() and self.__task == other.getTask()
-
-def test_Grade():
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1002, 'Alberto Mihai', 215)
-    student3 = Student(1001, 'Alberto Mihai', 215)
-
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    task2 = Task('7_2', 'Complex', '2/3/2022')
-
-    grade1 = Grade(student1, task1, 9)
-    assert(grade1.getStudent() == student1)
-    assert(grade1.getTask() == task1)
-    assert(grade1.getGrade() == 9)
-
-    grade1.setStudent(student3)
-    grade1.setTask(task2)
-    grade1.setGrade(10)
-
-    assert(grade1.getStudent() == student3)
-    assert(grade1.getTask() == task2)
-    assert(grade1.getGrade() == 10)
-
-    grade2 = Grade(student2, task2, 9)
-    assert(grade1 != grade2)
-
-    grade2.setStudent(student3)
-    assert(grade1 == grade2)
-
-test_Grade()
+        return self.__student == other.getStudentId() and self.__task == other.getLaboratory_Task()
 
 class DTO:
     '''

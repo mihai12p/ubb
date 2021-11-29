@@ -15,24 +15,26 @@ Creați o aplicație care permite:
 '''
 
 from domain.validators import StudentValidator, TaskValidator, GradeValidator
-from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository
+from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository, \
+                            InFileStudentRepository, InFileTaskRepository, InFileGradeRepository
 from service.serv import StudentService, TaskService, GradeService
 from ui.console import Console
+import tests
 
-s_validator = StudentValidator()
-s_repository = InMemoryStudentRepository()
-s_service = StudentService(s_repository, s_validator)
+ENABLE_FILE = True
+if not ENABLE_FILE:
+    s_validator = StudentValidator()
+    s_repository = InMemoryStudentRepository()
+    s_service = StudentService(s_repository, s_validator)
 
-t_validator = TaskValidator()
-t_repository = InMemoryTaskRepository()
-t_service = TaskService(t_repository, t_validator)
+    t_validator = TaskValidator()
+    t_repository = InMemoryTaskRepository()
+    t_service = TaskService(t_repository, t_validator)
 
-g_validator = GradeValidator()
-g_repository = InMemoryGradeRepository()
-g_service = GradeService(g_repository, g_validator, s_repository, t_repository)
+    g_validator = GradeValidator()
+    g_repository = InMemoryGradeRepository()
+    g_service = GradeService(g_repository, g_validator, s_repository, t_repository)
 
-ENABLE_SETUP = True
-if ENABLE_SETUP:
     def setup():
         from domain.entities import Student, Task, Grade
         student1 = Student(12, 'Mihai Panduru', 215)
@@ -43,6 +45,7 @@ if ENABLE_SETUP:
         s_repository.store(student1)
         s_repository.store(student2)
         s_repository.store(student3)
+        s_repository.store(student4)
 
         task1 = Task('7_2', 'Catalog', '8/11/2021')
         task2 = Task('8_4', 'Complex', '2/3/2022')
@@ -54,15 +57,15 @@ if ENABLE_SETUP:
         t_repository.store(task3)
         t_repository.store(task4)
 
-        grade1 = Grade(student2, task1, 6)
-        grade2 = Grade(student1, task1, 4)
-        grade3 = Grade(student3, task1, 3)
-        grade4 = Grade(student3, task2, 6.9)
-        grade5 = Grade(student2, task3, 9)
-        grade6 = Grade(student2, task2, 3)
-        grade7 = Grade(student4, task2, 9)
-        grade8 = Grade(student4, task4, 10)
-        grade9 = Grade(student2, task4, 10)
+        grade1 = Grade(student2.getStudentId(), task1.getLaboratory_Task(), 6)
+        grade2 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 4)
+        grade3 = Grade(student3.getStudentId(), task1.getLaboratory_Task(), 3)
+        grade4 = Grade(student3.getStudentId(), task2.getLaboratory_Task(), 6.9)
+        grade5 = Grade(student2.getStudentId(), task3.getLaboratory_Task(), 9)
+        grade6 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 3)
+        grade7 = Grade(student4.getStudentId(), task2.getLaboratory_Task(), 9)
+        grade8 = Grade(student4.getStudentId(), task4.getLaboratory_Task(), 10)
+        grade9 = Grade(student2.getStudentId(), task4.getLaboratory_Task(), 10)
 
         g_repository.store(grade1)
         g_repository.store(grade2)
@@ -74,6 +77,18 @@ if ENABLE_SETUP:
         g_repository.store(grade8)
         g_repository.store(grade9)
     setup()
+else:
+    s_validator = StudentValidator()
+    s_file_repository = InFileStudentRepository('data/students.txt')
+    s_service = StudentService(s_file_repository, s_validator)
+
+    t_validator = TaskValidator()
+    t_file_repository = InFileTaskRepository('data/tasks.txt')
+    t_service = TaskService(t_file_repository, t_validator)
+
+    g_validator = GradeValidator()
+    g_file_repository = InFileGradeRepository('data/grades.txt')
+    g_service = GradeService(g_file_repository, g_validator, s_file_repository, t_file_repository)
 
 ui = Console(s_service, t_service, g_service)
 ui.showUI()

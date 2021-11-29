@@ -1,6 +1,5 @@
-from tests.domain_tests import student_tests, task_tests, grade_tests
-from tests.repo_tests import student_repo_tests, task_repo_tests, grade_repo_tests
-from tests.service_tests import student_service_tests, task_service_tests, grade_service_tests
+from tests import student_tests, task_tests, grade_tests, student_repo_tests, task_repo_tests, grade_repo_tests, \
+                    student_service_tests, task_service_tests, grade_service_tests
 
 import unittest
 unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromModule(student_tests))

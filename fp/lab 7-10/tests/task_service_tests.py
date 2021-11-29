@@ -4,7 +4,7 @@ from exceptions.exceptions import ValidationException
 from repository.repo import InMemoryTaskRepository
 from service.serv import TaskService
 
-class TestCaseTaskMemoryRepo(TestCase):
+class TestCaseTaskService(TestCase):
     def setUp(self):
         self.__repo = InMemoryTaskRepository()
         self.__validator = TaskValidator()

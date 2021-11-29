@@ -4,7 +4,7 @@ from exceptions.exceptions import ValidationException
 from repository.repo import InMemoryStudentRepository
 from service.serv import StudentService
 
-class TestCaseStudentMemoryRepo(TestCase):
+class TestCaseStudentService(TestCase):
     def setUp(self):
         self.__repo = InMemoryStudentRepository()
         self.__validator = StudentValidator()

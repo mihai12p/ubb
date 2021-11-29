@@ -4,7 +4,7 @@ from domain.validators import GradeValidator
 from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository
 from service.serv import GradeService
 
-class TestCaseTaskMemoryRepo(TestCase):
+class TestCaseGradeService(TestCase):
     def setUp(self):
         self.__s_repo = InMemoryStudentRepository()
         self.__t_repo = InMemoryTaskRepository()

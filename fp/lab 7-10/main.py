@@ -14,12 +14,12 @@ Creați o aplicație care permite:
         • Toți studenții cu media notelor de laborator mai mic decât 5. (nume student și notă)
 '''
 
+import tests
 from domain.validators import StudentValidator, TaskValidator, GradeValidator
 from repository.repo import InMemoryStudentRepository, InMemoryTaskRepository, InMemoryGradeRepository, \
                             InFileStudentRepository, InFileTaskRepository, InFileGradeRepository
 from service.serv import StudentService, TaskService, GradeService
 from ui.console import Console
-import tests
 
 ENABLE_FILE = True
 if not ENABLE_FILE:

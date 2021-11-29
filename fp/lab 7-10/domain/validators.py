@@ -1,4 +1,3 @@
-from domain.entities import Student, Task, Grade
 from exceptions.exceptions import ValidationException
 
 class StudentValidator:

@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 from domain.entities import Student, Task, Grade
 from domain.validators import GradeValidator
 from exceptions.exceptions import ValidationException
 
-class TestCaseGradeDomain(unittest.TestCase):
+class TestCaseGradeDomain(TestCase):
     def setUp(self):
         self.__validator = GradeValidator()
 

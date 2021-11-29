@@ -41,26 +41,6 @@ class InMemoryStudentRepository:
 
         raise StudentNotFoundException()
 
-def test_findStudent():
-    repository = InMemoryStudentRepository()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1003, 'Alberto Mihai', 215)
-
-    repository.store(student1)
-    repository.store(student2)
-
-    assert(repository.findStudent(1001) == student1)
-    assert(repository.findStudent(1003) == student2)
-
-    try:
-        repository.findStudent(1002)
-        assert False
-    except StudentNotFoundException:
-        assert True
-
-test_findStudent()
-
 class InMemoryTaskRepository:
     '''
     Stocheaza multimea de probleme
@@ -100,26 +80,6 @@ class InMemoryTaskRepository:
                 return tsk
 
         raise TaskNotFoundException()
-
-def test_findTask():
-    repository = InMemoryTaskRepository()
-
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    task2 = Task('8_4', 'Complex', '2/3/2022')
-
-    repository.store(task1)
-    repository.store(task2)
-
-    assert(repository.findTask('7_2') == task1)
-    assert(repository.findTask('8_4') == task2)
-
-    try:
-        repository.findTask('8_5')
-        assert False
-    except TaskNotFoundException:
-        assert True
-
-test_findTask()
 
 class InMemoryGradeRepository:
     '''
@@ -179,76 +139,6 @@ class InMemoryGradeRepository:
                 return grade
 
         raise TaskNotAssignedException()
-
-def test_findStudents():
-    repository = InMemoryGradeRepository()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1003, 'Adelin Gradinaru', 217)
-
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    task2 = Task('8_4', 'Complex', '2/3/2022')
-    task3 = Task('7_3', 'Revelion', '12/1/2022')
-
-    grade1 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 1)
-    grade2 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 2)
-    grade3 = Grade(student1.getStudentId(), task3.getLaboratory_Task(), 3)
-
-    repository.store(grade1)
-    repository.store(grade2)
-    repository.store(grade3)
-
-    assert(repository.findStudents(task2) == [[1003, 2]])
-
-def test_findTasks():
-    repository = InMemoryGradeRepository()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1003, 'Adelin Gradinaru', 217)
-
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    task2 = Task('8_4', 'Complex', '2/3/2022')
-    task3 = Task('7_3', 'Revelion', '12/1/2022')
-
-    grade1 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 1)
-    grade2 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 2)
-    grade3 = Grade(student1.getStudentId(), task3.getLaboratory_Task(), 3)
-
-    repository.store(grade1)
-    repository.store(grade2)
-    repository.store(grade3)
-
-    assert(repository.findTasks(student2) == [['8_4', 2]])
-
-def test_findGrades():
-    repository = InMemoryGradeRepository()
-
-    student1 = Student(1001, 'Mihai Panduru', 215)
-    student2 = Student(1003, 'Adelin Gradinaru', 217)
-
-    task1 = Task('7_2', 'Catalog', '8/11/2021')
-    task2 = Task('8_4', 'Complex', '2/3/2022')
-    task3 = Task('7_3', 'Revelion', '12/1/2022')
-
-    grade1 = Grade(student1.getStudentId(), task1.getLaboratory_Task(), 1)
-    grade2 = Grade(student2.getStudentId(), task2.getLaboratory_Task(), 2)
-    grade3 = Grade(student1.getStudentId(), task3.getLaboratory_Task(), 3)
-
-    repository.store(grade1)
-    repository.store(grade2)
-    repository.store(grade3)
-
-    assert(repository.findGrade(student1.getStudentId(), task3.getLaboratory_Task()) == grade3)
-
-    try:
-        repository.findGrade(student1.getStudentId(), task2.getLaboratory_Task())
-        assert False
-    except TaskNotAssignedException:
-        assert True
-
-test_findStudents()
-test_findTasks()
-test_findGrades()
 
 class InFileStudentRepository(InMemoryStudentRepository):
     def __init__(self, filename):

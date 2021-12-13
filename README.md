@@ -1,4 +1,4 @@
-# <a href="http://www.cs.ubbcluj.ro"><img src="http://www.chem.ubbcluj.ro/romana/conferinte/MEEMB/archive/pictures/ubb.gif" /><img src="https://www.ubbcluj.ro/images/logo/logo_cs.png" /><p> Universitatea Babeş-Bolyai din Cluj-Napoca </p><p> Facultatea de Matematică și Informatică </p><p> Informatică</p></a>
+# <a href="http://www.cs.ubbcluj.ro"> Universitatea Babeş-Bolyai din Cluj-Napoca <br> Facultatea de Matematică și Informatică <br> Informatică</a>
 <ul>
   <li>:ledger: Semestrul :one:
     <ul>

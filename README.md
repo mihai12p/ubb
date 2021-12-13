@@ -1,4 +1,4 @@
-# <a href="http://www.cs.ubbcluj.ro"> Universitatea Babeş-Bolyai din Cluj-Napoca <br> Facultatea de Matematică și Informatică <br> Informatică</a>
+# <a href="https://cs.ubbcluj.ro"><img src="https://www.yourtango.com/sites/default/files/styles/header_slider/public/image_blog/college-memes.jpg?itok=JoGNEOBS" /></a>
 <ul>
   <li>:ledger: Semestrul :one:
     <ul>

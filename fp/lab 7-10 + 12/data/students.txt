@@ -1,0 +1,5 @@
+12; Mihai Panduru; 215
+23; Adelin Gradinaru; 213
+25; Kevin Axmannn; 219
+22; Adelin Gradinaru; 222
+123; Ionel Grindeanu; 999

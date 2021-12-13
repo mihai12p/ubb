@@ -1,5 +1,6 @@
 from domain.entities import Student, Task, Grade
 from exceptions.exceptions import StudentNotFoundException, TaskNotFoundException, TaskNotAssignedException
+from utilis.utils import recursive_counter
 
 class InMemoryStudentRepository:
     '''
@@ -43,6 +44,19 @@ class InMemoryStudentRepository:
                 return student
 
         raise StudentNotFoundException()
+
+    def recursive_findStudent(self, studentId, n) -> Student:
+        '''
+        Returneaza in mod recursiv studentul identificat dupa ID-ul acestuia
+        '''
+
+        if n == len(self.__students):
+            raise StudentNotFoundException()
+        
+        if self.__students[n].getStudentId() == studentId:
+            return self.__students[n]
+
+        return self.recursive_findStudent(studentId, n + 1)
 
 class InMemoryTaskRepository:
     '''

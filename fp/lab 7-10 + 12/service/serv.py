@@ -1,5 +1,6 @@
 from domain.entities import Student, Task, Grade, DTO
-from utilis.random_helper import randomNumber, randomString
+from utilis.utils import randomNumber, randomString, recursive_sum, recursive_counter, insertion_sort, comb_sort, compare
+from functools import cmp_to_key
 
 class StudentService:
     '''
@@ -79,7 +80,7 @@ class StudentService:
         '''
 
         self.__validator.validateExisting(studentId, self.get_all_students())
-        student = self.__repository.findStudent(studentId)
+        student = self.__repository.recursive_findStudent(studentId, 0) # self.__repository.findStudent(studentId)
 
         return student
 
@@ -305,6 +306,28 @@ class GradeService:
 
         paramtype: Task
         rtype: list
+
+        Analiza complexitate:
+        1. CAZ DEFAVORABIL
+            - toti stundetii au nota la problema
+                T(n) = 2*O(sorted) + n + n; unde O(sorted) = n log n
+                    => T(n) = 2n (log n + 1) = O(n log n)
+
+                Timp: O(n log n)
+                Spatiu: O(n) deoarece lista este plina de studenti
+
+        2. CAZ FAVORABIL
+            - niciun student nu are nota la problema
+                T(n) = n
+
+                Timp: Theta(n)
+                Spatiu: Theta(1)
+
+        3. CAZ MEDIU
+            - sorted se executa de 2 ori deci intotdeauna de 2n log n ori
+            - numarul de pasi executati in cele 2 foruri depinde de numarul studentilor care au nota la problema
+
+            complexitatea medie = O(n log n)
         '''
 
         self.__t_repository.findTask(task.getLaboratory_Task())
@@ -318,8 +341,10 @@ class GradeService:
                     individual = DTO(self.__s_repository.findStudent(studentGrade[0]), studentGrade[1])
                     statistics.append(individual)
 
-        statistics = sorted(statistics, key=lambda grade: grade.getGrade())
-        return sorted(statistics, key=lambda name: name.getStudent().getStudentName())
+        return insertion_sort(statistics, key = cmp_to_key(compare))
+        #                             sau
+        #statistics = insertion_sort(statistics, key=lambda grade: grade.getGrade())
+        #return insertion_sort(statistics, key=lambda name: name.getStudent().getStudentName())
 
     def statistics_students(self):
         '''
@@ -332,16 +357,11 @@ class GradeService:
         statistics = []
         if len(grades):
             for x in grades:
-                counter = 0
-                sum = 0
                 tasks = self.findTasks(x)
-                for y in tasks:
-                    if y[1]:
-                        counter += 1
-                        sum += y[1]
-
-                if counter:
-                    average = sum / counter
+                sum = recursive_sum([nota[1] for nota in tasks])
+                count = recursive_counter([nota[1] for nota in tasks])
+                if count:
+                    average = sum / count
                     if average < 5.0:
                         individual = DTO(self.__s_repository.findStudent(x.getStudentId()), average)
                         for already in statistics:
@@ -363,19 +383,15 @@ class GradeService:
         statistics = []
         if len(grades):
             for x in grades:
-                counter = 0
                 tasks = self.findStudents(self.__t_repository.findTask(x.getLaboratory_Task()))
-                for y in tasks:
-                    if y[1]:
-                        counter += 1
-
-                if counter:
-                    individual = DTO(self.__t_repository.findTask(x.getLaboratory_Task()), counter)
+                count = recursive_counter([nota[1] for nota in tasks])
+                if count:
+                    individual = DTO(self.__t_repository.findTask(x.getLaboratory_Task()), count)
                     for already in statistics:
                         if already == individual: # (DTO: __eq__(self, other) -> bool)
                             break
                     else:
                         statistics.append(individual)
 
-        statistics = sorted(statistics, key=lambda average : average.getGrade(), reverse=True)
+        statistics = comb_sort(statistics, key=lambda average : average.getGrade(), reverse=True)
         return statistics[:3]

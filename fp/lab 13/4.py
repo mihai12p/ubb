@@ -1,6 +1,15 @@
 '''
 4. Se dă o listă de numere întregi a1,...,an, determinați toate sub-secvențele
 (ordinea elementelor este menținută) strict crescătoare.
+
+Solutie candidat:
+x = (x0, x1, ..., xk), xi ∈ (0, 1, ..., K - 1), K <= N
+
+Conditie consistent:
+x = (x0, x1, ..., xk) e consistent daca xi ≠ xj
+
+Conditie solutie:
+x = (x0, x1, ..., xk) e solutie daca e consistent si xi < xj, i < j adica elementele sunt in ordinea care apar strict crescatoare
 '''
 
 import time

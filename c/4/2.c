@@ -54,7 +54,7 @@ int main()
 
     for (int i = 0; i < N; ++i)
     {
-        printf("#%d ID: %d Name: %s | Note: ", i + 1, pstudent[i].reg_num, pstudent[i].name);
+        printf("#%d ID: %d Nume: %s | Note: ", i + 1, pstudent[i].reg_num, pstudent[i].name);
         for (int j = 0; j < 5; ++j)
             printf("%d ", pstudent[i].marks[j]);
         printf("\n");

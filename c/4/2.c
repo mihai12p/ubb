@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 1.Using dynamic memory allocation where is the case, solve the following:
+// 2.Using dynamic memory allocation where is the case, solve the following:
 // For a list of students, each having name, registration_number and 5 marks for current semester, 
 // sort them in descending order of the average of the 5 marks, and display the students with identical average in alphabetical order.
 

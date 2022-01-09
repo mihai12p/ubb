@@ -66,12 +66,12 @@ def comb_sort(sir, *, key = None, reverse = False):
 def compare(s1, s2):
     if s1.getStudent().getStudentName() > s2.getStudent().getStudentName():
         return 1
-    elif s1.getStudent().getStudentName() > s2.getStudent().getStudentName():
+    elif s1.getStudent().getStudentName() < s2.getStudent().getStudentName():
         return -1
     else:
         if s1.getGrade() > s2.getGrade():
             return 1
-        elif s1.getGrade() > s2.getGrade():
+        elif s1.getGrade() < s2.getGrade():
             return -1
         else:
             return 0

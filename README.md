@@ -19,4 +19,13 @@
       </li>
     </ul>
   </li>
+  <li>:ledger: Semestrul :two:
+    <ul>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem2/ag"> 
+          :part_alternation_mark:  Algoritmica grafelor
+        </a>
+      </li>
+    </ul>
+  </li>
 </ul>

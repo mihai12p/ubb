@@ -3,17 +3,17 @@
   <li>:ledger: Semestrul :one:
     <ul>
       <li>
-        <a href="https://github.com/mihai12p/ubb/tree/main/asc"> 
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem1/asc"> 
           :sweat_drops:  Arhitectura sistemelor de calcul
         </a>
       </li>
       <li>
-        <a href="https://github.com/mihai12p/ubb/tree/main/fp"> 
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem1/fp"> 
           :snake:  Fundamentele programării
         </a>
       </li>
       <li>
-        <a href="https://github.com/mihai12p/ubb/tree/main/c"> 
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem1/c"> 
           :statue_of_liberty:  Programare în C
         </a>
       </li>

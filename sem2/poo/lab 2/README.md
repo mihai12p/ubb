@@ -1,0 +1,1 @@
+11. Determina intersectia a doua segmente plane (date prin coordonatele lor carteziene).

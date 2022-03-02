@@ -26,6 +26,11 @@
           :part_alternation_mark:  Algoritmica grafelor
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem2/poo"> 
+          :alien:  Programare orientata obiect
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

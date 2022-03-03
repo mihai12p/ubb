@@ -18,10 +18,10 @@ int main()
 
 	/*
 	ecuatia unui segment este x(B.y - A.y) + y(A.x - B.x) + (A.y*B.x - A.x*B.y) = 0
-				       ^	    ^		   ^
-				       |	    |		   |
-				       M	    N		   P
-					    => Mx + Ny + P = 0
+				        ^	       ^		 ^
+				        |	       |		 |
+				        M	       N		 P
+					       => Mx + Ny + P = 0
 	*/
 
 	float M1 = B.y - A.y, N1 = A.x - B.x, P1 = A.y * B.x - A.x * B.y;

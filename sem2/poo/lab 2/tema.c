@@ -5,6 +5,16 @@ struct punct
 	float x, y;
 } A, B, C, D;
 
+float max(float a, float b)
+{
+	return a > b ? a : b;
+}
+
+float min(float a, float b)
+{
+	return a < b ? a : b;
+}
+
 int main()
 {
 	printf("Introduceti coordonatele (X, Y) punctului A din primul segment: ");
@@ -59,7 +69,8 @@ int main()
 			Inty = -(P2 + M2 * Intx) / N2;
 		}
 
-		if ((abs(B.x - A.x) >= Intx && abs(B.y - A.y) >= Inty) && (abs(D.x - C.x) >= Intx && abs(D.y - C.y) >= Inty))
+		if (Intx >= min(A.x, B.x) && Intx <= max(A.x, B.x) && Intx >= min(C.x, D.x) && Intx <= max(C.x, D.x) &&
+			Inty >= min(A.y, B.y) && Inty <= max(A.y, B.y) && Inty >= min(C.y, D.y) && Inty <= max(C.y, D.y))
 			printf("Coordonatele punctului de intersectie sunt (%f, %f).", Intx, Inty);
 		else
 			printf("Segmentele nu se intersecteaza.");

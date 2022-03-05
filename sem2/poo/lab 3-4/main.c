@@ -4,6 +4,13 @@
 
 int main()
 {
+	test_valid();
+	test_adauga();
+	test_reset();
+	test_cauta();
+	test_actualizeaza();
+	test_sterge();
+
 	repository repo; // lista cu participanti alocata static
 	reset(&repo); // resetam continutul listei la 0
 

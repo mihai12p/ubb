@@ -21,3 +21,9 @@ void reset(repository* repo); // reseteaza lista de concurenti
 int cauta(repository* repo, participant existingUser); // verifica daca un participant este inscris in concurs
 void actualizeaza(repository* repo, participant modifiedUser, int poz); // actualizeaza detaliile pentru un concurent
 void sterge(repository* repo, int poz); // elimina un concurent
+
+void test_adauga();
+void test_reset();
+void test_cauta();
+void test_actualizeaza();
+void test_sterge();

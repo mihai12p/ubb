@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "operatii.h"
+#include "valid.h"
 
+/*
+	desc: afiseaza toti concurentii actuali
+	param: repo pentru gestiunea participantilor
+*/
 void printall(repository* repo)
 {
 	printf("\n" ANSI_COLOR_GREEN("Lista participanti: \n"));
@@ -14,32 +19,40 @@ void printall(repository* repo)
 	printf("\n");
 }
 
+/*
+	desc: interfata cu utilizatorul pentru a adauga un nou concurent
+	param: repo pentru gestiunea participantilor
+*/
 void adaugaUi(repository* repo)
 {
 	participant user;
 	printf("Introduceti numele, prenumele si scorul noului participant: \n");
-	printf("\tNume: ");
-	scanf_s("%23s", user.nume, sizeof(user.nume));
-
-	printf("\tPrenume: ");
-	scanf_s("%23s", user.prenume, sizeof(user.prenume));
+	printf("\tNume si prenume: ");
+	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
 	printf("\tScor: ");
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", user.scor + i);
 
-	adauga(repo, user);
+	if (valid(user.scor) == 0)
+	{
+		adauga(repo, user);
+		printf(ANSI_COLOR_GREEN("\tParticipantul a fost adaugat cu succes.\n"));
+	}
+	else
+		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
 }
 
+/*
+	desc: interfata cu utilizatorul pentru a actualiza detaliile unui concurent existent
+	param: repo pentru gestiunea participantilor
+*/
 void actualizeazaUi(repository* repo)
 {
 	participant user;
 	printf("Introduceti numele si prenumele unui participant existent: \n");
-	printf("\tNume: ");
-	scanf_s("%23s", user.nume, sizeof(user.nume));
-
-	printf("\tPrenume: ");
-	scanf_s("%23s", user.prenume, sizeof(user.prenume));
+	printf("\tNume si prenume: ");
+	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
 	int poz = cauta(repo, user);
 	if (poz == -1)
@@ -54,28 +67,32 @@ void actualizeazaUi(repository* repo)
 	printf("\n");
 
 	printf("\tIntroduceti noile date pentru acest participant: \n");
-	printf("\t\tNume nou: ");
-	scanf_s("%23s", user.nume, sizeof(user.nume));
-
-	printf("\t\tPrenume nou: ");
-	scanf_s("%23s", user.prenume, sizeof(user.prenume));
+	printf("\t\tNume si prenume noi: ");
+	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
 	printf("\t\tScor nou: ");
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", user.scor + i);
 
-	actualizeaza(repo, user, poz);
+	if (valid(user.scor) == 0)
+	{
+		actualizeaza(repo, user, poz);
+		printf(ANSI_COLOR_GREEN("\tParticipantul a fost modificat cu succes.\n"));
+	}
+	else
+		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
 }
 
+/*
+	desc: interfata cu utilizatorul pentru a elimina un concurent
+	param: repo pentru gestiunea participantilor
+*/
 void stergeUi(repository* repo)
 {
 	participant user;
 	printf("Introduceti numele si prenumele unui participant existent: \n");
-	printf("\tNume: ");
-	scanf_s("%23s", user.nume, sizeof(user.nume));
-
-	printf("\tPrenume: ");
-	scanf_s("%23s", user.prenume, sizeof(user.prenume));
+	printf("\tNume si prenume: ");
+	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
 	int poz = cauta(repo, user);
 	if (poz == -1)
@@ -92,12 +109,22 @@ void stergeUi(repository* repo)
 	printf("\t" ANSI_COLOR_RED("Sunteti sigur ca vreti sa stergeti acest participant: \n"));
 	printf("\t\t" ANSI_COLOR_GREEN("1") " - da\n");
 	printf("\t\t" ANSI_COLOR_GREEN("2") " - nu\n");
+	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
 	int del = 0;
-	if (scanf_s("%d", &del) == 1 && del == 1) //EXCEPTIE
+	if (scanf_s("%d", &del) == 1 && del == 1)
+	{
 		sterge(repo, poz);
+		printf("\t" ANSI_COLOR_GREEN("Participantul a fost eliminat cu succes.\n"));
+	}
+	else
+		printf("\t" ANSI_COLOR_RED("Participantul nu a fost eliminat.\n"));
 }
 
+/*
+	desc: interfata generala cu utilizatorul
+	param: repo pentru gestiunea participantilor
+*/
 int consola(repository* repo)
 {
 	printf(ANSI_COLOR_CYAN("Optiuni disponibile: \n"));
@@ -110,8 +137,7 @@ int consola(repository* repo)
 	printf(ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
 	int option;
-	if (scanf_s("%d", &option) != 1)
-		return -1; //EXCEPTIE
+	if (scanf_s("%d", &option) != 1) return -1; // incheiem executia programului daca nu se introduce un numar
 
 	switch (option)
 	{

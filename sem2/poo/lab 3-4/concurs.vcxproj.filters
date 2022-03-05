@@ -21,6 +21,12 @@
     <Filter Include="Source Files\domain">
       <UniqueIdentifier>{39d36e95-d4f5-42cd-a1d0-924133091703}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\validator">
+      <UniqueIdentifier>{aadbccf2-7134-41f4-853e-f00d0bd1d280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\validator">
+      <UniqueIdentifier>{80d864d1-9019-4145-8014-d20dfe4dfc39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -32,6 +38,9 @@
     <ClCompile Include="concurs.c">
       <Filter>Source Files\domain</Filter>
     </ClCompile>
+    <ClCompile Include="valid.c">
+      <Filter>Source Files\validator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="operatii.h">
@@ -39,6 +48,9 @@
     </ClInclude>
     <ClInclude Include="concurs.h">
       <Filter>Header Files\domain</Filter>
+    </ClInclude>
+    <ClInclude Include="valid.h">
+      <Filter>Header Files\validator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

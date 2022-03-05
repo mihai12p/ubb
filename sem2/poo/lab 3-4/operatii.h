@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string.h>
 #include "concurs.h"
 
 #define ANSI_COLOR_RED(s)     "\x1b[31m" s "\x1b[0m"
@@ -9,4 +10,4 @@
 #define ANSI_COLOR_MAGENTA(s) "\x1b[35m" s "\x1b[0m"
 #define ANSI_COLOR_CYAN(s)    "\x1b[36m" s "\x1b[0m"
 
-int consola(repository* repo);
+int consola(repository* repo); // interfata generala cu utilizatorul

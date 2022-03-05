@@ -30,6 +30,12 @@ void adaugaUi(repository* repo)
 	printf("\tNume si prenume: ");
 	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
+	if (cauta(repo, user) != -1)
+	{
+		printf(ANSI_COLOR_RED("\tExista deja un participant cu acest nume si prenume.\n"));
+		return;
+	}
+
 	printf("\tScor: ");
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", user.scor + i);
@@ -70,6 +76,12 @@ void actualizeazaUi(repository* repo)
 	printf("\t\tNume si prenume noi: ");
 	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
 
+	if (cauta(repo, user) != -1)
+	{
+		printf(ANSI_COLOR_RED("\tExista deja un participant cu acest nume si prenume.\n"));
+		return;
+	}
+
 	printf("\t\tScor nou: ");
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", user.scor + i);
@@ -107,7 +119,7 @@ void stergeUi(repository* repo)
 	printf("\n");
 
 	printf("\t" ANSI_COLOR_RED("Sunteti sigur ca vreti sa stergeti acest participant: \n"));
-	printf("\t\t" ANSI_COLOR_GREEN("1") " - da\n");
+	printf("\t\t" ANSI_COLOR_GREEN("1") " - absolut sigur\n");
 	printf("\t\t" ANSI_COLOR_GREEN("2") " - nu\n");
 	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
@@ -119,6 +131,27 @@ void stergeUi(repository* repo)
 	}
 	else
 		printf("\t" ANSI_COLOR_RED("Participantul nu a fost eliminat.\n"));
+}
+
+/*
+	functie utila pentru testarea aplicatiei
+	desc: adauga participanti in lista
+	param: repo pentru gestiunea participantilor
+*/
+void participanti_predefiniti(repository* repo)
+{
+	adauga(repo, (participant) { "Mihai", "Panduru", {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} });
+	adauga(repo, (participant) { "Alexandru", "Nedelcu", {1, 2, 2, 3, 1, 1, 1, 1, 10, 5} });
+	adauga(repo, (participant) { "Ion", "Tiriac", {10, 2, 3, 1, 5, 10, 2, 1, 10, 10} });
+	adauga(repo, (participant) { "Vladimir", "Putin", {1, 1, 1, 1, 1, 1, 1, 1, 1, 1} });
+	adauga(repo, (participant) { "Dani", "Mocanu", {2, 8, 3, 4, 3, 8, 2, 8, 8, 9} });
+	adauga(repo, (participant) { "Stefan", "Nastasa", {1, 2, 3, 4, 5, 1, 2, 3, 4, 5} });
+	adauga(repo, (participant) { "Mihai", "Bendeac", {1, 2, 3, 4, 5, 3, 3, 2, 2, 10} });
+	adauga(repo, (participant) { "Volodymyr", "Zelenskyy", {10, 10, 10, 10, 10, 10, 10, 10, 10, 10} });
+	adauga(repo, (participant) { "Florin", "Salam", {2, 2, 10, 2, 2, 10, 2, 2, 10, 10} });
+	adauga(repo, (participant) { "Andrea", "Bocelli", {7, 7, 7, 4, 5, 7, 2, 7, 4, 6} });
+	adauga(repo, (participant) { "Snoop", "Dogg", {4, 2, 4, 2, 4, 2, 4, 2, 4, 2} });
+	adauga(repo, (participant) { "Chester", "Bennington", {6, 3, 5, 9, 7, 2, 1, 5, 6, 9} });
 }
 
 /*

@@ -31,6 +31,11 @@
           :alien:  Programare orientata obiect
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem2/sda"> 
+          :heart:  Structuri de date si algoritmi
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

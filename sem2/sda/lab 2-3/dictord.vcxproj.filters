@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Teste">
+      <UniqueIdentifier>{b6de5ab7-70c1-4272-b1bd-3b2dc8006c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Teste">
+      <UniqueIdentifier>{34d999ed-6bc3-410f-a153-7c917762d1ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Iterator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Teste\TestExtins.cpp">
+      <Filter>Source Files\Teste</Filter>
+    </ClCompile>
+    <ClCompile Include="Teste\TestScurt.cpp">
+      <Filter>Source Files\Teste</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Teste\TestScurt.h">
+      <Filter>Header Files\Teste</Filter>
+    </ClInclude>
+    <ClInclude Include="Teste\TestExtins.h">
+      <Filter>Header Files\Teste</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

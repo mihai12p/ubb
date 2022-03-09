@@ -1,6 +1,8 @@
+#include "service.h"
 #include "operatii.h"
+#include "valid.h"
 
-#define PARTICIPANTI_PREDEFINITI // o lista cu pariticipanti predefiniti utila pentru teste
+#define PARTICIPANTI_PREDEFINITI // activeaza o lista cu pariticipanti predefiniti utila pentru teste
 
 int main()
 {
@@ -18,7 +20,7 @@ int main()
 	participanti_predefiniti(&repo);
 #endif
 
-	while (consola(&repo) != -1); // se executa pana cand userul doreste sa inchida executia programului, consola(...) returnand -1
+	while (consola(&repo) != -1);
 
 	return 0;
 }

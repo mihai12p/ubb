@@ -1,8 +1,6 @@
 #pragma once
 
-#include <string.h>
-#include "concurs.h"
-#include "valid.h"
+#include "service.h"
 
 #define ANSI_COLOR_RED(s)     "\x1b[31m" s "\x1b[0m"
 #define ANSI_COLOR_GREEN(s)   "\x1b[32m" s "\x1b[0m"

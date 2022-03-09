@@ -15,17 +15,23 @@
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{fb3df385-a12d-4320-b7c4-d23b9389f16d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\domain">
-      <UniqueIdentifier>{ed06a43c-75f2-459a-bcad-aac6e6b00434}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\domain">
-      <UniqueIdentifier>{39d36e95-d4f5-42cd-a1d0-924133091703}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\validator">
       <UniqueIdentifier>{aadbccf2-7134-41f4-853e-f00d0bd1d280}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\validator">
       <UniqueIdentifier>{80d864d1-9019-4145-8014-d20dfe4dfc39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\repository">
+      <UniqueIdentifier>{39d36e95-d4f5-42cd-a1d0-924133091703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\repository">
+      <UniqueIdentifier>{ed06a43c-75f2-459a-bcad-aac6e6b00434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\service">
+      <UniqueIdentifier>{9533c42b-a75b-4f66-8097-861b907c7690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\service">
+      <UniqueIdentifier>{fd8e8c2c-fa28-49e3-aae4-3c1a6ba114cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,10 +42,13 @@
       <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="concurs.c">
-      <Filter>Source Files\domain</Filter>
+      <Filter>Source Files\repository</Filter>
     </ClCompile>
     <ClCompile Include="valid.c">
       <Filter>Source Files\validator</Filter>
+    </ClCompile>
+    <ClCompile Include="service.c">
+      <Filter>Source Files\service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,10 +56,13 @@
       <Filter>Header Files\ui</Filter>
     </ClInclude>
     <ClInclude Include="concurs.h">
-      <Filter>Header Files\domain</Filter>
+      <Filter>Header Files\repository</Filter>
     </ClInclude>
     <ClInclude Include="valid.h">
       <Filter>Header Files\validator</Filter>
+    </ClInclude>
+    <ClInclude Include="service.h">
+      <Filter>Header Files\service</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "operatii.h"
-#include "valid.h"
 
 /*
 	desc: afiseaza toti concurentii actuali
@@ -25,26 +24,24 @@ void printall(repository* repo)
 */
 void adaugaUi(repository* repo)
 {
-	participant user;
+	char nume[23] = { 0 }, prenume[23] = { 0 };
 	printf("Introduceti numele, prenumele si scorul noului participant: \n");
 	printf("\tNume si prenume: ");
-	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
+	scanf_s("%23s %23s", nume, sizeof(nume), prenume, sizeof(prenume));
 
-	if (cauta(repo, user) != -1)
+	if (cauta(repo, nume, prenume) != NULL)
 	{
 		printf(ANSI_COLOR_RED("\tExista deja un participant cu acest nume si prenume.\n"));
 		return;
 	}
 
+	int scor[10] = { 0 };
 	printf("\tScor: ");
 	for (int i = 0; i < 10; ++i)
-		scanf_s("%d", user.scor + i);
+		scanf_s("%d", &scor[i]);
 
-	if (valid(user.scor) == 0)
-	{
-		adauga(repo, user);
+	if (adauga(repo, nume, prenume, scor) != NULL)
 		printf(ANSI_COLOR_GREEN("\tParticipantul a fost adaugat cu succes.\n"));
-	}
 	else
 		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
 }
@@ -55,42 +52,40 @@ void adaugaUi(repository* repo)
 */
 void actualizeazaUi(repository* repo)
 {
-	participant user;
+	char nume[23] = { 0 }, prenume[23] = { 0 };
 	printf("Introduceti numele si prenumele unui participant existent: \n");
 	printf("\tNume si prenume: ");
-	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
+	scanf_s("%23s %23s", nume, sizeof(nume), prenume, sizeof(prenume));
 
-	int poz = cauta(repo, user);
-	if (poz == -1)
+	participant* cautat = cauta(repo, nume, prenume);
+	if (cautat == NULL)
 	{
 		printf(ANSI_COLOR_RED("\tNu a fost gasit un astfel de participant.\n"));
 		return;
 	}
 
-	printf("\t" ANSI_COLOR_GREEN("Participant gasit: ") "%s %s | ", user.nume, user.prenume);
+	printf("\t" ANSI_COLOR_GREEN("Participant gasit: ") "%s %s | ", cautat->nume, cautat->prenume);
 	for (int i = 0; i < 10; ++i)
-		printf("%d ", repo->user[poz].scor[i]);
+		printf("%d ", cautat->scor[i]);
 	printf("\n");
 
 	printf("\tIntroduceti noile date pentru acest participant: \n");
 	printf("\t\tNume si prenume noi: ");
-	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
+	scanf_s("%23s %23s", nume, sizeof(nume), prenume, sizeof(prenume));
 
-	if (cauta(repo, user) != -1)
+	if (cauta(repo, nume, prenume) != NULL)
 	{
 		printf(ANSI_COLOR_RED("\tExista deja un participant cu acest nume si prenume.\n"));
 		return;
 	}
 
+	int scor[10] = { 0 };
 	printf("\t\tScor nou: ");
 	for (int i = 0; i < 10; ++i)
-		scanf_s("%d", user.scor + i);
+		scanf_s("%d", &scor[i]);
 
-	if (valid(user.scor) == 0)
-	{
-		actualizeaza(repo, user, poz);
+	if (actualizeaza(cautat, nume, prenume, scor) != NULL)
 		printf(ANSI_COLOR_GREEN("\tParticipantul a fost modificat cu succes.\n"));
-	}
 	else
 		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
 }
@@ -101,21 +96,21 @@ void actualizeazaUi(repository* repo)
 */
 void stergeUi(repository* repo)
 {
-	participant user;
+	char nume[23] = { 0 }, prenume[23] = { 0 };
 	printf("Introduceti numele si prenumele unui participant existent: \n");
 	printf("\tNume si prenume: ");
-	scanf_s("%23s %23s", user.nume, sizeof(user.nume), user.prenume, sizeof(user.prenume));
+	scanf_s("%23s %23s", nume, sizeof(nume), prenume, sizeof(prenume));
 
-	int poz = cauta(repo, user);
-	if (poz == -1)
+	participant* cautat = cauta(repo, nume, prenume);
+	if (cautat == NULL)
 	{
 		printf(ANSI_COLOR_RED("\tNu a fost gasit un astfel de participant.\n"));
 		return;
 	}
 
-	printf("\t" ANSI_COLOR_GREEN("Participant gasit: ") "%s %s | ", user.nume, user.prenume);
+	printf("\t" ANSI_COLOR_GREEN("Participant gasit: ") "%s %s | ", cautat->nume, cautat->prenume);
 	for (int i = 0; i < 10; ++i)
-		printf("%d ", repo->user[poz].scor[i]);
+		printf("%d ", cautat->scor[i]);
 	printf("\n");
 
 	printf("\t" ANSI_COLOR_RED("Sunteti sigur ca vreti sa stergeti acest participant: \n"));
@@ -124,11 +119,8 @@ void stergeUi(repository* repo)
 	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
 	int del = 0;
-	if (scanf_s("%d", &del) == 1 && del == 1)
-	{
-		sterge(repo, poz);
+	if (scanf_s("%d", &del) == 1 && del == 1 && sterge(repo, cautat) != NULL)
 		printf("\t" ANSI_COLOR_GREEN("Participantul a fost eliminat cu succes.\n"));
-	}
 	else
 		printf("\t" ANSI_COLOR_RED("Participantul nu a fost eliminat.\n"));
 }
@@ -140,23 +132,48 @@ void stergeUi(repository* repo)
 */
 void participanti_predefiniti(repository* repo)
 {
-	adauga(repo, (participant) { "Mihai", "Panduru", {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} });
-	adauga(repo, (participant) { "Alexandru", "Nedelcu", {1, 2, 2, 3, 1, 1, 1, 1, 10, 5} });
-	adauga(repo, (participant) { "Ion", "Tiriac", {10, 2, 3, 1, 5, 10, 2, 1, 10, 10} });
-	adauga(repo, (participant) { "Vladimir", "Putin", {1, 1, 1, 1, 1, 1, 1, 1, 1, 1} });
-	adauga(repo, (participant) { "Dani", "Mocanu", {2, 8, 3, 4, 3, 8, 2, 8, 8, 9} });
-	adauga(repo, (participant) { "Stefan", "Nastasa", {1, 2, 3, 4, 5, 1, 2, 3, 4, 5} });
-	adauga(repo, (participant) { "Mihai", "Bendeac", {1, 2, 3, 4, 5, 3, 3, 2, 2, 10} });
-	adauga(repo, (participant) { "Volodymyr", "Zelenskyy", {10, 10, 10, 10, 10, 10, 10, 10, 10, 10} });
-	adauga(repo, (participant) { "Florin", "Salam", {2, 2, 10, 2, 2, 10, 2, 2, 10, 10} });
-	adauga(repo, (participant) { "Andrea", "Bocelli", {7, 7, 7, 4, 5, 7, 2, 7, 4, 6} });
-	adauga(repo, (participant) { "Snoop", "Dogg", {4, 2, 4, 2, 4, 2, 4, 2, 4, 2} });
-	adauga(repo, (participant) { "Chester", "Bennington", {6, 3, 5, 9, 7, 2, 1, 5, 6, 9} });
+	int scor[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	adauga(repo, "Mihai", "Panduru", scor);
+
+	int scor2[10] = { 1, 2, 2, 3, 1, 1, 1, 1, 10, 5 };
+	adauga(repo, "Alexandru", "Nedelcu", scor2);
+
+	int scor3[10] = { 10, 2, 3, 1, 5, 10, 2, 1, 10, 10 };
+	adauga(repo, "Ion", "Tiriac", scor3);
+
+	int scor4[10] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	adauga(repo, "Vladimir", "Putin", scor4);
+
+	int scor5[10] = { 2, 8, 3, 4, 3, 8, 2, 8, 8, 9 };
+	adauga(repo, "Dani", "Mocanu", scor5);
+
+	int scor6[10] = { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 };
+	adauga(repo, "Stefan", "Nastasa", scor6);
+
+	int scor7[10] = { 1, 2, 3, 4, 5, 3, 3, 2, 2, 10 };
+	adauga(repo, "Mihai", "Bendeac", scor7);
+
+	int scor8[10] = { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+	adauga(repo, "Volodymyr", "Zelenskyy", scor8);
+
+	int scor9[10] = { 2, 2, 10, 2, 2, 10, 2, 2, 10, 10 };
+	adauga(repo, "Florin", "Salam", scor9);
+
+	int scor10[10] = { 7, 7, 7, 4, 5, 7, 2, 7, 4, 6 };
+	adauga(repo, "Andrea", "Bocelli", scor10);
+
+	int scor11[10] = { 4, 2, 4, 2, 4, 2, 4, 2, 4, 2 };
+	adauga(repo, "Snoop", "Dogg", scor11);
+
+	int scor12[10] = { 6, 3, 5, 9, 7, 2, 1, 5, 6, 9 };
+	adauga(repo, "Chester", "Bennington", scor12);
 }
 
 /*
 	desc: interfata generala cu utilizatorul
 	param: repo pentru gestiunea participantilor
+	return vals: 0 daca programul trebuie sa continue
+				-1 daca programul trebuie sa se opreasca
 */
 int consola(repository* repo)
 {

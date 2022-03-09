@@ -16,14 +16,8 @@ typedef struct
 	int len;
 } repository; // un nou tip de data pentru gestiunea participantilor sub forma de lista
 
-void adauga(repository* repo, participant user); // adauga un nou participant in concurs
+participant* adaugaRepo(repository* repo, participant user); // adauga un nou participant in concurs
 void reset(repository* repo); // reseteaza lista de concurenti
-int cauta(repository* repo, participant existingUser); // verifica daca un participant este inscris in concurs
-void actualizeaza(repository* repo, participant modifiedUser, int poz); // actualizeaza detaliile pentru un concurent
-void sterge(repository* repo, int poz); // elimina un concurent
-
-void test_adauga();
-void test_reset();
-void test_cauta();
-void test_actualizeaza();
-void test_sterge();
+participant* cautaRepo(repository* repo, char* nume, char* prenume); // verifica daca un participant este inscris in concurs
+participant* actualizeazaRepo(participant* modifiedUser, char* nume, char* prenume, int* scor); // actualizeaza detaliile pentru un concurent
+void stergeRepo(repository* repo, int poz); // elimina un concurent

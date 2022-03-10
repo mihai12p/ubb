@@ -63,15 +63,17 @@ participant* actualizeaza(participant* cautat, char* nume, char* prenume, int* s
 	return vals: returneaza un pointer catre adresa 1
 							NULL daca datele de intrare sunt invalide
 */
-void* sterge(repository* repo, participant* cautat)
+void* sterge(repository* repo, participant** cautat)
 {
-	if (repo == NULL || cautat == NULL)
+	if (repo == NULL || cautat == NULL || *cautat == NULL)
 		return NULL;
 
 	for (int i = 0; i < repo->len; ++i)
-		if (!strcmp(repo->user[i].nume, cautat->nume) && !strcmp(repo->user[i].prenume, cautat->prenume))
+		if (!strcmp(repo->user[i].nume, (*cautat)->nume) && !strcmp(repo->user[i].prenume, (*cautat)->prenume))
 		{
 			stergeRepo(repo, i);
+			*cautat = NULL;
+
 			break;
 		}
 
@@ -190,9 +192,9 @@ void test_sterge()
 	void* nesters = sterge(&repo, NULL);
 	assert(nesters == NULL);
 
-	void* ret = sterge(&repo, adaugat);
+	void* ret = sterge(&repo, &adaugat);
 	assert(ret != NULL);
 	assert(repo.len == 2);
 	assert(cauta(&repo, "Vladimir", "Putin") == NULL);
-	assert(adaugat != NULL);
+	assert(adaugat == NULL);
 }

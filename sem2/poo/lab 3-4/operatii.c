@@ -119,7 +119,7 @@ void stergeUi(repository* repo)
 	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
 	int del = 0;
-	if (scanf_s("%d", &del) == 1 && del == 1 && sterge(repo, cautat) != NULL)
+	if (scanf_s("%d", &del) == 1 && del == 1 && sterge(repo, &cautat) != NULL)
 		printf("\t" ANSI_COLOR_GREEN("Participantul a fost eliminat cu succes.\n"));
 	else
 		printf("\t" ANSI_COLOR_RED("Participantul nu a fost eliminat.\n"));

@@ -1,5 +1,66 @@
 #include <string.h>
+#include <stdlib.h>
 #include "concurs.h"
+
+/*
+	desc: creeaza un repo pentru participanti
+	return vals: repo-ul creat
+*/
+repository createEmpty()
+{
+	repository repo;
+	repo.len = 0;
+	repo.capacity = 1;
+	repo.concurent = (participant*)malloc(sizeof(participant) * repo.capacity);
+	return repo;
+}
+
+/*
+	desc: distruge un repo si detaliile acestuia
+*/
+void destroy(repository* repo)
+{
+	for (int i = 0; i < repo->len; ++i)
+		destroyParticipant(&repo->concurent[i]);
+	free(repo->concurent);
+	repo->concurent = NULL;
+	repo->len = 0;
+}
+
+participant get(repository* repo, int poz)
+{
+	return repo->concurent[poz];
+}
+
+participant set(repository* repo, int poz, participant nou)
+{
+	participant vechi = repo->concurent[poz];
+	repo->concurent[poz] = nou;
+
+	return vechi;
+}
+
+int size(repository* repo)
+{
+	return repo->len;
+}
+
+/*
+	desc: ne asiguram ca vectorul dinamic este intotdeauna pregatit pentru un nou participant
+*/
+void ensureCapacity(repository* repo)
+{
+	if (repo->len < repo->capacity)
+		return;
+
+	int newCapacity = repo->capacity * 2;
+	participant* nou = (participant*)malloc(sizeof(participant) * newCapacity);
+	for (int i = 0; i < repo->len; ++i)
+		nou[i] = repo->concurent[i];
+	free(repo->concurent);
+	repo->concurent = nou;
+	repo->capacity = newCapacity;
+}
 
 /*
 	desc: adauga un nou participant in concurs
@@ -8,17 +69,26 @@
 */
 participant* adaugaRepo(repository* repo, participant newUser)
 {
-	repo->user[repo->len++] = newUser;
-	return &repo->user[repo->len - 1];
+	ensureCapacity(repo);
+	set(repo, repo->len++, newUser);
+
+	return &repo->concurent[repo->len - 1];
 }
 
 /*
-	desc: reseteaza lista de concurenti
-	param: repo pentru gestiunea participantilor
+	desc: face o copie a listei de participanti
+	param: lista de participanti de copiat
+	return vals: lista de participanti copiata
 */
-void reset(repository* repo)
+repository copyList(repository* repo)
 {
-	memset(repo, 0, sizeof(*repo));
+	repository newCopy = createEmpty();
+	for (int i = 0; i < size(repo); ++i)
+	{
+		participant user = get(repo, i);
+		adaugaRepo(&newCopy, copyParticipant(&user));
+	}
+	return newCopy;
 }
 
 /*
@@ -30,25 +100,10 @@ void reset(repository* repo)
 participant* cautaRepo(repository* repo, char* nume, char* prenume)
 {
 	for (int i = 0; i < repo->len; ++i)
-		if (!strcmp(repo->user[i].nume, nume) && !strcmp(repo->user[i].prenume, prenume))
-			return &repo->user[i];
+		if (!strcmp(repo->concurent[i].nume, nume) && !strcmp(repo->concurent[i].prenume, prenume))
+			return &repo->concurent[i];
 
 	return NULL;
-}
-
-/*
-	desc: actualizeaza detaliile pentru un concurent
-	param: modifiedUser pentru identificarea participantului, numele, prenumele si scorul pentru participantului modificat
-	return vals: returneaza adresa participantului modificat
-*/
-participant* actualizeazaRepo(participant* modifiedUser, char* nume, char* prenume, int* scor)
-{
-	strcpy_s(modifiedUser->nume, sizeof(modifiedUser->nume), nume);
-	strcpy_s(modifiedUser->prenume, sizeof(modifiedUser->prenume), prenume);
-	for (int i = 0; i < 10; ++i)
-		modifiedUser->scor[i] = scor[i];
-
-	return modifiedUser;
 }
 
 /*
@@ -58,8 +113,27 @@ participant* actualizeazaRepo(participant* modifiedUser, char* nume, char* prenu
 void stergeRepo(repository* repo, int poz)
 {
 	for (int i = poz; i < repo->len - 1; ++i)
-		repo->user[i] = repo->user[i + 1];
+		set(repo, i, repo->concurent[i + 1]);
 
-	memset(&repo->user[repo->len - 1], 0, sizeof(repo->user[repo->len - 1]));
+	memset(&repo->concurent[repo->len - 1], 0, sizeof(repo->concurent[repo->len - 1]));
 	--repo->len;
+}
+
+/*
+	desc: sorteaza o lista de participanti dupa un anumit criteriu
+	param: lista de participanti de sortat si functia (criteriul)
+*/
+void sort(repository* repo, function cmp)
+{
+	for (int i = 0; i < size(repo) - 1; ++i)
+		for (int j = i + 1; j < size(repo); ++j)
+		{
+			participant p1 = get(repo, i);
+			participant p2 = get(repo, j);
+			if (cmp(&p1, &p2) > 0)
+			{
+				set(repo, i, p2);
+				set(repo, j, p1);
+			}
+		}
 }

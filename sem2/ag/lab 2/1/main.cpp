@@ -3,7 +3,7 @@
 #include <vector>
 #include <queue>
 
-const int inf = INT_MAX;
+const int inf = INT_MAX / 2;
 #define elems 100
 
 void moore(std::vector<unsigned>* G, unsigned nod, unsigned* drum, unsigned* parinte, unsigned noduri)

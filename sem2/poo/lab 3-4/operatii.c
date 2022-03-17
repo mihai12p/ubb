@@ -3,17 +3,22 @@
 
 /*
 	desc: afiseaza toti concurentii actuali
-	param: repo pentru gestiunea participantilor
+	param: repo pentru gestiunea participantilor, mode pentru filtrare/sortare
 */
-void printall(repository* repo)
+void printall(repository* repo, int mode)
 {
-	printf("\n" ANSI_COLOR_GREEN("Lista participanti: \n"));
+	if (mode == 2)
+		printf("\n" ANSI_COLOR_GREEN("Lista participanti sortati: \n"));
+	else if (mode == 1)
+		printf("\n" ANSI_COLOR_GREEN("Lista participanti filtrati: \n"));
+	else
+		printf("\n" ANSI_COLOR_GREEN("Lista participanti: \n"));
 	for (int i = 0; i < repo->len; ++i)
 	{
-		printf("\t" ANSI_COLOR_BLUE("%d") ". %s %s | ", i + 1, repo->user[i].nume, repo->user[i].prenume);
+		printf("\t" ANSI_COLOR_BLUE("%d") ". %s %s | ", i + 1, repo->concurent[i].nume, repo->concurent[i].prenume);
 		for (int j = 0; j < 10; ++j)
-			printf("%d ", repo->user[i].scor[j]);
-		printf("\n");
+			printf("%d ", repo->concurent[i].scor[j]);
+		printf("| Scor : %d\n", getScore(repo->concurent[i]));
 	}
 	printf("\n");
 }
@@ -40,7 +45,7 @@ void adaugaUi(repository* repo)
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", &scor[i]);
 
-	if (adauga(repo, nume, prenume, scor) != NULL)
+	if (adauga(repo, nume, prenume, scor) != 0)
 		printf(ANSI_COLOR_GREEN("\tParticipantul a fost adaugat cu succes.\n"));
 	else
 		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
@@ -84,7 +89,7 @@ void actualizeazaUi(repository* repo)
 	for (int i = 0; i < 10; ++i)
 		scanf_s("%d", &scor[i]);
 
-	if (actualizeaza(cautat, nume, prenume, scor) != NULL)
+	if (actualizeaza(cautat, nume, prenume, scor) == 0)
 		printf(ANSI_COLOR_GREEN("\tParticipantul a fost modificat cu succes.\n"));
 	else
 		printf(ANSI_COLOR_RED("\tFiecare problema poate avea intre 1-10 puncte.\n"));
@@ -119,11 +124,105 @@ void stergeUi(repository* repo)
 	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
 
 	int del = 0;
-	if (scanf_s("%d", &del) == 1 && del == 1 && sterge(repo, &cautat) != NULL)
+	if (scanf_s("%d", &del) == 1 && del == 1 && sterge(repo, cautat) != NULL)
 		printf("\t" ANSI_COLOR_GREEN("Participantul a fost eliminat cu succes.\n"));
 	else
 		printf("\t" ANSI_COLOR_RED("Participantul nu a fost eliminat.\n"));
 }
+
+/*
+	desc: interfata cu utilizatorul pentru a filtra concurentii
+	param: repo pentru gestiunea concurentilor
+*/
+void filtreazaUi(repository* repo)
+{
+	printf("\t" ANSI_COLOR_RED("Alegeti criterul de filtrare a participantilor \n"));
+	printf("\t\t" ANSI_COLOR_GREEN("1") " - cu scor mai mic decat o valoare data\n");
+	printf("\t\t" ANSI_COLOR_GREEN("2") " - a caror nume incep cu o litera data\n");
+	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
+
+	int del = 0;
+	int ret = scanf_s("%d", &del);
+	if (ret == 1)
+	{
+		printf("\t\t" ANSI_COLOR_YELLOW("Introduceti valoarea dorita: "));
+		
+		if (del == 1)
+		{
+			int val;
+			if (scanf_s("%d", &val))
+			{
+				repository filteredRepo = filter(repo, del, val);
+				printf("\t" ANSI_COLOR_GREEN("Participantii au fost filtrati cu succes.\n"));
+				printall(&filteredRepo, 1);
+				destroy(&filteredRepo);
+			}
+			else
+				printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi filtrati.\n"));
+		}
+		else if (del == 2)
+		{
+			char val;
+			if (scanf_s(" %c", &val, 1))
+			{
+				repository filteredRepo = filter(repo, del, val);
+				printf("\t" ANSI_COLOR_GREEN("Participantii au fost filtrati cu succes.\n"));
+				printall(&filteredRepo, 1);
+				destroy(&filteredRepo);
+			}
+			else
+				printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi filtrati.\n"));
+		}
+		else
+			printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi filtrati.\n"));
+	}
+	else
+		printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi filtrati.\n"));
+}
+
+/*
+	desc: interfata cu utilizatorul pentru a sorta concurentii
+	param: repo pentru gestiunea concurentilor
+*/
+void sorteazaUi(repository* repo)
+{
+	printf("\t" ANSI_COLOR_RED("Alegeti criterul de sortare a participantilor \n"));
+	printf("\t\t" ANSI_COLOR_GREEN("1") " - dupa nume\n");
+	printf("\t\t" ANSI_COLOR_GREEN("2") " - dupa scor\n");
+	printf("\t" ANSI_COLOR_YELLOW("Introduceti optiunea dorita: "));
+
+	int del = 0;
+	int ret = scanf_s("%d", &del);
+	if (ret == 1)
+	{
+		printf("\t\t" ANSI_COLOR_YELLOW("Introduceti 1 pentru crescator si 2 pentru descrescator: "));
+		int ord = 0;
+		if (scanf_s("%d", &ord))
+		{
+			if (del == 1)
+			{
+				repository sortedRepo = sortBy(repo, 1, ord);
+				printf("\t" ANSI_COLOR_GREEN("Participantii au fost sortati cu succes.\n"));
+				printall(&sortedRepo, 2);
+				destroy(&sortedRepo);
+			}
+			else if (del == 2)
+			{
+				repository sortedRepo = sortBy(repo, 2, ord);
+				printf("\t" ANSI_COLOR_GREEN("Participantii au fost sortati cu succes.\n"));
+				printall(&sortedRepo, 2);
+				destroy(&sortedRepo);
+			}
+			else
+				printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi sortati.\n"));
+		}
+		else
+			printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi sortati.\n"));
+	}
+	else
+		printf("\n\t" ANSI_COLOR_RED("Participantii nu au putut fi sortati.\n"));
+}
+
 
 /*
 	functie utila pentru testarea aplicatiei
@@ -135,7 +234,7 @@ void participanti_predefiniti(repository* repo)
 	int scor[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	adauga(repo, "Mihai", "Panduru", scor);
 
-	int scor2[10] = { 1, 2, 2, 3, 1, 1, 1, 1, 10, 5 };
+	int scor2[10] = {1, 2, 2, 3, 1, 1, 1, 1, 10, 5};
 	adauga(repo, "Alexandru", "Nedelcu", scor2);
 
 	int scor3[10] = { 10, 2, 3, 1, 5, 10, 2, 1, 10, 10 };
@@ -204,7 +303,11 @@ int consola(repository* repo)
 			break;
 
 		case 4:
+			filtreazaUi(repo);
+			break;
+
 		case 5:
+			sorteazaUi(repo);
 			break;
 
 		case 6:
@@ -215,7 +318,7 @@ int consola(repository* repo)
 			printf(ANSI_COLOR_RED("Optiune invalida."));
 	}
 
-	printall(repo);
+	printall(repo, 0);
 	printf("\n");
 
 	return 0;

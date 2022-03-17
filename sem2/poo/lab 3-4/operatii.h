@@ -9,5 +9,5 @@
 #define ANSI_COLOR_MAGENTA(s) "\x1b[35m" s "\x1b[0m"
 #define ANSI_COLOR_CYAN(s)    "\x1b[36m" s "\x1b[0m"
 
-void participanti_predefiniti(repository* repo); // adauga participanti in lista
-int consola(repository* repo); // interfata generala cu utilizatorul
+void participanti_predefiniti(repository* repo);
+int consola(repository* repo);

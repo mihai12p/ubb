@@ -2,7 +2,6 @@
 #include "DO.h"
 #include <iostream>
 
-#include <exception>
 using namespace std;
 
 DO::DO(Relatie r) 
@@ -24,31 +23,26 @@ DO::~DO()
 //daca nu exista cheia, adauga perechea si returneaza null
 TValoare DO::adauga(TCheie c, TValoare v) 
 {
-	int i = 0;
-	while (i < this->len && this->rel(c, this->MyDynaVec[i].first))
-	{
+	for (int i = 0; i < this->len; ++i)
 		if (this->MyDynaVec[i].first == c)
 		{
 			TValoare vecheaVal = this->MyDynaVec[i].second;
 			this->MyDynaVec[i].second = v;
 			return vecheaVal;
 		}
-		++i;
-	}
 
 	if (this->len == this->capacity)
 	{
 		this->capacity *= 2;
 
-		TElem* copyVec = new TElem[this->capacity];
-		std::copy(this->MyDynaVec, this->MyDynaVec + this->len, copyVec);
+		TElem* newDynaVec = new TElem[this->capacity];
+		std::copy(this->MyDynaVec, this->MyDynaVec + this->len, newDynaVec);
 		if (this->MyDynaVec)
 			delete[] this->MyDynaVec;
-		this->MyDynaVec = copyVec;
+		this->MyDynaVec = newDynaVec;
 	}
 
-	this->MyDynaVec[this->len] = TElem(c, v);
-	this->len++;
+	this->MyDynaVec[this->len++] = TElem(c, v);
 
 	return NULL_TVALOARE;
 }
@@ -56,29 +50,40 @@ TValoare DO::adauga(TCheie c, TValoare v)
 //cauta o cheie si returneaza valoarea asociata (daca dictionarul contine cheia) sau null
 TValoare DO::cauta(TCheie c) const 
 {
-	/* de adaugat */
+	for (int i = 0; i < this->len; ++i)
+		if (this->MyDynaVec[i].first == c)
+			return this->MyDynaVec[i].second;
+
 	return NULL_TVALOARE;	
 }
 
 //sterge o cheie si returneaza valoarea asociata (daca exista) sau null
 TValoare DO::sterge(TCheie c) 
 {
-	/* de adaugat */
+	for (int i = 0; i < this->len; ++i)
+		if (this->MyDynaVec[i].first == c)
+		{
+			TValoare valStearsa = this->MyDynaVec[i].second;
+
+			std::copy(this->MyDynaVec + i + 1, this->MyDynaVec + this->len, this->MyDynaVec + i);
+			--this->len;
+
+			return valStearsa;
+		}
+
 	return NULL_TVALOARE;
 }
 
 //returneaza numarul de perechi (cheie, valoare) din dictionar
 int DO::dim() const 
 {
-	/* de adaugat */
-	return 0;
+	return this->len;
 }
 
 //verifica daca dictionarul e vid
 bool DO::vid() const 
 {
-	/* de adaugat */
-	return true;
+	return this->len == 0;
 }
 
 Iterator DO::iterator() const 

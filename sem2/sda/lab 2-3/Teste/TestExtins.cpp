@@ -219,7 +219,7 @@ void testIterator(Relatie r) {
 	for (int i=1; i<100; i++){
 		assert(cPrec == itD.element().first);
 	}
-	itD.urmator();
+    itD.urmator();
 	while (itD.valid()) {
 		TCheie c = itD.element().first;
 		assert(cMin <= c && c <= cMax);
@@ -235,34 +235,34 @@ void testCantitativ(){
 	int cMin = -3000;
 	int cMax = 3000;
 	vector<int> chei  = cheiInOrdineAleatoare(cMin, cMax);
-	populeazaDOVidIdentic(d, cMin, cMax);
-	for (int c = cMin; c <= cMax; c++){
-		assert(d.cauta(c) == c);
-	}
-	assert(d.dim() == cMax - cMin + 1);
-	Iterator it  = d.iterator();
-	assert(it.valid());
-	it.prim();
-	assert(it.valid());
-	for (int i = 0; i < d.dim(); i++) {
-		it.urmator();
-	}
-	assert(!it.valid());
-	it.prim();
-	while (it.valid()){
-		TCheie c = it.element().first;
-		assert(d.cauta(c) == c);
-		TValoare v  = it.element().second;
-		assert(c == v);
-		it.urmator();
-	}
-	assert(!it.valid());
-	for (int c = cMin-100; c <= cMax+100; c++){
-		 d.sterge(c);
-		 assert(d.cauta(c) == NULL_TVALOARE);
-	}
-	assert(d.dim() == 0);
-	assert(d.vid());
+    populeazaDOVidIdentic(d, cMin, cMax);
+    for (int c = cMin; c <= cMax; c++){
+      	assert(d.cauta(c) == c);
+    }
+    assert(d.dim() == cMax - cMin + 1);
+    Iterator it  = d.iterator();
+    assert(it.valid());
+    it.prim();
+    assert(it.valid());
+    for (int i = 0; i < d.dim(); i++) {
+    	it.urmator();
+    }
+    assert(!it.valid());
+    it.prim();
+    while (it.valid()){
+    	TCheie c = it.element().first;
+    	assert(d.cauta(c) == c);
+        TValoare v  = it.element().second;
+        assert(c == v);
+        it.urmator();
+    }
+    assert(!it.valid());
+    for (int c = cMin-100; c <= cMax+100; c++){
+         d.sterge(c);
+         assert(d.cauta(c) == NULL_TVALOARE);
+    }
+    assert(d.dim() == 0);
+    assert(d.vid());
 }
 
 void testIterator() {

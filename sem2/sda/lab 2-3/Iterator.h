@@ -14,8 +14,7 @@ class Iterator
 		//contine o referinta catre containerul pe care il itereaza
 		const DO& dict;
 
-		/* aici e reprezentarea specifica a iteratorului */
-
+		int pozCurenta;
 
 	public:
 		//reseteaza pozitia iteratorului la inceputul containerului

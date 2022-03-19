@@ -23,7 +23,7 @@ DO::~DO()
 //daca nu exista cheia, adauga perechea si returneaza null
 TValoare DO::adauga(TCheie c, TValoare v) 
 {
-	for (int i = 0; i < this->len; ++i)
+	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
 		if (this->MyDynaVec[i].first == c)
 		{
 			TValoare vecheaVal = this->MyDynaVec[i].second;
@@ -36,13 +36,25 @@ TValoare DO::adauga(TCheie c, TValoare v)
 		this->capacity *= 2;
 
 		TElem* newDynaVec = new TElem[this->capacity];
-		std::copy(this->MyDynaVec, this->MyDynaVec + this->len, newDynaVec);
+		for (int i = 0; i < this->len; ++i)
+			newDynaVec[i] = this->MyDynaVec[i];
+
 		if (this->MyDynaVec)
 			delete[] this->MyDynaVec;
+
 		this->MyDynaVec = newDynaVec;
 	}
 
-	this->MyDynaVec[this->len++] = TElem(c, v);
+	int i;
+	for (i = 0; i < this->len; ++i)
+		if (!this->rel(c, this->MyDynaVec[i].first)) // i = pozitia primului element care nu mai e in relatie cu cel pe care vreau sa il adaug
+			break;									 // deci trebuie sa ii fac loc intre i - 1 si i
+
+	for (int j = this->len - 1; j >= i; --j)
+		this->MyDynaVec[j + 1] = this->MyDynaVec[j]; // trag toate elementele incepand cu pozitia i cu o pozitie mai in fata
+	++this->len;
+
+	this->MyDynaVec[i] = TElem(c, v); // inserez pe pozitia i noul element si va fi in relatie cu toate cele [0..i-1] elemente
 
 	return NULL_TVALOARE;
 }
@@ -50,7 +62,7 @@ TValoare DO::adauga(TCheie c, TValoare v)
 //cauta o cheie si returneaza valoarea asociata (daca dictionarul contine cheia) sau null
 TValoare DO::cauta(TCheie c) const 
 {
-	for (int i = 0; i < this->len; ++i)
+	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
 		if (this->MyDynaVec[i].first == c)
 			return this->MyDynaVec[i].second;
 
@@ -60,12 +72,13 @@ TValoare DO::cauta(TCheie c) const
 //sterge o cheie si returneaza valoarea asociata (daca exista) sau null
 TValoare DO::sterge(TCheie c) 
 {
-	for (int i = 0; i < this->len; ++i)
+	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
 		if (this->MyDynaVec[i].first == c)
 		{
 			TValoare valStearsa = this->MyDynaVec[i].second;
 
-			std::copy(this->MyDynaVec + i + 1, this->MyDynaVec + this->len, this->MyDynaVec + i);
+			for (int j = i; j < this->len - 1; ++j)
+				this->MyDynaVec[j] = this->MyDynaVec[j + 1];
 			--this->len;
 
 			return valStearsa;

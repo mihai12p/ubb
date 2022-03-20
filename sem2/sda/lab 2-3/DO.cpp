@@ -4,7 +4,7 @@
 
 using namespace std;
 
-DO::DO(Relatie r) 
+DO::DO(Relatie r) // theta(1)
 {
 	this->len = 0;
 	this->capacity = 1;
@@ -12,7 +12,7 @@ DO::DO(Relatie r)
 	this->rel = r;
 }
 
-DO::~DO() 
+DO::~DO() // theta(1)
 {
 	if (this->MyDynaVec)
 		delete[] this->MyDynaVec;
@@ -21,15 +21,23 @@ DO::~DO()
 //adauga o pereche (cheie, valoare) in dictionar
 //daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
 //daca nu exista cheia, adauga perechea si returneaza null
-TValoare DO::adauga(TCheie c, TValoare v) 
+TValoare DO::adauga(TCheie c, TValoare v) // theta(log n) + theta(1) (pentru resize amortizat) + theta(n) + theta(n) = theta(n)
 {
-	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
-		if (this->MyDynaVec[i].first == c)
+	int st = 0, dr = this->len - 1;
+	while (st <= dr)
+	{
+		int m = (st + dr) / 2;
+		if (this->MyDynaVec[m].first == c)
 		{
-			TValoare vecheaVal = this->MyDynaVec[i].second;
-			this->MyDynaVec[i].second = v;
+			TValoare vecheaVal = this->MyDynaVec[m].second;
+			this->MyDynaVec[m].second = v;
 			return vecheaVal;
 		}
+		else if (this->rel(c, this->MyDynaVec[m].first))
+			st = m + 1;
+		else
+			dr = m - 1;
+	}
 
 	if (this->len == this->capacity)
 	{
@@ -60,46 +68,62 @@ TValoare DO::adauga(TCheie c, TValoare v)
 }
 
 //cauta o cheie si returneaza valoarea asociata (daca dictionarul contine cheia) sau null
-TValoare DO::cauta(TCheie c) const 
+TValoare DO::cauta(TCheie c) const // theta(log n)
 {
-	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
-		if (this->MyDynaVec[i].first == c)
-			return this->MyDynaVec[i].second;
+	int st = 0, dr = this->len - 1;
+	while (st <= dr)
+	{
+		int m = (st + dr) / 2;
+		if (this->MyDynaVec[m].first == c)
+			return this->MyDynaVec[m].second;
+		else if (this->rel(c, this->MyDynaVec[m].first))
+			st = m + 1;
+		else
+			dr = m - 1;
+	}
 
 	return NULL_TVALOARE;	
 }
 
 //sterge o cheie si returneaza valoarea asociata (daca exista) sau null
-TValoare DO::sterge(TCheie c) 
+TValoare DO::sterge(TCheie c) // theta(log n) + theta(1) (pentru permutare amortizata) = theta(log n)
 {
-	for (int i = 0; i < this->len && this->rel(c, this->MyDynaVec[i].first); ++i)
-		if (this->MyDynaVec[i].first == c)
+	int st = 0, dr = this->len - 1;
+	while (st <= dr)
+	{
+		int m = (st + dr) / 2;
+		if (this->MyDynaVec[m].first == c)
 		{
-			TValoare valStearsa = this->MyDynaVec[i].second;
+			TValoare valStearsa = this->MyDynaVec[m].second;
 
-			for (int j = i; j < this->len - 1; ++j)
+			for (int j = m; j < this->len - 1; ++j)
 				this->MyDynaVec[j] = this->MyDynaVec[j + 1];
 			--this->len;
 
 			return valStearsa;
 		}
+		else if (this->rel(c, this->MyDynaVec[m].first))
+			st = m + 1;
+		else
+			dr = m - 1;
+	}
 
 	return NULL_TVALOARE;
 }
 
 //returneaza numarul de perechi (cheie, valoare) din dictionar
-int DO::dim() const 
+int DO::dim() const // theta(1)
 {
 	return this->len;
 }
 
 //verifica daca dictionarul e vid
-bool DO::vid() const 
+bool DO::vid() const // theta(1)
 {
 	return this->len == 0;
 }
 
-Iterator DO::iterator() const 
+Iterator DO::iterator() const // theta(1)
 {
 	return Iterator(*this);
 }

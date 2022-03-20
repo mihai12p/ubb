@@ -4,17 +4,17 @@
 #include <exception>
 using namespace std;
 
-Iterator::Iterator(const DO& d) : dict(d)
+Iterator::Iterator(const DO& d) : dict(d) // theta(1)
 {
 	this->pozCurenta = 0;
 }
 
-void Iterator::prim()
+void Iterator::prim() // theta(1)
 {
 	this->pozCurenta = 0;
 }
 
-void Iterator::urmator()
+void Iterator::urmator() // theta(1) amortizata
 {
 	if (!this->valid())
 		return;
@@ -32,12 +32,12 @@ void Iterator::urmator()
 	}
 }
 
-bool Iterator::valid() const
+bool Iterator::valid() const // theta(1)
 {
 	return this->pozCurenta < dict.dim();
 }
 
-TElem Iterator::element() const
+TElem Iterator::element() const // theta(1)
 {
 	if (this->valid())
 		return dict.MyDynaVec[this->pozCurenta];

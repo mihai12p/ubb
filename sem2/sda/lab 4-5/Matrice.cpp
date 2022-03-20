@@ -42,6 +42,9 @@ TElem Matrice::element(int i, int j) const
 	lsi* nod = this->prim;
 	while (nod)
 	{
+		//if (nod->elem.first.first > i || (nod->elem.first.first == i && nod->elem.first.second > j))
+		//	break;
+
 		if (nod->elem.first == std::make_pair(i, j))
 			return nod->elem.second;
 
@@ -50,7 +53,7 @@ TElem Matrice::element(int i, int j) const
 
 	return NULL_TELEMENT;
 }
-
+#include <cstdio>
 TElem Matrice::modifica(int i, int j, TElem e) 
 {
 	if (i >= this->nrLinii() || j >= this->nrColoane() || i < 0 || j < 0)
@@ -59,6 +62,9 @@ TElem Matrice::modifica(int i, int j, TElem e)
 	lsi* nod = this->prim;
 	while (nod)
 	{
+		//if (nod->elem.first.first > i || (nod->elem.first.first == i && nod->elem.first.second > j))
+		//	break;
+
 		if (nod->elem.first == std::make_pair(i,j))
 		{
 			TElem vecheaVal = nod->elem.second;
@@ -77,11 +83,33 @@ TElem Matrice::modifica(int i, int j, TElem e)
 		this->prim = nodNou;
 	else
 	{
+		/*lsi* print = this->prim;
+		while (print)
+		{
+			printf("%d %d %d\n", print->elem.first.first, print->elem.first.second, print->elem.second);
+			print = print->urm;
+		}printf("\n\n");*/
+
 		lsi* nod = this->prim;
-		while (nod->urm)
+		while (nod->urm && nod->urm->elem.first.first < i)
 			nod = nod->urm;
 
-		nod->urm = nodNou;
+		if (nod->urm)
+		{
+			if (nod->elem.first.first > i)
+			{
+				nodNou->urm = nod;
+				this->prim = nodNou;
+			}
+			else
+			{
+				lsi* inter = nod->urm;
+				nod->urm = nodNou;
+				nodNou->urm = inter;
+			}
+		}
+		else
+			nod->urm = nodNou;
 	}
 
 	return NULL_TELEMENT;

@@ -86,7 +86,7 @@ TValoare DO::cauta(TCheie c) const // theta(log n)
 }
 
 //sterge o cheie si returneaza valoarea asociata (daca exista) sau null
-TValoare DO::sterge(TCheie c) // theta(log n) + theta(1) (pentru permutare amortizata) = theta(log n)
+TValoare DO::sterge(TCheie c) // theta(log n) + theta(n) = theta(n)
 {
 	int st = 0, dr = this->len - 1;
 	while (st <= dr)

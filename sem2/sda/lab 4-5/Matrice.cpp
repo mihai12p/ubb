@@ -107,3 +107,50 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n) + O(n) = O(n)
 
 	return NULL_TELEMENT;
 }
+
+/*
+Complexitati:
+	- caz favorabil: lista noastra inlantuita contine doar elemente ce au coloana egala cu cea pe care o cautam noi => se executa theta(n) pasi
+	- caz defavorabil: lista noastra inlanuita contine si alte elemente => se executa theta(n) pasi
+	- caz total: deoarece CF = CD (suma noastra nu ne afecteaza complexitatea parcurgerii listei), CT = theta(n)
+
+Pseudocod:
+	Subalgoritm suma(j)
+		{pre: j = pozitia unui element din matrice}
+		{post: sum: suma elementelor de pe coloana j}
+
+		daca (j nu este pozitie valida in matrice) atunci
+			@arunca exceptie
+		sfarsit_daca
+
+		suma <- 0
+		nod <- [prim]
+		cat timp (nod != NULL) executa
+			daca [nod].elem.first.second = j atunci
+				suma <- suma + [nod].elem.second
+			sfarsit_daca
+
+			nod <- [nod].urm
+		sfarsit_cat_timp
+
+		ret suma
+	Sfarsit_subalg
+*/
+TElem Matrice::suma(int j)
+{
+	if (j >= this->nrColoane() || j < 0)
+		throw std::exception();
+
+	TElem sum = 0;
+
+	lsi* nod = this->prim;
+	while (nod)
+	{
+		if (nod->elem.first.second == j)
+			sum += nod->elem.second;
+
+		nod = nod->urm;
+	}
+
+	return sum;
+}

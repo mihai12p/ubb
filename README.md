@@ -36,6 +36,11 @@
           :heart:  Structuri de date si algoritmi
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem2/sd"> 
+          :shipit:  Sisteme dinamice
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

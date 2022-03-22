@@ -7,8 +7,7 @@ Programul trebuie să afiseze lanțul cel mai scurt dintr-un vârf (vârful surs
 2. Sa se determine închiderea transitivă a unui graf orientat. 
 (Închiderea tranzitivă poate fi reprezentată ca matricea care descrie, pentru fiecare vârf în parte, 
 care sunt vârfurile accesibile din acest vârf. Matricea inchiderii tranzitive arată unde se poate ajunge din fiecare vârf.) 
-ex. figura inchidere_tranzitiva.png - pentru graful de sus se construieste matricea de 
-jos care arata inchiderea tranzitiva.
+ex. figura inchidere_tranzitiva.png - pentru graful de sus se construieste matricea de jos care arata inchiderea tranzitiva.
 
 3. Să se scrie un program care găsește o soluție pentru unul din următoarele labirinturi: labirint_1.txt, labirint_2.txt, labirint_cuvinte.txt. 
 Pentru labirintul 1 si 2 punctul de pornire este indicat de litera S și punctul de oprire este indicat de litera F, spre deosebire de labirintul 1 și 2, 

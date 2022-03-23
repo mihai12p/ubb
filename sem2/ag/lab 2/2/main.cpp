@@ -9,8 +9,8 @@ void floyd_warshall(unsigned graf[][elems], unsigned noduri)
 	for (unsigned k = 0; k < noduri; ++k)
 		for (unsigned i = 0; i < noduri; ++i)
 			for (unsigned j = 0; j < noduri; ++j)
-				if (graf[i][j] > graf[i][k] + graf[k][j] && graf[i][k] != inf && graf[k][j] != inf)
-					graf[i][j] = graf[i][k] + graf[k][j];
+				if (graf[i][k] != inf && graf[k][j] != inf)
+					graf[i][j] = 1;
 }
 
 int main()
@@ -40,7 +40,7 @@ int main()
 		for (unsigned j = 0; j < noduri; ++j)
 		{
 			if (graf[i][j] != inf)
-				std::cout << "1 ";
+				std::cout << graf[i][j] << ' ';
 			else
 				std::cout << "0 ";
 		}

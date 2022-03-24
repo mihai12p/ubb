@@ -4,182 +4,173 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+int undo(MasinaRepository* masinaRepository)
+{
+	if (masinaRepository->listaUndo->dimensiune == 0)
+		return 1; // nu mai putem face undo
+
+	lista_masini* listaFaraUltimulElem = stergeUltim(masinaRepository->listaUndo);
+	stergeLista(masinaRepository->toateMasini);
+	masinaRepository->toateMasini = listaFaraUltimulElem;
+	return 0;
+}
+
 int adaugareMasinaService(MasinaRepository *masinaRepository, char *numarInmatriculare, char *model, char *categorie) 
 {
-    /*
-     * Primeste informatiile despre o masina , o valideaza, verifica si adauga in repo
-     */
-    if (!validareMasina(numarInmatriculare, model, categorie)) 
-        return 0;
+	/*
+	 * Primeste informatiile despre o masina , o valideaza, verifica si adauga in repo
+	 */
+	if (!validareMasina(numarInmatriculare, model, categorie)) 
+		return 0;
 
-    Masina *masinaNoua = creeazaMasina(numarInmatriculare, model, categorie);
-    if (adaugaMasinaRepository(masinaRepository, masinaNoua)) 
-        return 1;
+	for (int i = 0; i < masinaRepository->toateMasini->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository->toateMasini, i);
+		if (strcmp(numarInmatriculare, rez->numarInmatriculare) == 0)
+			return 0; //Deja exista o masina cu acelasi numar de inmatriculare
+	}
 
-    stergeMasina(masinaNoua);
-    return 0;
+	Masina* masinaNoua = creeazaMasina(numarInmatriculare, model, categorie, 0);
+	lista_masini* undoList = copiazaLista(masinaRepository->toateMasini, copiazaMasina);
+	adaugaMasinaRepository(masinaRepository->toateMasini, masinaNoua);
+	adaugaMasinaRepository(masinaRepository->listaUndo, undoList);
+
+	return 1;
 }
 
 int modificareMasinaService(MasinaRepository *masinaRepository, char *numarInmatriculare, char *model, char *categorie) 
 {
-    /*
-     * Primeste informatiile despre o masina o cauta in repo si daca o gaseste apeleaza modificarea acesteia
-     */
-    Masina *masinaDeModificat = cautaMasina(masinaRepository, numarInmatriculare);
-    if (masinaDeModificat == NULL) 
-        return 0;
+	/*
+	 * Primeste informatiile despre o masina o cauta in repo si daca o gaseste apeleaza modificarea acesteia
+	 */
+	Masina* masinaDeModificat = cautaMasina(masinaRepository->toateMasini, numarInmatriculare);
+	if (masinaDeModificat == NULL) 
+		return 0;
 
-    //Daca campurile sunt lasate goale inseamna ca nu trebuie modificate
-    if (strlen(model) == 0) model = masinaDeModificat->model;
-    if (strlen(categorie) == 0) categorie = masinaDeModificat->categorie;
+	//Daca campurile sunt lasate goale inseamna ca nu trebuie modificate
+	if (strlen(model) == 0) model = masinaDeModificat->model;
+	if (strlen(categorie) == 0) categorie = masinaDeModificat->categorie;
 
-    Masina *masinaNoua = creeazaMasina(numarInmatriculare, model, categorie);
-    modificareMasina(masinaRepository, masinaNoua);
+	Masina* masinaNoua = creeazaMasina(numarInmatriculare, model, categorie, masinaDeModificat->inchiriata);
+	lista_masini* undoList = copiazaLista(masinaRepository->toateMasini, copiazaMasina);
+	modificareMasina(masinaRepository->toateMasini, masinaNoua);
+	adaugaMasinaRepository(masinaRepository->listaUndo, undoList);
 
-    return 1;
+	return 1;
 }
-
 
 int inchiriereMasina(MasinaRepository *masinaRepository, char *numarDeInmatriculare) 
 {
-    /*
-     * Seteaza atributul de inchiriat 1 la o masina cu un numar de inmatriculare dat
-     */
-    int ok = -1, good = 0;
-    for (int i = 0; ok == -1 && i < masinaRepository->dimensiune; i++) 
-        if (strcmp(masinaRepository->listaMasini[i]->numarInmatriculare, numarDeInmatriculare) == 0) 
-        {
-            good = 1;
-            if (masinaRepository->listaMasini[i]->inchiriata == 0)
-                masinaRepository->listaMasini[i]->inchiriata = ok = 1;
-            else
-                ok = 0;
-        }
-     
-    return (good) ? ok : 0;
+	/*
+	 * Seteaza atributul de inchiriat 1 la o masina cu un numar de inmatriculare dat
+	 */
+	int ok = -1, good = 0;
+	for (int i = 0; ok == -1 && i < masinaRepository->toateMasini->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository->toateMasini, i);
+		if (strcmp(rez->numarInmatriculare, numarDeInmatriculare) == 0)
+		{
+			good = 1;
+			if (rez->inchiriata == 0)
+			{
+				lista_masini* undoList = copiazaLista(masinaRepository->toateMasini, copiazaMasina);
+				adaugaMasinaRepository(masinaRepository->listaUndo, undoList);
+
+				ok = rez->inchiriata = 1;
+			}
+			else
+				ok = 0;
+		}
+	}
+	 
+	return (good) ? ok : 0;
 }
 
-int returnareMasina(MasinaRepository *masinaRepository, char *numarDeInmatriculare) {
-    /*
-     * Seteaza atributul de inchiriat 0 la o masina cu un numar de inmatriculare dat
-     */
-    int ok = -1, good = 0;
-    for (int i = 0; ok == -1 && i < masinaRepository->dimensiune; i++) 
-        if (strcmp(masinaRepository->listaMasini[i]->numarInmatriculare, numarDeInmatriculare) == 0) 
-        {
-            good = 1;
-            if (masinaRepository->listaMasini[i]->inchiriata == 1)
-            {
-                masinaRepository->listaMasini[i]->inchiriata = 0;
-                ok = 1;
-            }
-            else
-                ok = 0;
-        }
-
-    return (good) ? ok : 0;
-}
-
-Masina **listaMasiniDupaCategorie(MasinaRepository *masinaRepository, int *dimensiuneListaReturnata, char *categorieDeCautat) 
+int returnareMasina(MasinaRepository *masinaRepository, char *numarDeInmatriculare) 
 {
-    /*
-     * Creaza un pointer catre lista noua cu toate masinile care au categoria data si o returneaza
-     */
-    Masina **listaMasiniDeCautat = malloc(sizeof(Masina*) * masinaRepository->dimensiune);
+	/*
+	 * Seteaza atributul de inchiriat 0 la o masina cu un numar de inmatriculare dat
+	 */
+	int ok = -1, good = 0;
+	for (int i = 0; ok == -1 && i < masinaRepository->toateMasini->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository->toateMasini, i);
+		if (strcmp(rez->numarInmatriculare, numarDeInmatriculare) == 0)
+		{
+			good = 1;
+			if (rez->inchiriata == 1)
+			{
+				lista_masini* undoList = copiazaLista(masinaRepository->toateMasini, copiazaMasina);
+				adaugaMasinaRepository(masinaRepository->listaUndo, undoList);
 
-    for (int i = 0; i < masinaRepository->dimensiune; i++) 
-        if (strcmp(categorieDeCautat, masinaRepository->listaMasini[i]->categorie) == 0) 
-            listaMasiniDeCautat[(*dimensiuneListaReturnata)++] = masinaRepository->listaMasini[i];
+				rez->inchiriata = 0;
+				ok = 1;
+			}
+			else
+				ok = 0;
+		}
+	}
 
-    return listaMasiniDeCautat;
+	return (good) ? ok : 0;
 }
 
-Masina **listaMasiniDupaModel(MasinaRepository *masinaRepository, int *dimensiuneListaReturnata, char *modelDeCautat) 
+ElemType* listaMasiniDupaCategorie(MasinaRepository *masinaRepository, int *dimensiuneListaReturnata, char *categorieDeCautat) 
 {
-    /*
-     * Creaza un pointer catre lista noua cu toate masinile care au model data si o returneaza
-     */
-    Masina **listaMasiniDeCautat = malloc(sizeof(Masina*) * masinaRepository->dimensiune);
+	/*
+	 * Creaza un pointer catre lista noua cu toate masinile care au categoria data si o returneaza
+	 */
+	ElemType* listaMasiniDeCautat = (ElemType*)malloc(sizeof(ElemType) * masinaRepository->toateMasini->dimensiune);
 
-    for (int i = 0; i < masinaRepository->dimensiune; i++)
-        if (strcmp(modelDeCautat, masinaRepository->listaMasini[i]->model) == 0)
-            listaMasiniDeCautat[(*dimensiuneListaReturnata)++] = masinaRepository->listaMasini[i];
+	for (int i = 0; i < masinaRepository->toateMasini->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository->toateMasini, i);
+		if (strcmp(categorieDeCautat, rez->categorie) == 0)
+			listaMasiniDeCautat[(*dimensiuneListaReturnata)++] = rez;
+	}
 
-    return listaMasiniDeCautat;
+	return listaMasiniDeCautat;
 }
 
-int comparareMasiniDupaModel(Masina *masina1, Masina *masina2, int crescator) 
+ElemType* listaMasiniDupaModel(MasinaRepository *masinaRepository, int *dimensiuneListaReturnata, char *modelDeCautat) 
 {
-    /*
-     * Returneaza o valoare de adevar prin compararea modelului a doua masini in ordine cresc or decresc
-     */
-    if (crescator == 1) 
-        return (strcmp(masina1->model, masina2->model) > 0 ? 1 : 0);
-    else 
-        return (strcmp(masina2->model, masina1->model) > 0 ? 1 : 0);
+	/*
+	 * Creaza un pointer catre lista noua cu toate masinile care au model data si o returneaza
+	 */
+	ElemType* listaMasiniDeCautat = (ElemType*)malloc(sizeof(ElemType) * masinaRepository->toateMasini->dimensiune);
+
+	for (int i = 0; i < masinaRepository->toateMasini->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository->toateMasini, i);
+		if (strcmp(modelDeCautat, rez->model) == 0)
+			listaMasiniDeCautat[(*dimensiuneListaReturnata)++] = rez;
+	}
+
+	return listaMasiniDeCautat;
 }
 
-Masina **sortareMasiniDupaModel(MasinaRepository *masinaRepository, int crescator) 
+ElemType* sortareMasiniDupaFunctie(MasinaRepository* masinaRepository, functie func, int order)
 {
-    /*
-     *  creaza un pointer la o lista noua unde va copia toate masinile si va aplica bubble sort
-     */
-    Masina **listaMasiniSortata = malloc(sizeof(Masina*) * masinaRepository->dimensiune);
-    //Copiere masini in lista
-    for (int i = 0; i < masinaRepository->dimensiune; i++) 
-        listaMasiniSortata[i] = masinaRepository->listaMasini[i];
+	/*
+	 *  creaza un pointer la o lista noua unde va copia toate masinile si va aplica bubble sort
+	 */
+	ElemType* listaMasiniSortata = (ElemType*)malloc(sizeof(ElemType) * masinaRepository->toateMasini->dimensiune);
+	//Copiere masini in lista
+	for (int i = 0; i < masinaRepository->toateMasini->dimensiune; i++)
+		listaMasiniSortata[i] = masinaRepository->toateMasini->listaMasini[i];
 
-    //Sortare
-    int listaSortata = 0;
-    while (!listaSortata) 
-    {
-        listaSortata = 1;
-        for (int i = 0; i < masinaRepository->dimensiune-1; i++) 
-            if (comparareMasiniDupaModel(listaMasiniSortata[i], listaMasiniSortata[i+1], crescator)) 
-            {
-                listaSortata = 0;
-                Masina *aux = listaMasiniSortata[i];
-                listaMasiniSortata[i] = listaMasiniSortata[i+1];
-                listaMasiniSortata[i+1] = aux;
-            }
-    }
-    return listaMasiniSortata;
-}
-
-int comparareMasiniDupaCategorie(Masina *masina1, Masina *masina2, int crescator) 
-{
-    /*
-     * Returneaza o valoare de adevar prin compararea categoriile a doua masini in ordine cresc or decresc
-     */
-    if (crescator == 1) 
-        return (strcmp(masina1->categorie, masina2->categorie) > 0 ? 1 : 0);
-    else 
-        return (strcmp(masina2->categorie, masina1->categorie) > 0 ? 1 : 0);
-}
-
-Masina **sortareMasiniDupaCategorie(MasinaRepository *masinaRepository, int crescator) 
-{
-    /*
-     *  creaza un pointer la o lista noua unde va copia toate masinile si va aplica bubble sort
-     */
-    Masina **listaMasiniSortata = malloc(sizeof(Masina*) * masinaRepository->dimensiune);
-    //Copiere masini in lista
-    for (int i = 0; i < masinaRepository->dimensiune; i++) 
-        listaMasiniSortata[i] = masinaRepository->listaMasini[i];
-
-    //Sortare
-    int listaSortata = 0;
-    while (!listaSortata) 
-    {
-        listaSortata = 1;
-        for (int i = 0; i < masinaRepository->dimensiune-1; i++) 
-            if (comparareMasiniDupaCategorie(listaMasiniSortata[i], listaMasiniSortata[i+1], crescator)) 
-            {
-                listaSortata = 0;
-                Masina *aux = listaMasiniSortata[i];
-                listaMasiniSortata[i] = listaMasiniSortata[i+1];
-                listaMasiniSortata[i+1] = aux;
-            }
-    }
-    return listaMasiniSortata;
+	//Sortare
+	int listaSortata = 0;
+	while (!listaSortata)
+	{
+		listaSortata = 1;
+		for (int i = 0; i < masinaRepository->toateMasini->dimensiune - 1; i++)
+			if (func(listaMasiniSortata[i], listaMasiniSortata[i + 1], order) > 0)
+			{
+				listaSortata = 0;
+				ElemType aux = listaMasiniSortata[i];
+				listaMasiniSortata[i] = listaMasiniSortata[i + 1];
+				listaMasiniSortata[i + 1] = aux;
+			}
+	}
+	return listaMasiniSortata;
 }

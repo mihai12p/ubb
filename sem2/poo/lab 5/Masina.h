@@ -3,14 +3,14 @@
 
 typedef struct 
 {
-    char *numarInmatriculare;
-    char *model;
-    char *categorie;
-    int inchiriata;
+	char *numarInmatriculare;
+	char *model;
+	char *categorie;
+	int inchiriata;
 } Masina;
 
-Masina *creeazaMasina();
-
-void stergeMasina(Masina *masina);
+Masina* creeazaMasina(char* numarInmatriculare, char* model, char* categorie, int inchiriata);
+Masina* copiazaMasina(Masina* masina);
+void stergeMasina(Masina* masina);
 
 #endif //UNTITLED_MASINA_H

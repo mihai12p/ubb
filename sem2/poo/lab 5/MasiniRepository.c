@@ -3,86 +3,138 @@
 #include <string.h>
 #include <crtdbg.h>
 
-MasinaRepository *creeazaMasinaRepository() 
+int comparareMasiniDupaModel(Masina* masina1, Masina* masina2, int crescator) { return (crescator) ? (strcmp(masina1->model, masina2->model) > 0 ? 1 : 0) : (strcmp(masina2->model, masina1->model) > 0 ? 1 : 0); }
+int comparareMasiniDupaCategorie(Masina* masina1, Masina* masina2, int crescator) { return (crescator) ? (strcmp(masina1->categorie, masina2->categorie) > 0 ? 1 : 0) : (strcmp(masina2->categorie, masina1->categorie) > 0 ? 1 : 0); }
+
+ElemType set(lista_masini* masinaRepository, int poz, ElemType masina)
 {
-    /*
-     * creaza un repo gol format din (capacitate/dimensiune/lista_masini)
-     */
-    MasinaRepository *masinaRepository = (MasinaRepository*)malloc(sizeof(MasinaRepository));
-    masinaRepository->capacitate = 1;
-    masinaRepository->dimensiune = 0;
-    masinaRepository->listaMasini = malloc(sizeof(Masina*));
-    return masinaRepository;
+	ElemType rez = masinaRepository->listaMasini[poz];
+	masinaRepository->listaMasini[poz] = masina;
+	return rez;
 }
 
-void redimensionareRepository(MasinaRepository *masinaRepository) 
+ElemType get(lista_masini* masinaRepository, int poz)
 {
-    /*
-     * Daca capacitatea va fi egala cu dimensiunea se va apela aceasta functie si se va realoca o lista de 2 ori mai mare
-     */
-    Masina **listaNouaMasini = malloc(2*masinaRepository->capacitate*sizeof(Masina*));
-    masinaRepository->capacitate *= 2;
-    for (int i = 0; i < masinaRepository->capacitate; i++)
-        listaNouaMasini[i] = masinaRepository->listaMasini[i];
-
-    free(masinaRepository->listaMasini);
-    masinaRepository->listaMasini = listaNouaMasini;
+	return masinaRepository->listaMasini[poz];
 }
 
-int adaugaMasinaRepository(MasinaRepository *masinaRepository, Masina *masina) 
+lista_masini* creeazaMasinaRepository(DestroyFct func)
 {
-    /*
-     * adauga o masina in repo daca nu exista o masina cu numar de inmatriculare dat
-     */
-
-    for (int i = 0; i < masinaRepository->dimensiune; i++) 
-        if (strcmp(masina->numarInmatriculare, masinaRepository->listaMasini[i]->numarInmatriculare) == 0) 
-            return 0; //Deja exista o masina cu acelasi numar de inmatriculare
-
-    //Daca se ajunge aici inseamna ca masina poate fi adaugata
-    if (masinaRepository->dimensiune == masinaRepository->capacitate)
-        redimensionareRepository(masinaRepository);
-
-    masinaRepository->listaMasini[masinaRepository->dimensiune++] = masina;
-    return 1;
+	/*
+	 * creaza un repo gol format din (capacitate/dimensiune/lista_masini)
+	 */
+	lista_masini* masinaRepository = (lista_masini*)malloc(sizeof(lista_masini));
+	masinaRepository->capacitate = 1;
+	masinaRepository->dimensiune = 0;
+	masinaRepository->listaMasini = malloc(sizeof(ElemType)*masinaRepository->capacitate);
+	masinaRepository->dfunc = func;
+	return masinaRepository;
 }
 
-int modificareMasina(MasinaRepository *masinaRepository, Masina *masinaDeModificat) 
+void redimensionareRepository(lista_masini* masinaRepository)
 {
-    /*
-     * cauta masina cu acelasi numar de inmatriculare si o schimba
-     */
-    for (int i = 0; i < masinaRepository->dimensiune; i++) {
-        if (strcmp(masinaRepository->listaMasini[i]->numarInmatriculare, masinaDeModificat->numarInmatriculare) == 0) 
-        {
-            stergeMasina(masinaRepository->listaMasini[i]);
-            masinaRepository->listaMasini[i] = masinaDeModificat;
-            return 1;
-        }
-    }
-    return 0;
+	/*
+	 * Daca capacitatea va fi egala cu dimensiunea se va apela aceasta functie si se va realoca o lista de 2 ori mai mare
+	 */
+	masinaRepository->capacitate *= 2;
+	ElemType* listaNouaMasini = malloc(sizeof(ElemType)*masinaRepository->capacitate);
+	for (int i = 0; i < masinaRepository->dimensiune; i++)
+		listaNouaMasini[i] = masinaRepository->listaMasini[i];
+
+	free(masinaRepository->listaMasini);
+	masinaRepository->listaMasini = listaNouaMasini;
 }
 
-Masina *cautaMasina(MasinaRepository *masinaRepository, char *numarInmatriculare) 
+int adaugaMasinaRepository(lista_masini* masinaRepository, ElemType masina)
 {
-    /*
-     *cauta o masina in repo si returneaza masina daca o gaseste sau NULL in cazul inexistentei
-     */
-    for (int i = 0; i < masinaRepository->dimensiune; i++)
-        if (strcmp(masinaRepository->listaMasini[i]->numarInmatriculare, numarInmatriculare) == 0) 
-            return masinaRepository->listaMasini[i];
+	/*
+	 * adauga o masina in repo daca nu exista o masina cu numar de inmatriculare dat
+	 */
 
-    return NULL;
+	//Daca se ajunge aici inseamna ca masina poate fi adaugata
+	if (masinaRepository->dimensiune == masinaRepository->capacitate)
+		redimensionareRepository(masinaRepository);
+
+	set(masinaRepository, masinaRepository->dimensiune, masina);
+	++masinaRepository->dimensiune;
+	
+	return 1;
 }
 
-void stergeMasinaRepository(MasinaRepository *masinaRepository) 
+int modificareMasina(lista_masini* masinaRepository, ElemType masinaDeModificat)
 {
-    /*
-     * sterge masinile din repository dupa care dealoca lista si repo ul in sine
-     */
-    for (int i = 0; i < masinaRepository->dimensiune; i++)
-        stergeMasina(masinaRepository->listaMasini[i]);
+	/*
+	 * cauta masina cu acelasi numar de inmatriculare si o schimba
+	 */
+	for (int i = 0; i < masinaRepository->dimensiune; i++) 
+	{
+		Masina* rez = get(masinaRepository, i);
+		if (strcmp(rez->numarInmatriculare, ((Masina*)masinaDeModificat)->numarInmatriculare) == 0)
+		{
+			stergeMasina(masinaRepository->listaMasini[i]);
+			set(masinaRepository, i, masinaDeModificat);
 
-    free(masinaRepository->listaMasini);
-    free(masinaRepository);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+ElemType cautaMasina(lista_masini* masinaRepository, char *numarInmatriculare)
+{
+	/*
+	 *cauta o masina in repo si returneaza masina daca o gaseste sau NULL in cazul inexistentei
+	 */
+	for (int i = 0; i < masinaRepository->dimensiune; i++)
+	{
+		Masina* rez = get(masinaRepository, i);
+		if (strcmp(rez->numarInmatriculare, numarInmatriculare) == 0)
+			return masinaRepository->listaMasini[i];
+	}
+
+	return NULL;
+}
+
+int size(lista_masini* masinaRepository)
+{
+	/*
+	returneaza numarul de elemente ale unei liste
+	*/
+	return masinaRepository->dimensiune;
+}
+
+lista_masini* copiazaLista(lista_masini* lista, CopyFct func)
+{
+	/*
+	copiaza o lista intr-o alta lista noua independenta de acelasi fel (dupa functia func)
+	*/
+	lista_masini* rez = creeazaMasinaRepository(lista->dfunc);
+	for (int i = 0; i < lista->dimensiune; ++i)
+	{
+		ElemType el = get(lista, i);
+		adaugaMasinaRepository(rez, func(el));
+	}
+	return rez;
+}
+
+void stergeLista(lista_masini* lista)
+{
+	/*
+	 * sterge masinile din repository dupa care dealoca lista si repo ul in sine
+	 */
+	for (int i = 0; i < lista->dimensiune; i++)
+		lista->dfunc(lista->listaMasini[i]);
+
+	free(lista->listaMasini);
+	free(lista);
+}
+
+ElemType stergeUltim(lista_masini* lista)
+{
+	/*
+	returneaza ultimul element din lista FARA SA IL STEARGA
+	*/
+	ElemType elem = lista->listaMasini[lista->dimensiune - 1];
+	--lista->dimensiune;
+	return elem;
 }

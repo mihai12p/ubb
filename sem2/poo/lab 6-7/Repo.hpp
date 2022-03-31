@@ -18,7 +18,7 @@ class Filme
 
 		void adauga(const Film& film);
 		void sterge(const Film& film);
-		size_t modifica(Film& filmDeModificat, Film& filmDupaModificare);
+		size_t modifica(const Film& filmDeModificat, const Film& filmDupaModificare);
 		const Film& cauta(const std::string& titlu, const std::string& gen, const int an, const std::string& actor) const;
 };
 

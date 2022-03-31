@@ -9,7 +9,7 @@ class Service
 	Valid& valid;
 
 	public:
-		Service(Filme& repo, Valid& valid) : repo{ repo }, valid{ valid } { }
+		Service(Filme& repo, Valid& valid) noexcept : repo{ repo }, valid{ valid } { }
 		Service(const Service& other) = delete;
 
 		const std::vector<Film>& getAll() const noexcept { return repo.getAll(); }

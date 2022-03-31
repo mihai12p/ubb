@@ -123,10 +123,10 @@ void testModifica()
 	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
 
 	size_t poz = srv.modificaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry", "Soacra mea e o scorpie", "Romance", 2005, "Jane Fonda");
-	assert(repo.getAll()[poz].getTitlu() == "Soacra mea e o scorpie");
-	assert(repo.getAll()[poz].getGen() == "Romance");
-	assert(repo.getAll()[poz].getAn() == 2005);
-	assert(repo.getAll()[poz].getActor() == "Jane Fonda");
+	assert(repo.getAll().at(poz).getTitlu() == "Soacra mea e o scorpie");
+	assert(repo.getAll().at(poz).getGen() == "Romance");
+	assert(repo.getAll().at(poz).getAn() == 2005);
+	assert(repo.getAll().at(poz).getActor() == "Jane Fonda");
 
 	try
 	{

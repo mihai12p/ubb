@@ -13,7 +13,7 @@ class Consola
 	void tipareste(const std::vector<Film>& filme);
 
 	public:
-		Consola(Service& srv) : srv{ srv } { }
+		Consola(Service& srv) noexcept : srv{ srv } { }
 		Consola(const Consola& other) = delete;
 
 		void adaugaCateva();

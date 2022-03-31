@@ -11,12 +11,15 @@ void Consola::adaugaCateva()
 
 void Consola::adaugaUi()
 {
-	fseek(stdin, 0, SEEK_SET);
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string titlu;
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
-
-	fseek(stdin, 0, SEEK_SET);
+	
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string gen;
 	std::cout << "Gen: ";
 	std::getline(std::cin, gen);
@@ -25,7 +28,8 @@ void Consola::adaugaUi()
 	std::cout << "An: ";
 	std::cin >> an;
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string actor;
 	std::cout << "Actor: ";
 	std::getline(std::cin, actor);
@@ -36,12 +40,15 @@ void Consola::adaugaUi()
 
 void Consola::stergeUi()
 {
-	fseek(stdin, 0, SEEK_SET);
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string titlu;
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string gen;
 	std::cout << "Gen: ";
 	std::getline(std::cin, gen);
@@ -50,7 +57,8 @@ void Consola::stergeUi()
 	std::cout << "An: ";
 	std::cin >> an;
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string actor;
 	std::cout << "Actor: ";
 	std::getline(std::cin, actor);
@@ -61,12 +69,15 @@ void Consola::stergeUi()
 
 void Consola::modificaUi()
 {
-	fseek(stdin, 0, SEEK_SET);
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string titlu;
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string gen;
 	std::cout << "Gen: ";
 	std::getline(std::cin, gen);
@@ -75,18 +86,21 @@ void Consola::modificaUi()
 	std::cout << "An: ";
 	std::cin >> an;
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string actor;
 	std::cout << "Actor: ";
 	std::getline(std::cin, actor);
 
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string titluNou;
 	std::cout << "Titlu nou: ";
 	std::getline(std::cin, titluNou);
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string genNou;
 	std::cout << "Gen nou: ";
 	std::getline(std::cin, genNou);
@@ -95,7 +109,8 @@ void Consola::modificaUi()
 	std::cout << "An nou: ";
 	std::cin >> anNou;
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string actorNou;
 	std::cout << "Actor nou: ";
 	std::getline(std::cin, actorNou);
@@ -106,12 +121,15 @@ void Consola::modificaUi()
 
 void Consola::cautaUi()
 {
-	fseek(stdin, 0, SEEK_SET);
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string titlu;
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string gen;
 	std::cout << "Gen: ";
 	std::getline(std::cin, gen);
@@ -120,7 +138,8 @@ void Consola::cautaUi()
 	std::cout << "An: ";
 	std::cin >> an;
 
-	fseek(stdin, 0, SEEK_SET);
+	if (input)
+		fseek(input, 0, SEEK_SET);
 	std::string actor;
 	std::cout << "Actor: ";
 	std::getline(std::cin, actor);
@@ -163,11 +182,11 @@ void Consola::start()
 			else
 				std::cout << "Comanda invalida.\n";
 		}
-		catch (ValidateException& ex)
+		catch (const ValidateException& ex)
 		{
 			std::cout << "EXCEPTIE VALIDARE: " << ex << '\n';
 		}
-		catch (FilmeException& ex)
+		catch (const FilmeException& ex)
 		{
 			std::cout << "EXCEPTIE VALIDARE: " << ex << '\n';
 		}

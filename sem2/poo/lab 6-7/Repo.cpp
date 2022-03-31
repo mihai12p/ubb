@@ -1,5 +1,10 @@
 #include "Repo.hpp"
 
+/*
+verifica daca exista un film in lista
+param: referinta catre film
+return: true sau false
+*/
 bool Filme::exist(const Film& film) const
 {
 	try
@@ -13,6 +18,10 @@ bool Filme::exist(const Film& film) const
 	}
 }
 
+/*
+adauga un nou film daca nu exista un astfel de film deja sau arunca exceptie daca filmul exista deja
+param: referinta catre film
+*/
 void Filme::adauga(const Film& film)
 {
 	if (this->exist(film))
@@ -21,6 +30,10 @@ void Filme::adauga(const Film& film)
 	this->all.push_back(film);
 }
 
+/*
+sterge un film deja existent sau arunca exceptie daca nu exista un astfel de film
+param: referinta catre film
+*/
 void Filme::sterge(const Film& film)
 {
 	if (this->exist(film) == false)
@@ -29,7 +42,12 @@ void Filme::sterge(const Film& film)
 	this->all.erase(std::find(this->all.begin(), this->all.end(), film));
 }
 
-size_t Filme::modifica(Film& filmDeModificat, Film& filmDupaModificare)
+/*
+modifica un film
+param: referinta catre filmul de modificat si filmul dupa modificare
+return: pozitia filmului ce a fost modificat
+*/
+size_t Filme::modifica(const Film& filmDeModificat, const Film& filmDupaModificare)
 {
 	if (this->exist(filmDeModificat) == false)
 		throw FilmeException("Nu exista un astfel de film.");
@@ -38,11 +56,16 @@ size_t Filme::modifica(Film& filmDeModificat, Film& filmDupaModificare)
 		throw FilmeException("Exista deja un astfel de film.");
 
 	size_t poz = std::find(this->all.begin(), this->all.end(), filmDeModificat) - this->all.begin();
-	this->all[poz] = filmDupaModificare;
+	this->all.at(poz) = filmDupaModificare;
 
 	return poz;
 }
 
+/*
+cauta un film
+param: titlu, gen, an, actor pentru a cauta un film
+return: referinta catre filmul cautat
+*/
 const Film& Filme::cauta(const std::string& titlu, const std::string& gen, const int an, const std::string& actor) const
 {
 	for (const Film& film : this->all)

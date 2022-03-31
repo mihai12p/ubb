@@ -1,5 +1,10 @@
 #include "Valid.hpp"
 
+/*
+valideaza un film
+param: referinta catre filmul de validat
+arunca exceptie daca detaliile unui film sunt invalide
+*/
 void Valid::validate(const Film& film)
 {
 	std::vector<std::string> msg;

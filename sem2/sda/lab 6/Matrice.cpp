@@ -69,7 +69,7 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n)
 	if (i >= this->nrLinii() || j >= this->nrColoane() || i < 0 || j < 0)
 		throw std::exception();
 
-	int index = this->prim;
+	int prev = this->prim, index = this->prim;
 	while (index != -1)
 	{
 		if (this->elem[index].first.first > i || (this->elem[index].first.first == i && this->elem[index].first.second > j))
@@ -77,10 +77,20 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n)
 
 		if (this->elem[index].first == std::make_pair(i, j))
 		{
-			TElem vecheaVal = this->elem[index].second;
-			this->elem[index].second = e;
-			return vecheaVal;
+			if (e == NULL_TELEMENT)
+			{ // stergeElement
+				this->elem[index] = { {0, 0}, 0 };
+				this->urm[prev] = this->urm[index];
+				this->primLiber = index;
+			}
+			else
+			{ // modificaValoare
+				TElem vecheaVal = this->elem[index].second;
+				this->elem[index].second = e;
+				return vecheaVal;
+			}
 		}
+		prev = index;
 		index = this->urm[index];
 	}
 
@@ -112,7 +122,7 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n)
 		this->primLiber = this->len;
 	}
 
-	if (e != 0)
+	if (e != NULL_TELEMENT)
 	{
 		this->elem[this->primLiber] = { {i, j}, e };
 		++this->len;

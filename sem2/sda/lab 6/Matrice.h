@@ -18,6 +18,7 @@ class Matrice
 		int* urm = nullptr;
 
 	public:
+
 		//constructor
 		//se arunca exceptie daca nrLinii<=0 sau nrColoane<=0
 		Matrice(int nrLinii, int nrColoane);

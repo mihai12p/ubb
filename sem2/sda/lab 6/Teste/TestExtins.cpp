@@ -23,14 +23,13 @@ void testAdauga() {
 	for (int i = 0; i < m.nrLinii(); i++)
 		for (int j = 0; j < m.nrColoane(); j++)
 			if (i == 4)
-				// std::cout << i << ' ' << j << ' ' << m.element(i, j) << '\n';
 		  assert(m.element(i,j) == 3);
 		else
 		  assert(m.element(i,j) == NULL_TELEMENT);
 }
 
 void testQuantity() {//scopul e sa adaugam multe date
-	Matrice m(300,30);
+	Matrice m(300,300);
 	for(int i=m.nrLinii()/2; i<m.nrLinii(); i++){
            for(int j=0; j<m.nrColoane()/2; j++)
 	   {	

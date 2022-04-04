@@ -16,7 +16,7 @@ Matrice::Matrice(int m, int n) // theta(1)
 	this->cap = 1;
 
 	this->elem = new std::pair<std::pair<int, int>, TElem>[this->cap];
-	this->elem[this->cap - 1] = std::make_pair(std::make_pair(0, 0), 0);
+	this->elem[this->cap - 1] = { {0, 0}, 0 };
 
 	this->urm = new int[this->cap];
 	this->urm[this->cap - 1] = -1;
@@ -25,7 +25,7 @@ Matrice::Matrice(int m, int n) // theta(1)
 	this->primLiber = 0;
 }
 
-Matrice::~Matrice() // theta(n)
+Matrice::~Matrice() // theta(1)
 {
 	if (this->elem)
 		delete[] this->elem;
@@ -63,8 +63,8 @@ TElem Matrice::element(int i, int j) const // O(n)
 
 	return NULL_TELEMENT;
 }
-#include <iostream>
-TElem Matrice::modifica(int i, int j, TElem e) // O(n) + O(n) = O(n)
+
+TElem Matrice::modifica(int i, int j, TElem e) // O(n)
 {
 	if (i >= this->nrLinii() || j >= this->nrColoane() || i < 0 || j < 0)
 		throw std::exception();
@@ -108,12 +108,13 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n) + O(n) = O(n)
 		for (int i = this->len; i < this->cap - 1; ++i)
 			this->urm[i] = i + 1;
 		this->urm[this->cap - 1] = -1;
+
 		this->primLiber = this->len;
 	}
 
 	if (e != 0)
 	{
-		this->elem[this->primLiber] = std::make_pair(std::make_pair(i, j), e);
+		this->elem[this->primLiber] = { {i, j}, e };
 		++this->len;
 
 		if (this->prim == -1) // lista vida
@@ -123,62 +124,27 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n) + O(n) = O(n)
 		}
 		else
 		{
-			int curent = this->prim, prev = this->prim, next = this->urm[curent];
+			int prev = this->prim, curent = this->prim, next = this->urm[curent];
 			while (next != -1 && (this->elem[next].first.first < i || (this->elem[next].first.first == i && this->elem[next].first.second < j)))
 				prev = curent, curent = next, next = this->urm[next];
 
-			/*if (next == -1) // e ultimul nod deci noul nod trebuie adaugat fix la sfarsit
-			{
-				if (this->elem[curent].first.first < i || (this->elem[curent].first.first == i && this->elem[curent].first.second < j))
-				{
-					this->urm[curent] = this->primLiber;
-					this->urm[this->primLiber] = -1;
-				}
-				else
-				{
-					this->urm[prev] = this->primLiber;
-					this->urm[this->primLiber] = curent;
-					this->urm[curent] = -1;
-					if (this->prim == prev)
-						this->prim = this->primLiber;
-				}
+			if (this->elem[curent].first.first < i || (this->elem[curent].first.first == i && this->elem[curent].first.second < j))
+			{ // adaugaDupa
+				int ret = this->urm[curent];
+				this->urm[curent] = this->primLiber;
+				this->urm[this->primLiber] = ret;
 			}
-			else // intercalam in fata sau in spate
-			*/{
-				if (this->elem[curent].first.first < i || (this->elem[curent].first.first == i && this->elem[curent].first.second < j))
-				{
-					int ret = this->urm[curent];
-					this->urm[curent] = this->primLiber;
-					this->urm[this->primLiber] = ret;
-				}
-				else
-				{
-					this->urm[this->primLiber] = curent;
-					this->prim = this->primLiber;
-				}
+			else
+			{ // adaugaInainte
+				this->urm[this->primLiber] = curent;
+				this->prim = this->primLiber;
 			}
 		}
 
 		int x;
 		for (x = this->cap - 1; x >= 0 && this->elem[x].second != 0; --x);
-		this->primLiber = x;
+		this->primLiber = x; // daca x ajunge la -1 (nu avem loc liber) => redimensionare, altfel x e o pozitie libera (posibil stearsa anterior)
 	}
-	else
-		this->elem[this->primLiber] = std::make_pair(std::make_pair(0, 0), 0);
-
-	///
-	/*std::cout << "Index\t";
-	for (int q = 0; q < this->cap; ++q)
-		std::cout << q << '\t';
-	std::cout << "\nElem\t";
-	for (int q = 0; q < this->cap; ++q)
-		std::cout << this->elem[q].first.first << ',' << this->elem[q].first.second << ',' << this->elem[q].second << '\t';
-	std::cout << "\nUrm\t";
-	for (int q = 0; q < this->cap; ++q)
-		std::cout << this->urm[q] << '\t';
-	std::cout << "\nPrim\t" << this->prim << "\nPrimLiber\t" << this->primLiber;
-	std::cout << "\n\n";*/
-	///
 
 	return NULL_TELEMENT;
 }

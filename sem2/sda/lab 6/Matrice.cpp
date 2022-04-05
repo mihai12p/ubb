@@ -158,3 +158,39 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(n)
 
 	return NULL_TELEMENT;
 }
+
+/*
+Complexitati:
+	- CF = CD
+	- caz total: deoarece CF = CD (suma noastra nu ne afecteaza complexitatea parcurgerii listei), 
+				 iar de fiecare data parcurgem toata lista, CT = theta(n)
+Pseudocod:
+	Subalgoritm sumaDiagonalaPrincipala()
+		{pre: nu avem}
+		{post: sum: suma elementelor de pe diagonala principala}
+
+		sum <- 0
+		index <- prim
+		cat timp (index != -1) executa
+			daca linia = coloana atunci
+				sum <- sum + element[index]
+			sfarsit_daca
+			index <- urm[index]
+		sfarsit_cat_timp
+		ret sum
+	Sfarsit_subalg
+*/
+TElem Matrice::sumaDiagonalaPrincipala() // theta(n)
+{
+	TElem sum = 0;
+	int index = this->prim;
+	while (index != -1)
+	{
+		if (this->elem[index].first.first == this->elem[index].first.second)
+			sum += this->elem[index].second;
+
+		index = this->urm[index];
+	}
+
+	return sum;
+}

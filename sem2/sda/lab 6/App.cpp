@@ -14,6 +14,7 @@ int main()
 {
 	testAll();
 	testAllExtins();
+	testSumaDiagonalaPrincipala();
 	std::cout << "Finished Tests!" << std::endl;
 
 #ifdef CHECK_MEMORY_LEAKS

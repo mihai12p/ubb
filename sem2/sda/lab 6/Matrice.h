@@ -40,4 +40,7 @@ class Matrice
 		// modificare element de pe o linie si o coloana si returnarea vechii valori
 		// se arunca exceptie daca (i,j) nu e o pozitie valida in Matrice
 		TElem modifica(int i, int j, TElem);
+
+		// determina si returneaza suma elementelor de pe diagonala principala
+		TElem sumaDiagonalaPrincipala();
 };

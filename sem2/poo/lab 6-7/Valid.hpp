@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "MyDynaVec.hpp"
 #include <ostream>
 #include "Film.hpp"
 
@@ -12,10 +12,10 @@ class Valid
 
 class ValidateException
 {
-	std::vector<std::string> msg;
+	MyDynaVec<std::string> msg;
 
 	public:
-		ValidateException(const std::vector<std::string>& msg) : msg{ msg } { }
+		ValidateException(const MyDynaVec<std::string>& msg) : msg{ msg } { }
 
 		friend std::ostream& operator<<(std::ostream& out, const ValidateException& ex);
 };

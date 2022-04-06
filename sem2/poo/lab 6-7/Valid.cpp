@@ -7,7 +7,7 @@ arunca exceptie daca detaliile unui film sunt invalide
 */
 void Valid::validate(const Film& film)
 {
-	std::vector<std::string> msg;
+	MyDynaVec<std::string> msg;
 	if (film.getTitlu().size() <= 0)
 		msg.push_back("Titlu inexistent.");
 	if (film.getGen().size() <= 0)

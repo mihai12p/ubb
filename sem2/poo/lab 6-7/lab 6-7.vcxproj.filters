@@ -56,5 +56,8 @@
     <ClInclude Include="Service.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyDynaVec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

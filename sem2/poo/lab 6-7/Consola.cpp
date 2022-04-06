@@ -148,10 +148,11 @@ void Consola::cautaUi()
 	std::cout << "Filmul a fost gasit cu succes.\n";
 }
 
-void Consola::tipareste(const std::vector<Film>& filme)
+void Consola::tipareste(const MyDynaVec<Film>& filme)
 {
 	std::cout << "\n*************************************************\nFilme: \n";
 	int index = 0;
+
 	for (const Film& film : filme)
 		std::cout << '\t' << ++index << ". " << film.getTitlu() << " | " << film.getGen() << " | " << film.getAn() << " | " << film.getActor() << '\n';
 	std::cout << "*************************************************\n";
@@ -176,7 +177,10 @@ void Consola::start()
 			else if (opt == 4)
 				cautaUi();
 			else if (opt == 5)
-				tipareste(srv.getAll());
+			{
+				if (&srv)
+					tipareste(srv.getAll());
+			}
 			else if (opt == 6)
 				gata = true;
 			else
@@ -192,7 +196,8 @@ void Consola::start()
 		}
 
 		if (opt >= 1 && opt <= 4)
-			tipareste(srv.getAll());
+			if (&srv)
+				tipareste(srv.getAll());
 		std::cout << '\n';
 	}
 }

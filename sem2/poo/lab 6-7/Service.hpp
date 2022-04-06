@@ -12,7 +12,7 @@ class Service
 		Service(Filme& repo, Valid& valid) noexcept : repo{ repo }, valid{ valid } { }
 		Service(const Service& other) = delete;
 
-		const std::vector<Film>& getAll() const noexcept { return repo.getAll(); }
+		const MyDynaVec<Film>& getAll() const noexcept { return repo.getAll(); }
 
 		void adaugaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor);
 		void stergeFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor);

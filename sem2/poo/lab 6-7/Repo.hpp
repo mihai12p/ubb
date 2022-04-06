@@ -1,20 +1,20 @@
 #pragma once
 
-#include <vector>
 #include <ostream>
+#include "MyDynaVec.hpp"
 #include "Film.hpp"
 
 class Filme
 {
-	std::vector<Film> all;
+	MyDynaVec<Film> all;
 
 	bool exist(const Film& film) const;
 
 	public:
-		Filme() = default;
+		Filme() noexcept = default;
 		Filme(const Filme& other) = delete;
 
-		const std::vector<Film>& getAll() const noexcept { return this->all; };
+		const MyDynaVec<Film>& getAll() const noexcept { return this->all; };
 
 		void adauga(const Film& film);
 		void sterge(const Film& film);

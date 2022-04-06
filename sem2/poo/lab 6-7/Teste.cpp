@@ -180,7 +180,7 @@ void testCauta()
 	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
 	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
 
-	Film filmCautat = srv.cautaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	const Film& filmCautat = srv.cautaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
 	assert(filmCautat.getActor() == "Jerry");
 
 	try

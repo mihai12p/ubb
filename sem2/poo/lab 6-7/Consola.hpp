@@ -10,7 +10,7 @@ class Consola
 	void stergeUi();
 	void modificaUi();
 	void cautaUi();
-	void tipareste(const std::vector<Film>& filme);
+	void tipareste(const MyDynaVec<Film>& filme);
 
 	public:
 		Consola(Service& srv) noexcept : srv{ srv } { }

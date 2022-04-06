@@ -39,7 +39,16 @@ void Filme::sterge(const Film& film)
 	if (this->exist(film) == false)
 		throw FilmeException("Nu exista un astfel de film.");
 
-	this->all.erase(std::find(this->all.begin(), this->all.end(), film));
+	int poz = -1;
+	for (const Film& filmIt : this->getAll())
+	{
+		++poz;
+		if (filmIt == film)
+		{
+			this->all.erase(poz);
+			break;
+		}
+	}
 }
 
 /*
@@ -55,8 +64,16 @@ size_t Filme::modifica(const Film& filmDeModificat, const Film& filmDupaModifica
 	if (this->exist(filmDupaModificare))
 		throw FilmeException("Exista deja un astfel de film.");
 
-	size_t poz = std::find(this->all.begin(), this->all.end(), filmDeModificat) - this->all.begin();
-	this->all.at(poz) = filmDupaModificare;
+	int poz = -1;
+	for (const Film& filmIt : this->getAll())
+	{
+		++poz;
+		if (filmIt == filmDeModificat)
+		{
+			this->all.at(poz) = filmDupaModificare;
+			break;
+		}
+	}
 
 	return poz;
 }

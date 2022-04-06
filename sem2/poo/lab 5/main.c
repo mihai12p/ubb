@@ -1,6 +1,5 @@
 #include "Console.h"
 #include "Testing.h"
-#include <crtdbg.h>
 
 //#define OPEN_CPP_COVERAGE
 #define CHECK_MEMORY_LEAKS

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #define INITIAL_CAP 1
 
 template <typename TElem>
@@ -11,11 +9,11 @@ template <typename TElem>
 class MyDynaVec
 {
 	int len, cap;
-	std::unique_ptr<TElem[]> elems = nullptr;
+	TElem* elems;
 
 	public:
-		MyDynaVec() : elems{ std::make_unique<TElem[]>(INITIAL_CAP) }, cap{ INITIAL_CAP }, len{ 0 } { }
-		~MyDynaVec() = default;
+		MyDynaVec();
+		~MyDynaVec();
 
 		MyDynaVec(const MyDynaVec& other); // constructor de copiere
 		MyDynaVec& operator=(const MyDynaVec& other); // assignment operator
@@ -53,9 +51,19 @@ class MyDynaVecIt
 };
 
 template <typename TElem>
+MyDynaVec<TElem>::MyDynaVec() : elems{ new TElem[INITIAL_CAP] }, cap{ INITIAL_CAP }, len{ 0 } { }
+
+template <typename TElem>
+MyDynaVec<TElem>::~MyDynaVec()
+{
+	if (this->elems) 
+		delete[] this->elems;
+}
+
+template <typename TElem>
 MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>& other)
 {
-	this->elems = std::make_unique<TElem[]>(other.cap);
+	this->elems = new TElem[other.cap];
 	for (int i = 0; i < other.len; ++i)
 		this->elems[i] = other.elems[i];
 	this->len = other.len;
@@ -68,8 +76,10 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec& other)
 	if (this == &other)
 		return *this;
 
-	this->elems.reset();
-	this->elems = std::make_unique<TElem[]>(other.cap);
+	if (this->elems)
+		delete[] this->elems;
+
+	this->elems = new TElem[other.cap];
 	for (int i = 0; i < other.len; ++i)
 		this->elems[i] = other.elems[i];
 	this->len = other.len;
@@ -95,7 +105,9 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec&& other)
 	if (this == &other)
 		return *this;
 
-	this->elems.reset();
+	if (this->elems)
+		delete[] this->elems;
+
 	this->elems = other.elems;
 	this->cap = other.cap;
 	this->len = other.len;
@@ -112,11 +124,12 @@ void MyDynaVec<TElem>::push_back(const TElem& elem)
 	if (this->len == this->cap)
 	{
 		this->cap *= 2;
-		auto newVec = std::make_unique<TElem[]>(this->cap);
+		TElem* newVec = new TElem[this->cap];
 		for (int i = 0; i < this->len; ++i)
 			newVec[i] = this->elems[i];
-		this->elems.reset();
-		std::swap(this->elems, newVec);
+		if (this->elems)
+			delete[] this->elems;
+		this->elems = newVec;
 	}
 
 	this->elems[this->len++] = elem;

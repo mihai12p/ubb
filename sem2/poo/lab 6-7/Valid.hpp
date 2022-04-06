@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MyDynaVec.hpp"
 #include <ostream>
+#include "MyDynaVec.hpp"
 #include "Film.hpp"
 
 class Valid

@@ -1,6 +1,6 @@
 #pragma once
 
-#define INITIAL_CAP 1
+#define INITIAL_CAP 2
 
 template <typename TElem>
 class MyDynaVecIt;
@@ -8,8 +8,9 @@ class MyDynaVecIt;
 template <typename TElem>
 class MyDynaVec
 {
-	int len, cap;
-	TElem* elems;
+	int len = NULL;
+	int cap = INITIAL_CAP;
+	TElem* elems = nullptr;
 
 	public:
 		MyDynaVec();
@@ -34,7 +35,7 @@ class MyDynaVec
 template <typename TElem>
 class MyDynaVecIt
 {
-	int poz = 0;
+	int poz = NULL;
 	const MyDynaVec<TElem>& myVec;
 
 	public:
@@ -51,7 +52,7 @@ class MyDynaVecIt
 };
 
 template <typename TElem>
-MyDynaVec<TElem>::MyDynaVec() : elems{ new TElem[INITIAL_CAP] }, cap{ INITIAL_CAP }, len{ 0 } { }
+MyDynaVec<TElem>::MyDynaVec() : elems{ new TElem[INITIAL_CAP] }, cap{ INITIAL_CAP }, len{ NULL } { }
 
 template <typename TElem>
 MyDynaVec<TElem>::~MyDynaVec()
@@ -63,7 +64,7 @@ MyDynaVec<TElem>::~MyDynaVec()
 template <typename TElem>
 MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>& other)
 {
-	this->elems = new TElem[other.cap];
+	this->elems = new TElem[other.len];
 	for (int i = 0; i < other.len; ++i)
 		this->elems[i] = other.elems[i];
 	this->len = other.len;
@@ -71,7 +72,7 @@ MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>& other)
 }
 
 template <typename TElem>
-MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec& other)
+MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec<TElem>& other)
 {
 	if (this == &other)
 		return *this;
@@ -89,18 +90,19 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec& other)
 }
 
 template <typename TElem>
-MyDynaVec<TElem>::MyDynaVec(const MyDynaVec&& other)
+MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>&& other)
 {
 	this->elems = other.elems;
 	this->cap = other.cap;
 	this->len = other.len;
 
 	other.elems = nullptr;
-	other.cap = other.len = 0;
+	other.cap = INITIAL_CAP;
+	other.len = NULL;
 }
 
 template <typename TElem>
-MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec&& other)
+MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec<TElem>&& other)
 {
 	if (this == &other)
 		return *this;
@@ -113,7 +115,8 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec&& other)
 	this->len = other.len;
 
 	other.elems = nullptr;
-	other.cap = other.len = 0;
+	other.cap = INITIAL_CAP;
+	other.len = NULL;
 
 	return *this;
 }
@@ -121,24 +124,25 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec&& other)
 template <typename TElem>
 void MyDynaVec<TElem>::push_back(const TElem& elem)
 {
-	if (this->len == this->cap)
+	if (this->size() == this->cap)
 	{
 		this->cap *= 2;
 		TElem* newVec = new TElem[this->cap];
-		for (int i = 0; i < this->len; ++i)
+		for (int i = 0; i < this->size(); ++i)
 			newVec[i] = this->elems[i];
 		if (this->elems)
 			delete[] this->elems;
 		this->elems = newVec;
 	}
 
-	this->elems[this->len++] = elem;
+	this->elems[this->size()] = elem;
+	++this->len;
 }
 
 template <typename TElem>
 void MyDynaVec<TElem>::erase(const int poz)
 {
-	for (int i = poz; i < this->len - 1; ++i)
+	for (int i = poz; i < this->size() - 1; ++i)
 		this->elems[i] = this->elems[i + 1];
 
 	--this->len;
@@ -183,7 +187,7 @@ MyDynaVecIt<TElem>::MyDynaVecIt(const MyDynaVec<TElem>& myVec, const int poz) no
 template <typename TElem>
 bool MyDynaVecIt<TElem>::valid() const
 {
-	return this->poz < this->myVec.len;
+	return this->poz < this->myVec.size();
 }
 
 template <typename TElem>
@@ -212,13 +216,13 @@ MyDynaVecIt<TElem>& MyDynaVecIt<TElem>::operator++() noexcept
 }
 
 template <typename TElem>
-bool MyDynaVecIt<TElem>::operator==(const MyDynaVecIt& other) noexcept
+bool MyDynaVecIt<TElem>::operator==(const MyDynaVecIt<TElem>& other) noexcept
 {
 	return this->poz == other.poz;
 }
 
 template <typename TElem>
-bool MyDynaVecIt<TElem>::operator!=(const MyDynaVecIt& other) noexcept
+bool MyDynaVecIt<TElem>::operator!=(const MyDynaVecIt<TElem>& other) noexcept
 {
 	return !(*this == other);
 }

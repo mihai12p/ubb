@@ -225,3 +225,39 @@ void testCauta()
 		assert(out.str() == "Titlu inexistent. Gen inexistent. An inexistent. Actor inexistent. ");
 	}
 }
+
+void testFiltrare()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
+
+	MyDynaVec<Film> filmeFiltrate = srv.filtrare("Tom si Jerry", 2020);
+	assert(filmeFiltrate.size() == 2);
+
+	filmeFiltrate = srv.filtrare("Tom si Jerry", 2022);
+	assert(filmeFiltrate.size() == 1);
+}
+
+void testSortare()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+
+	srv.adaugaFilm("Miami Bici", "Amuzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+
+	MyDynaVec<Film> filmeSortate = srv.sortare(1);
+	assert(filmeSortate.at(0).getTitlu() == "Miami Bici");
+
+	filmeSortate = srv.sortare(2);
+	assert(filmeSortate.at(0).getGen() == "Amuzament");
+
+	filmeSortate = srv.sortare(3);
+	assert(filmeSortate.at(0).getAn() == 1940);
+}
+

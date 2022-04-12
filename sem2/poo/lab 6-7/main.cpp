@@ -14,6 +14,8 @@ void teste()
 	testSterge();
 	testModifica();
 	testCauta();
+	testFiltrare();
+	testSortare();
 }
 
 void init()

@@ -1,6 +1,6 @@
 #pragma once
 
-#define INITIAL_CAP 2
+#define INITIAL_CAP 5
 
 template <typename TElem>
 class MyDynaVecIt;
@@ -18,8 +18,8 @@ class MyDynaVec
 
 		MyDynaVec(const MyDynaVec& other); // constructor de copiere
 		MyDynaVec& operator=(const MyDynaVec& other); // assignment operator
-		MyDynaVec(const MyDynaVec&& other); // move constructor
-		MyDynaVec& operator=(const MyDynaVec&& other); // move assignment
+		MyDynaVec(MyDynaVec&& other) noexcept; // move constructor
+		MyDynaVec& operator=(MyDynaVec&& other) noexcept; // move assignment
 
 		void push_back(const TElem& elem);
 		void erase(const int poz);
@@ -64,7 +64,7 @@ MyDynaVec<TElem>::~MyDynaVec()
 template <typename TElem>
 MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>& other)
 {
-	this->elems = new TElem[other.len];
+	this->elems = new TElem[other.cap];
 	for (int i = 0; i < other.len; ++i)
 		this->elems[i] = other.elems[i];
 	this->len = other.len;
@@ -90,7 +90,7 @@ MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec<TElem>& other)
 }
 
 template <typename TElem>
-MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>&& other)
+MyDynaVec<TElem>::MyDynaVec(MyDynaVec<TElem>&& other) noexcept
 {
 	this->elems = other.elems;
 	this->cap = other.cap;
@@ -102,7 +102,7 @@ MyDynaVec<TElem>::MyDynaVec(const MyDynaVec<TElem>&& other)
 }
 
 template <typename TElem>
-MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(const MyDynaVec<TElem>&& other)
+MyDynaVec<TElem>& MyDynaVec<TElem>::operator=(MyDynaVec<TElem>&& other) noexcept
 {
 	if (this == &other)
 		return *this;

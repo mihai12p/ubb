@@ -148,6 +148,31 @@ void Consola::cautaUi()
 	std::cout << "Filmul a fost gasit cu succes.\n";
 }
 
+void Consola::filtreazaUi()
+{
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
+	std::string titlu;
+	std::cout << "Titlu: ";
+	std::getline(std::cin, titlu);
+
+	int an;
+	std::cout << "An: ";
+	std::cin >> an;
+
+	tipareste(srv.filtrare(titlu, an));
+}
+
+void Consola::sorteazaUi()
+{
+	int criteriu;
+	std::cout << "Criterii: 1 - titlu, 2 - actor, 3 - an + gen\n";
+	std::cin >> criteriu;
+
+	tipareste(srv.sortare(criteriu));
+}
+
 void Consola::tipareste(const MyDynaVec<Film>& filme)
 {
 	std::cout << "\n*************************************************\nFilme: \n";
@@ -163,7 +188,7 @@ void Consola::start()
 	bool gata = false;
 	while (gata == false)
 	{
-		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - tipareste\n\t6 - iesire\n>>>";
+		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - tipareste\n\t8 - iesire\n>>>";
 		int opt;
 		std::cin >> opt;
 		try
@@ -177,11 +202,15 @@ void Consola::start()
 			else if (opt == 4)
 				cautaUi();
 			else if (opt == 5)
+				filtreazaUi();
+			else if (opt == 6)
+				sorteazaUi();
+			else if (opt == 7)
 			{
 				if (&srv)
 					tipareste(srv.getAll());
 			}
-			else if (opt == 6)
+			else if (opt == 8)
 				gata = true;
 			else
 				std::cout << "Comanda invalida.\n";

@@ -10,6 +10,8 @@ class Consola
 	void stergeUi();
 	void modificaUi();
 	void cautaUi();
+	void filtreazaUi();
+	void sorteazaUi();
 	void tipareste(const MyDynaVec<Film>& filme);
 
 	public:

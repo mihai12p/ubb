@@ -5,10 +5,10 @@
 
 class Film
 {
-	std::string titlu;
-	std::string gen;
+	std::string titlu = "";
+	std::string gen = "";
 	int an = NULL;
-	std::string actor;
+	std::string actor = "";
 
 	public:
 		Film() noexcept { };
@@ -16,10 +16,10 @@ class Film
 
 		Film(const std::string titlu, const std::string gen, const int an, const std::string actor) : titlu{ titlu }, gen{ gen }, an{ an }, actor{ actor } { }
 		
-		Film(const Film& other) = delete; // constructor de copiere
+		Film(const Film& other); // constructor de copiere
 		Film& operator=(const Film& other); // assignment operator
-		Film(const Film&& other) = delete; // move constructor
-		Film& operator=(const Film&& other) = delete; // move assignment
+		Film(Film&& other) noexcept; // move constructor
+		Film& operator=(Film&& other) noexcept; // move assignment
 
 		const std::string getTitlu() const { return this->titlu; }
 		const std::string getGen() const { return this->gen; }

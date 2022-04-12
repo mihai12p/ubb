@@ -18,4 +18,6 @@ class Service
 		void stergeFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor);
 		const size_t modificaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou);
 		const Film& cautaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor) const;
+		const MyDynaVec<Film> filtrare(const std::string& titlu, const int an);
+		const MyDynaVec<Film> sortare(int criteriu);
 };

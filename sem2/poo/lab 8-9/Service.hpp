@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_map>
 #include "Repo.hpp"
 #include "Valid.hpp"
 
@@ -25,4 +26,5 @@ class Service
 		const std::vector<Film> sortare(int criteriu);
 		void inchiriazaFilm(const std::string& titlu);
 		void golesteCos() noexcept { repo.golesteCos(); }
+		const std::unordered_map<int, int> raport() const noexcept;
 };

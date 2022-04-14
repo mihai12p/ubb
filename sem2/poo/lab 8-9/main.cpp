@@ -18,6 +18,7 @@ void teste()
 	testSortare();
 	testAdaugaCos();
 	testGolesteCos();
+	testRaport();
 }
 
 void adaugaCateva(Service& srv)

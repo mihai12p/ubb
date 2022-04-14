@@ -8,3 +8,4 @@ void testFiltrare();
 void testSortare();
 void testAdaugaCos();
 void testGolesteCos();
+void testRaport();

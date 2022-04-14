@@ -171,12 +171,29 @@ void Consola::genereazaUi()
 	std::cout << "Cosul a fost generat cu succes.\n";
 }
 
+void Consola::raportUi()
+{
+	std::cout << "\n************************************************************************\nRaport an/inchirieri: \n";
+	const std::unordered_map<int, int>& map = srv.raport();
+	std::for_each(map.begin(), map.end(), [](const std::pair<int, int>& elem)
+	{
+		std::cout << "\tAn: " << elem.first << " | Numar inchirieri: " << elem.second << '\n';
+	});
+	std::cout << "************************************************************************\n";
+}
+
 void Consola::tipareste(const std::vector<Film>& filme)
 {
 	std::cout << "\n************************************************************************\nFilme: \n";
 	int index = 0;
 
-	std::for_each(filme.begin(), filme.end(), [&index](const Film& film) { std::cout << '\t' << ++index << ". " << film.getTitlu() << " | " << film.getGen() << " | " << film.getAn() << " | " << film.getActor(); if (film.getInchiriat() > 0) std::cout << " | INCHIRIAT x " << film.getInchiriat(); std::cout << '\n'; });
+	std::for_each(filme.begin(), filme.end(), [&index](const Film& film) 
+	{ 
+			std::cout << '\t' << ++index << ". " << film.getTitlu() << " | " << film.getGen() << " | " << film.getAn() << " | " << film.getActor(); 
+			if (film.getInchiriat() > 0) 
+				std::cout << " | INCHIRIAT x " << film.getInchiriat(); 
+			std::cout << '\n'; 
+	});
 	std::cout << "\n\tMomentan sunt " << srv.getCos() << " filme inchiriate in cos.\n";
 	std::cout << "************************************************************************\n";
 }
@@ -186,7 +203,7 @@ void Consola::start()
 	bool gata = false;
 	while (gata == false)
 	{
-		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - adauga in cos\n\t8 - goleste cos\n\t9 - genereaza\n\t10 - tipareste\n\t11 - iesire\n>>>";
+		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - adauga in cos\n\t8 - goleste cos\n\t9 - genereaza\n\t10 - raport\n\t11 - tipareste\n\t12 - iesire\n>>>";
 		int opt;
 		std::cin >> opt;
 		try
@@ -210,11 +227,13 @@ void Consola::start()
 			else if (opt == 9)
 				genereazaUi();
 			else if (opt == 10)
+				raportUi();
+			else if (opt == 11)
 			{
 				if (&srv)
 					tipareste(srv.getAll());
 			}
-			else if (opt == 11)
+			else if (opt == 12)
 				gata = true;
 			else
 				std::cout << "Comanda invalida.\n";
@@ -228,7 +247,7 @@ void Consola::start()
 			std::cout << "EXCEPTIE VALIDARE: " << ex << '\n';
 		}
 
-		if ((opt >= 1 && opt <= 4) || (opt >= 7 && opt <= 9))
+		if ((opt >= 1 && opt <= 4) || (opt >= 7 && opt <= 10))
 			if (&srv)
 				tipareste(srv.getAll());
 		std::cout << '\n';

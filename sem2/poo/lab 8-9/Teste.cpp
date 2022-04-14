@@ -283,3 +283,27 @@ void testGolesteCos()
 	assert(srv.getAll().size() == 2);
 	assert(srv.getCos() == 0);
 }
+
+void testRaport()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+	assert(srv.getAll().size() == 0);
+
+	srv.adaugaFilm("Miami Bici", "Amuzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Elodia", "Crime", 2020, "Cristian Cioaca");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	assert(srv.getAll().size() == 3);
+
+	srv.inchiriazaFilm("Miami Bici");
+	srv.inchiriazaFilm("Miami Bici");
+	srv.inchiriazaFilm("Elodia");
+	srv.inchiriazaFilm("Tom si Jerry");
+	assert(srv.raport().at(1940) == 1);
+	assert(srv.raport().at(2020) == 3);
+
+	srv.golesteCos();
+	assert(srv.raport().at(1940) == 0);
+	assert(srv.raport().at(2020) == 0);
+}

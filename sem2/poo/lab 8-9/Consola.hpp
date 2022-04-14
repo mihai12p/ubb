@@ -15,6 +15,7 @@ class Consola
 	void inchiriazaUi();
 	void golesteUi();
 	void genereazaUi();
+	void raportUi();
 	void tipareste(const std::vector<Film>& filme);
 
 	public:

@@ -57,3 +57,16 @@ void Service::inchiriazaFilm(const std::string& titlu)
 	if (film)
 		repo.inchiriaza(*film);
 }
+
+const std::unordered_map<int, int> Service::raport() const noexcept
+{
+	std::unordered_map<int, int> map;
+	std::for_each(this->getAll().begin(), this->getAll().end(), [&](const Film& film) 
+	{ 
+			if (map.find(film.getAn()) == map.end()) 
+				map.insert({ film.getAn(), film.getInchiriat() }); 
+			else 
+				map.at(film.getAn()) += film.getInchiriat(); 
+	});
+	return map;
+}

@@ -10,12 +10,12 @@ class Valid
 		void validate(const Film& film);
 };
 
-class ValidateException
+class ValidateException : public std::exception
 {
 	std::vector<std::string> msg;
 
 	public:
-		ValidateException(const std::vector<std::string>& msg) : msg{ msg } { }
+		ValidateException(const std::vector<std::string>& msg) : std::exception(), msg{ msg } { }
 
 		friend std::ostream& operator<<(std::ostream& out, const ValidateException& ex);
 };

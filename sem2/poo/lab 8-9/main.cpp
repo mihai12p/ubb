@@ -16,6 +16,16 @@ void teste()
 	testCauta();
 	testFiltrare();
 	testSortare();
+	testAdaugaCos();
+	testGolesteCos();
+}
+
+void adaugaCateva(Service& srv)
+{
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Moartea", "Documentar", 2022, "Ion Iliescu");
+	srv.adaugaFilm("Soacra mea e o scorpie", "Romance", 2005, "Jane Fonda");
 }
 
 void init()
@@ -23,8 +33,9 @@ void init()
 	Filme repo;
 	Valid validator;
 	Service srv{ repo, validator };
+	adaugaCateva(srv);
+
 	Consola consola{ srv };
-	consola.adaugaCateva();
 	consola.start();
 }
 

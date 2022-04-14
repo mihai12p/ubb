@@ -1,14 +1,7 @@
+#include <random>
 #include <iostream>
 #include <algorithm>
 #include "Consola.hpp"
-
-void Consola::adaugaCateva()
-{
-	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
-	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
-	srv.adaugaFilm("Moartea", "Documentar", 2022, "Ion Iliescu");
-	srv.adaugaFilm("Soacra mea e o scorpie", "Romance", 2005, "Jane Fonda");
-}
 
 void Consola::adaugaUi()
 {
@@ -77,22 +70,6 @@ void Consola::modificaUi()
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
 
-	if (input)
-		fseek(input, 0, SEEK_SET);
-	std::string gen;
-	std::cout << "Gen: ";
-	std::getline(std::cin, gen);
-
-	int an;
-	std::cout << "An: ";
-	std::cin >> an;
-
-	if (input)
-		fseek(input, 0, SEEK_SET);
-	std::string actor;
-	std::cout << "Actor: ";
-	std::getline(std::cin, actor);
-
 
 	if (input)
 		fseek(input, 0, SEEK_SET);
@@ -116,7 +93,7 @@ void Consola::modificaUi()
 	std::cout << "Actor nou: ";
 	std::getline(std::cin, actorNou);
 
-	srv.modificaFilm(titlu, gen, an, actor, titluNou, genNou, anNou, actorNou);
+	srv.modificaFilm(titlu, titluNou, genNou, anNou, actorNou);
 	std::cout << "Filmul a fost modificat cu succes.\n";
 }
 
@@ -129,23 +106,7 @@ void Consola::cautaUi()
 	std::cout << "Titlu: ";
 	std::getline(std::cin, titlu);
 
-	if (input)
-		fseek(input, 0, SEEK_SET);
-	std::string gen;
-	std::cout << "Gen: ";
-	std::getline(std::cin, gen);
-
-	int an;
-	std::cout << "An: ";
-	std::cin >> an;
-
-	if (input)
-		fseek(input, 0, SEEK_SET);
-	std::string actor;
-	std::cout << "Actor: ";
-	std::getline(std::cin, actor);
-
-	srv.cautaFilm(titlu, gen, an, actor);
+	srv.cautaFilm(titlu);
 	std::cout << "Filmul a fost gasit cu succes.\n";
 }
 
@@ -174,13 +135,50 @@ void Consola::sorteazaUi()
 	tipareste(srv.sortare(criteriu));
 }
 
+void Consola::inchiriazaUi()
+{
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
+	std::string titlu;
+	std::cout << "Titlu: ";
+	std::getline(std::cin, titlu);
+
+	srv.inchiriazaFilm(titlu);
+	std::cout << "Filmul a fost inchiriat cu succes.\n";
+}
+
+void Consola::golesteUi()
+{
+	srv.golesteCos();
+	std::cout << "Cosul a fost golit cu succes.\n";
+}
+
+void Consola::genereazaUi()
+{
+	int nr;
+	std::cout << "Introduceti numarul de generari in cos: ";
+	std::cin >> nr;
+
+	std::mt19937 mt{ std::random_device{}() };
+	const std::uniform_int_distribution<> dist(0, srv.getAll().size() - 1);
+	
+	while (nr--)
+	{
+		const int rndNr = dist(mt);
+		srv.inchiriazaFilm(srv.getAll().at(rndNr).getTitlu());
+	}
+	std::cout << "Cosul a fost generat cu succes.\n";
+}
+
 void Consola::tipareste(const std::vector<Film>& filme)
 {
-	std::cout << "\n*************************************************\nFilme: \n";
+	std::cout << "\n************************************************************************\nFilme: \n";
 	int index = 0;
 
-	std::for_each(filme.begin(), filme.end(), [&index](const Film& film) { std::cout << '\t' << ++index << ". " << film.getTitlu() << " | " << film.getGen() << " | " << film.getAn() << " | " << film.getActor() << '\n'; });
-	std::cout << "*************************************************\n";
+	std::for_each(filme.begin(), filme.end(), [&index](const Film& film) { std::cout << '\t' << ++index << ". " << film.getTitlu() << " | " << film.getGen() << " | " << film.getAn() << " | " << film.getActor(); if (film.getInchiriat() > 0) std::cout << " | INCHIRIAT x " << film.getInchiriat(); std::cout << '\n'; });
+	std::cout << "\n\tMomentan sunt " << srv.getCos() << " filme inchiriate in cos.\n";
+	std::cout << "************************************************************************\n";
 }
 
 void Consola::start()
@@ -188,7 +186,7 @@ void Consola::start()
 	bool gata = false;
 	while (gata == false)
 	{
-		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - tipareste\n\t8 - iesire\n>>>";
+		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - adauga in cos\n\t8 - goleste cos\n\t9 - genereaza\n\t10 - tipareste\n\t11 - iesire\n>>>";
 		int opt;
 		std::cin >> opt;
 		try
@@ -206,11 +204,17 @@ void Consola::start()
 			else if (opt == 6)
 				sorteazaUi();
 			else if (opt == 7)
+				inchiriazaUi();
+			else if (opt == 8)
+				golesteUi();
+			else if (opt == 9)
+				genereazaUi();
+			else if (opt == 10)
 			{
 				if (&srv)
 					tipareste(srv.getAll());
 			}
-			else if (opt == 8)
+			else if (opt == 11)
 				gata = true;
 			else
 				std::cout << "Comanda invalida.\n";
@@ -224,7 +228,7 @@ void Consola::start()
 			std::cout << "EXCEPTIE VALIDARE: " << ex << '\n';
 		}
 
-		if (opt >= 1 && opt <= 4)
+		if ((opt >= 1 && opt <= 4) || (opt >= 7 && opt <= 9))
 			if (&srv)
 				tipareste(srv.getAll());
 		std::cout << '\n';

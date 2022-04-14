@@ -1,6 +1,6 @@
 #include "Film.hpp"
 
-Film::Film(const Film& other) : titlu{ other.titlu }, gen{ other.gen }, an{ other.an }, actor{ other.actor } { }
+Film::Film(const Film& other) : titlu{ other.titlu }, gen{ other.gen }, an{ other.an }, actor{ other.actor }, inchiriat{ other.inchiriat } { }
 
 Film& Film::operator=(const Film& other)
 {
@@ -8,16 +8,18 @@ Film& Film::operator=(const Film& other)
 	this->gen = other.gen;
 	this->an = other.an;
 	this->actor = other.actor;
+	this->inchiriat = other.inchiriat;
 
 	return *this;
 }
 
-Film::Film(Film&& other) noexcept : titlu{ other.titlu }, gen{ other.gen }, an{ other.an }, actor{ other.actor }
+Film::Film(Film&& other) noexcept : titlu{ other.titlu }, gen{ other.gen }, an{ other.an }, actor{ other.actor }, inchiriat{ other.inchiriat }
 {
 	other.titlu = "";
 	other.gen = "";
 	other.an = NULL;
 	other.actor = "";
+	other.inchiriat = NULL;
 }
 
 Film& Film::operator=(Film&& other) noexcept
@@ -29,11 +31,13 @@ Film& Film::operator=(Film&& other) noexcept
 	this->gen = other.gen;
 	this->an = other.an;
 	this->actor = other.actor;
+	this->inchiriat = other.inchiriat;
 
 	other.titlu = "";
 	other.gen = "";
 	other.an = NULL;
 	other.actor = "";
+	other.inchiriat = NULL;
 
 	return *this;
 }

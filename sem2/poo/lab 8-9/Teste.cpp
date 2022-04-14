@@ -1,5 +1,6 @@
 #include <cassert>
 #include <sstream>
+#include <algorithm>
 #include "Service.hpp"
 #include "Valid.hpp"
 
@@ -122,7 +123,7 @@ void testModifica()
 	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
 	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
 
-	size_t poz = srv.modificaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry", "Soacra mea e o scorpie", "Romance", 2005, "Jane Fonda");
+	size_t poz = srv.modificaFilm("Tom si Jerry", "Soacra mea e o scorpie", "Romance", 2005, "Jane Fonda");
 	assert(repo.getAll().at(poz).getTitlu() == "Soacra mea e o scorpie");
 	assert(repo.getAll().at(poz).getGen() == "Romance");
 	assert(repo.getAll().at(poz).getAn() == 2005);
@@ -130,7 +131,7 @@ void testModifica()
 
 	try
 	{
-		srv.modificaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry", "Moartea", "Documentar", 2022, "Ion Iliescu");
+		srv.modificaFilm("Tom si Jerry", "Moartea", "Documentar", 2022, "Ion Iliescu");
 		assert(false);
 	}
 	catch (const FilmeException& ex)
@@ -144,7 +145,7 @@ void testModifica()
 
 	try
 	{
-		srv.modificaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc", "Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
+		srv.modificaFilm("Miami Bici", "Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
 		assert(false);
 	}
 	catch (const FilmeException& ex)
@@ -158,7 +159,7 @@ void testModifica()
 
 	try
 	{
-		srv.modificaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry", "Moartea", "Documentar", NULL, "Ion Iliescu");
+		srv.modificaFilm("Tom si Jerry", "Moartea", "Documentar", NULL, "Ion Iliescu");
 		assert(false);
 	}
 	catch (const ValidateException& ex)
@@ -180,14 +181,14 @@ void testCauta()
 	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
 	srv.adaugaFilm("Miami Bici", "Amuzzament", 2020, "Codin Maticiuc");
 
-	std::unique_ptr<Film> filmCautat = srv.cautaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	std::unique_ptr<Film> filmCautat = srv.cautaFilm("Tom si Jerry");
 	const Film* filmPointer = filmCautat.get();
 	assert(filmPointer != nullptr);
 	assert(filmPointer && filmPointer->getActor() == "Jerry");
 
 	try
 	{
-		srv.cautaFilm("Moartea", "Documentar", 2022, "Ion Iliescu");
+		srv.cautaFilm("Moartea");
 		assert(false);
 	}
 	catch (const FilmeException& ex)
@@ -201,7 +202,7 @@ void testCauta()
 
 	try
 	{
-		srv.cautaFilm("Moartea", "Documentar", NULL, "Ion Iliescu");
+		srv.cautaFilm("");
 		assert(false);
 	}
 	catch (const ValidateException& ex)
@@ -210,21 +211,7 @@ void testCauta()
 
 		std::stringstream out;
 		out << ex;
-		assert(out.str() == "An inexistent. ");
-	}
-
-	try
-	{
-		srv.cautaFilm("", "", NULL, "");
-		assert(false);
-	}
-	catch (const ValidateException& ex)
-	{
-		assert(true);
-
-		std::stringstream out;
-		out << ex;
-		assert(out.str() == "Titlu inexistent. Gen inexistent. An inexistent. Actor inexistent. ");
+		assert(out.str() == "Titlu inexistent. ");
 	}
 }
 
@@ -263,3 +250,36 @@ void testSortare()
 	assert(filmeSortate.at(0).getAn() == 1940);
 }
 
+void testAdaugaCos()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+	assert(srv.getAll().size() == 0);
+
+	srv.adaugaFilm("Miami Bici", "Amuzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	assert(srv.getAll().size() == 2);
+
+	srv.inchiriazaFilm("Miami Bici");
+	assert(srv.getAll().size() == 2);
+	assert(srv.getCos() == 1);
+}
+
+void testGolesteCos()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+	assert(srv.getAll().size() == 0);
+
+	srv.adaugaFilm("Miami Bici", "Amuzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	assert(srv.getAll().size() == 2);
+
+	srv.inchiriazaFilm("Miami Bici");
+	
+	srv.golesteCos();
+	assert(srv.getAll().size() == 2);
+	assert(srv.getCos() == 0);
+}

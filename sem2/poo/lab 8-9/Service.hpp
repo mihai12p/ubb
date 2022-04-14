@@ -15,11 +15,14 @@ class Service
 		Service(const Service& other) = delete;
 
 		const std::vector<Film>& getAll() const noexcept { return repo.getAll(); }
+		const int getCos() const noexcept { return repo.getCos(); }
 
 		void adaugaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor);
 		void stergeFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor);
-		const size_t modificaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou);
-		const std::unique_ptr<Film> cautaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor) const;
+		const size_t modificaFilm(const std::string& titlu, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou);
+		const std::unique_ptr<Film> cautaFilm(const std::string& titlu) const;
 		const std::vector<Film> filtrare(const std::string& titlu, const int an);
 		const std::vector<Film> sortare(int criteriu);
+		void inchiriazaFilm(const std::string& titlu);
+		void golesteCos() noexcept { repo.golesteCos(); }
 };

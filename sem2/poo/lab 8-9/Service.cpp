@@ -1,3 +1,4 @@
+#include <array>
 #include <algorithm>
 #include "Service.hpp"
 
@@ -15,23 +16,18 @@ void Service::stergeFilm(const std::string& titlu, const std::string& gen, const
 	repo.sterge(film);
 }
 
-const size_t Service::modificaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou)
+const size_t Service::modificaFilm(const std::string& titlu, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou)
 {
-	Film filmDeModificat{ titlu, gen, an, actor };
-	valid.validate(filmDeModificat);
-
 	Film filmDupaModificare{ titluNou, genNou, anNou, actorNou };
 	valid.validate(filmDupaModificare);
 
-	return repo.modifica(filmDeModificat, filmDupaModificare);
+	return repo.modifica(*repo.cauta(titlu), filmDupaModificare);
 }
 
-const std::unique_ptr<Film> Service::cautaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor) const
+const std::unique_ptr<Film> Service::cautaFilm(const std::string& titlu) const
 {
-	Film filmCautat{ titlu, gen, an, actor };
-	valid.validate(filmCautat);
-
-	return repo.cauta(titlu, gen, an, actor);
+	valid.validate(Film{ titlu, "Gen", 2022, "Actor" });
+	return repo.cauta(titlu);
 }
 
 const std::vector<Film> Service::filtrare(const std::string& titlu, const int an)
@@ -47,10 +43,17 @@ const bool dupaActor(const Film& f1, const Film& f2) { return f1.getActor().comp
 const bool dupaGenAn(const Film& f1, const Film& f2) { return f1.getAn() == f2.getAn() ? f1.getGen().compare(f2.getGen()) < 0 : f1.getAn() < f2.getAn(); }
 const std::vector<Film> Service::sortare(int criteriu)
 {
-	const std::vector<functie>& myVec = { dupaTitlu, dupaActor, dupaGenAn };
-
+	std::array<functie, 3> criterii = { dupaTitlu, dupaActor, dupaGenAn };
 	std::vector<Film> listaNoua = this->getAll();
-	std::sort(listaNoua.begin(), listaNoua.end(), myVec.at(criteriu - 1));
+	std::sort(listaNoua.begin(), listaNoua.end(), criterii.at(criteriu - 1));
 
 	return listaNoua;
+}
+
+void Service::inchiriazaFilm(const std::string& titlu)
+{
+	const std::unique_ptr<Film> filmCautat = cautaFilm(titlu);
+	Film* film = filmCautat.get();
+	if (film)
+		repo.inchiriaza(*film);
 }

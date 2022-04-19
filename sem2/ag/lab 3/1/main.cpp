@@ -17,8 +17,8 @@ void dijkstra(const std::vector<std::pair<int, int>>* graf, std::vector<int>& di
 		int nodCurent = PQ.top().second; PQ.pop();
 		for (const auto& i : graf[nodCurent])
 		{
-			int vecin = i.first;
-			int cost = i.second;
+			const int vecin = i.first;
+			const int cost = i.second;
 			if (dist[vecin] > dist[nodCurent] + cost)
 			{
 				dist[vecin] = dist[nodCurent] + cost;

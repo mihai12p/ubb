@@ -5,9 +5,11 @@
 
 const int INF = 0x3f3f3f3f;
 
-typedef std::pair<int, int> iPair;
-void dijkstra(const std::vector<std::pair<int, int>>* graf, std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>>& PQ, const int start, const int noduri, std::vector<int>& dist)
+void dijkstra(const std::vector<std::pair<int, int>>* graf, std::vector<int>& dist, const int start)
 {
+	typedef std::pair<int, int> iPair;
+	std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> PQ; // min-heap
+	PQ.push({ 0, start });
 	dist[start] = 0;
 
 	while (!PQ.empty())
@@ -39,22 +41,16 @@ int main(int argc, char** argv)
 
 	int noduri, arce, start;
 	fin >> noduri >> arce >> start;
-
-	std::priority_queue<iPair, std::vector<iPair>, std::greater<iPair>> PQ; // min-heap
-	PQ.push({ 0, start });
-
 	std::vector<std::pair<int, int>>* graf = new std::vector<std::pair<int, int>>[noduri];
 	for (int i = 0; i < arce; ++i)
 	{
 		int x, y, cost;
 		fin >> x >> y >> cost;
 		graf[x].push_back({ y, cost });
-		PQ.push({ INF, x });
 	}
 
 	std::vector<int> dist(noduri, INF);
-	dijkstra(graf, PQ, start, noduri, dist);
-
+	dijkstra(graf, dist, start);
 	for (int i = 0; i < noduri; ++i)
 	{
 		if (dist[i] == INF)

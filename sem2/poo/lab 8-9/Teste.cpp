@@ -1,3 +1,4 @@
+#include <fstream>
 #include <cassert>
 #include <sstream>
 #include <algorithm>
@@ -306,4 +307,67 @@ void testRaport()
 	srv.golesteCos();
 	assert(srv.raport().at(1940) == 0);
 	assert(srv.raport().at(2020) == 0);
+}
+
+void testSaveToFile()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+
+	srv.adaugaFilm("Miami Bici", "Amuzament", 2020, "Codin Maticiuc");
+	srv.adaugaFilm("Elodia", "Crime", 2020, "Cristian Cioaca");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	assert(srv.getAll().size() == 3);
+
+	srv.inchiriazaFilm("Miami Bici");
+	srv.saveToFile("test.cvs");
+
+	std::ifstream createdFile("test.cvs");
+	assert(createdFile.good() == true);
+	assert(createdFile.is_open() == true);
+	createdFile.close();
+	assert(createdFile.is_open() == false);
+	assert(remove("test.cvs") == 0);
+}
+
+void testUndo()
+{
+	Filme repo;
+	Valid validator;
+	Service srv{ repo, validator };
+
+	srv.adaugaFilm("Elodia", "Crime", 2020, "Cristian Cioaca");
+	srv.adaugaFilm("Tom si Jerry", "Amuzzament", 1940, "Jerry");
+	assert(srv.getAll().size() == 2);
+
+	srv.undoLast();
+	assert(srv.getAll().size() == 1);
+
+	srv.stergeFilm("Elodia", "Crime", 2020, "Cristian Cioaca");
+	assert(srv.getAll().size() == 0);
+
+	srv.undoLast();
+	assert(srv.getAll().size() == 1);
+
+	srv.modificaFilm("Elodia", "Alexandra Macesanu", "Crime", 2019, "Gheorghe Dinca");
+	assert(srv.getAll().at(0).getActor() == "Gheorghe Dinca");
+
+	srv.undoLast();
+	assert(srv.getAll().at(0).getActor() == "Cristian Cioaca");
+
+	srv.undoLast();
+	try
+	{
+		srv.undoLast();
+		assert(false);
+	}
+	catch (const FilmeException& ex)
+	{
+		assert(true);
+
+		std::stringstream out;
+		out << ex;
+		assert(out.str() == "Nu mai exista operatii.");
+	}
 }

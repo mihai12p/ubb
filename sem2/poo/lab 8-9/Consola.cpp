@@ -198,12 +198,31 @@ void Consola::tipareste(const std::vector<Film>& filme)
 	std::cout << "************************************************************************\n";
 }
 
+void Consola::exportUi()
+{
+	FILE* input = __acrt_iob_func(0);
+	if (input)
+		fseek(input, 0, SEEK_SET);
+	std::string fileName;
+	std::cout << "Nume fisier: ";
+	std::getline(std::cin, fileName);
+
+	srv.saveToFile(fileName);
+	std::cout << "Cosul a fost salvat cu succes in fisierul " << fileName << ".\n";
+}
+
+void Consola::undoUi()
+{
+	srv.undoLast();
+	std::cout << "A fost facut undo cu succes.\n";
+}
+
 void Consola::start()
 {
 	bool gata = false;
 	while (gata == false)
 	{
-		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - adauga in cos\n\t8 - goleste cos\n\t9 - genereaza\n\t10 - raport\n\t11 - tipareste\n\t12 - iesire\n>>>";
+		std::cout << "Meniu: \n\t1 - adauga\n\t2 - sterge\n\t3 - modifica\n\t4 - cauta\n\t5 - filtreaza\n\t6 - sorteaza\n\t7 - adauga in cos\n\t8 - goleste cos\n\t9 - genereaza\n\t10 - raport\n\t11 - tipareste\n\t12 - export\n\t13 - undo\n\t14 - iesire\n>>>";
 		int opt;
 		std::cin >> opt;
 		try
@@ -234,6 +253,10 @@ void Consola::start()
 					tipareste(srv.getAll());
 			}
 			else if (opt == 12)
+				exportUi();
+			else if (opt == 13)
+				undoUi();
+			else if (opt == 14)
 				gata = true;
 			else
 				std::cout << "Comanda invalida.\n";
@@ -247,7 +270,7 @@ void Consola::start()
 			std::cout << "EXCEPTIE VALIDARE: " << ex << '\n';
 		}
 
-		if ((opt >= 1 && opt <= 4) || (opt >= 7 && opt <= 10))
+		if ((opt >= 1 && opt <= 4) || (opt >= 7 && opt <= 10) || (opt >= 12 && opt <= 13))
 			if (&srv)
 				tipareste(srv.getAll());
 		std::cout << '\n';

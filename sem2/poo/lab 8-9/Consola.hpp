@@ -17,6 +17,8 @@ class Consola
 	void genereazaUi();
 	void raportUi();
 	void tipareste(const std::vector<Film>& filme);
+	void exportUi();
+	void undoUi();
 
 	public:
 		Consola(Service& srv) noexcept : srv{ srv } { }

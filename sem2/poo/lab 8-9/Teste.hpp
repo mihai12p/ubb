@@ -9,3 +9,5 @@ void testSortare();
 void testAdaugaCos();
 void testGolesteCos();
 void testRaport();
+void testSaveToFile();
+void testUndo();

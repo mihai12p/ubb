@@ -1,5 +1,6 @@
 #include <array>
 #include <algorithm>
+#include <fstream>
 #include "Service.hpp"
 
 void Service::adaugaFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor)
@@ -7,6 +8,7 @@ void Service::adaugaFilm(const std::string& titlu, const std::string& gen, const
 	Film film{ titlu, gen, an, actor };
 	valid.validate(film);
 	repo.adauga(film);
+	undo.push_back(std::make_unique<UndoAdauga>(UndoAdauga{ repo, film }));
 }
 
 void Service::stergeFilm(const std::string& titlu, const std::string& gen, const int an, const std::string& actor)
@@ -14,14 +16,17 @@ void Service::stergeFilm(const std::string& titlu, const std::string& gen, const
 	Film film{ titlu, gen, an, actor };
 	valid.validate(film);
 	repo.sterge(film);
+	undo.push_back(std::make_unique<UndoSterge>(UndoSterge{ repo, film }));
 }
 
 const size_t Service::modificaFilm(const std::string& titlu, const std::string& titluNou, const std::string& genNou, const int anNou, const std::string& actorNou)
 {
 	Film filmDupaModificare{ titluNou, genNou, anNou, actorNou };
 	valid.validate(filmDupaModificare);
-
-	return repo.modifica(*repo.cauta(titlu), filmDupaModificare);
+	std::unique_ptr<Film> filmDeModificat = repo.cauta(titlu);
+	const size_t ret = repo.modifica(*filmDeModificat, filmDupaModificare);
+	undo.push_back(std::make_unique<UndoModifica>(UndoModifica{ repo, filmDupaModificare, *filmDeModificat }));
+	return ret;
 }
 
 const std::unique_ptr<Film> Service::cautaFilm(const std::string& titlu) const
@@ -63,10 +68,33 @@ const std::unordered_map<int, int> Service::raport() const noexcept
 	std::unordered_map<int, int> map;
 	std::for_each(this->getAll().begin(), this->getAll().end(), [&](const Film& film) 
 	{ 
-			if (map.find(film.getAn()) == map.end()) 
-				map.insert({ film.getAn(), film.getInchiriat() }); 
-			else 
-				map.at(film.getAn()) += film.getInchiriat(); 
+		if (map.find(film.getAn()) == map.end()) 
+			map.insert({ film.getAn(), film.getInchiriat() }); 
+		else 
+			map.at(film.getAn()) += film.getInchiriat(); 
 	});
 	return map;
+}
+
+void Service::saveToFile(const std::string& fileName)
+{
+	std::ofstream fout(fileName);
+	std::for_each(this->getAll().begin(), this->getAll().end(), [&](const Film& film)
+	{
+		if (film.getInchiriat())
+			fout << film.getTitlu() << ';' << film.getGen() << ';' << film.getAn() << ';' << film.getActor() << '\n';
+	});
+	fout.close();
+}
+
+void Service::undoLast()
+{
+	if (this->undo.empty())
+		throw FilmeException("Nu mai exista operatii.");
+
+	const std::unique_ptr<ActiuneUndo> last(std::move(undo.back()));
+	ActiuneUndo* result = last.get();
+	if (result)
+		result->doUndo();
+	this->undo.pop_back();
 }

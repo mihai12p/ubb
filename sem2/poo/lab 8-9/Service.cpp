@@ -92,7 +92,7 @@ void Service::undoLast()
 	if (this->undo.empty())
 		throw FilmeException("Nu mai exista operatii.");
 
-	const std::unique_ptr<ActiuneUndo> last(std::move(undo.back()));
+	const std::unique_ptr<ActiuneUndo> last(std::move(this->undo.back()));
 	ActiuneUndo* result = last.get();
 	if (result)
 		result->doUndo();

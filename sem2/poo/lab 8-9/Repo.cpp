@@ -20,8 +20,8 @@ bool Filme::exist(const Film& film) const
 
 const int Filme::getCos() const noexcept
 {
-	int i = 0; 
-	std::for_each(this->getAll().begin(), this->getAll().end(), [&](const Film& film) noexcept { i += film.getInchiriat(); });
+	int i = 0;
+	std::for_each(this->getAll().cbegin(), this->getAll().cend(), [&](const Film& film) noexcept { i += film.getInchiriat(); });
 	return i;
 }
 
@@ -46,8 +46,8 @@ void Filme::sterge(const Film& film)
 	if (this->exist(film) == false)
 		throw FilmeException("Nu exista un astfel de film.");
 
-	const auto& it = std::find_if(this->getAll().begin(), this->getAll().end(), [&film](const Film& filmIt) noexcept { return filmIt == film; });
-	if (it != this->getAll().end())
+	const auto& it = std::find_if(this->getAll().cbegin(), this->getAll().cend(), [&film](const Film& filmIt) noexcept { return filmIt == film; });
+	if (it != this->getAll().cend())
 		this->all.erase(it);
 }
 
@@ -63,11 +63,11 @@ size_t Filme::modifica(const Film& filmDeModificat, Film& filmDupaModificare)
 
 	filmDupaModificare.inchiriaza(filmDeModificat.getInchiriat());
 
-	const auto& it = std::find_if(this->getAll().begin(), this->getAll().end(), [&filmDeModificat](const Film& filmIt) noexcept { return filmIt == filmDeModificat; });
-	if (it != this->getAll().end())
-		this->all.at(it - this->getAll().begin()) = filmDupaModificare;
+	const auto& it = std::find_if(this->getAll().cbegin(), this->getAll().cend(), [&filmDeModificat](const Film& filmIt) noexcept { return filmIt == filmDeModificat; });
+	if (it != this->getAll().cend())
+		this->all.at(it - this->getAll().cbegin()) = filmDupaModificare;
 
-	return it - this->getAll().begin();
+	return it - this->getAll().cbegin();
 }
 
 /*
@@ -77,8 +77,8 @@ return: referinta catre filmul cautat
 */
 const std::unique_ptr<Film> Filme::cauta(const std::string& titlu) const
 {
-	const auto& it = std::find_if(this->getAll().begin(), this->getAll().end(), [&](const Film& film) { return (film.getTitlu() == titlu); });
-	if (&it == nullptr || it == this->getAll().end())
+	const auto& it = std::find_if(this->getAll().cbegin(), this->getAll().cend(), [&](const Film& film) { return (film.getTitlu() == titlu); });
+	if (&it == nullptr || it == this->getAll().cend())
 		throw FilmeException("Nu exista un astfel de film.");
 
 	return std::make_unique<Film>(*it);
@@ -86,12 +86,12 @@ const std::unique_ptr<Film> Filme::cauta(const std::string& titlu) const
 
 void Filme::inchiriaza(Film& film, int val) noexcept
 {
-	const auto& it = std::find_if(this->getAll().begin(), this->getAll().end(), [&](const Film& filmIt) noexcept { return filmIt == film; });
+	const auto& it = std::find_if(this->getAll().cbegin(), this->getAll().cend(), [&](const Film& filmIt) noexcept { return filmIt == film; });
 	
 	if (val == 0)
 		val = -film.getInchiriat();
 
-	this->all.at(it - this->getAll().begin()).inchiriaza(val);
+	this->all.at(it - this->getAll().cbegin()).inchiriaza(val);
 }
 
 void Filme::golesteCos() noexcept

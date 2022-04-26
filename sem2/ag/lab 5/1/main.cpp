@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 	fin >> noduri >> arce;
 	int** grafRezidual = new int* [noduri];
 	for (int i = 0; i < noduri; ++i)
-		grafRezidual[i] = new int[noduri] {};
+		grafRezidual[i] = new int[noduri] { };
 	for (int i = 0; i < arce; ++i)
 	{
 		int x, y, cost;

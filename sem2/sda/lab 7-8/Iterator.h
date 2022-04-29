@@ -20,6 +20,13 @@ class Iterator
 		//reseteaza pozitia iteratorului la inceputul containerului
 		void prim();
 
+		//reseteaza pozitia iteratorului la sfarsitul containerului
+		void ultim();
+
+		//muta iteratorul in container
+		// arunca exceptie daca iteratorul nu e valid
+		void anterior();
+
 		//muta iteratorul in container
 		// arunca exceptie daca iteratorul nu e valid
 		void urmator();

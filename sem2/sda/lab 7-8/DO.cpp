@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void DO::actualizarePrimLiber()
+void DO::actualizarePrimLiber() // O(cap)
 {
 	int liber = 0;
 	while (this->elem[liber] != std::make_pair(-INT_MAX, -INT_MAX))
@@ -17,7 +17,7 @@ void DO::actualizarePrimLiber()
 	this->primLiber = liber;
 }
 
-DO::DO(Relatie r) 
+DO::DO(Relatie r) // theta(cap)
 {
 	this->len = 0;
 	this->capacity = MAX;
@@ -28,15 +28,16 @@ DO::DO(Relatie r)
 		this->urm[i] = -1;
 	}
 	this->primLiber = 0;
+	this->indexUltim = -1;
 	this->rel = r;
-	this->indexMin = 0;
-	this->keyMin = INT_MAX;
+	this->indexMin = 0, this->indexMax = this->capacity - 1;
+	this->keyMin = INT_MAX, this->keyMax = INT_MIN;
 }
 
 //adauga o pereche (cheie, valoare) in dictionar
 //daca exista deja cheia in dictionar, inlocuieste valoarea asociata cheii si returneaza vechea valoare
 //daca nu exista cheia, adauga perechea si returneaza null
-TValoare DO::adauga(TCheie c, TValoare v) 
+TValoare DO::adauga(TCheie c, TValoare v) // O(cap)
 {
 	int index = this->d(c);
 	while (index != -1)
@@ -59,6 +60,7 @@ TValoare DO::adauga(TCheie c, TValoare v)
 	{
 		++this->len;
 		this->elem[index] = { c, v };
+		this->indexUltim = std::max(this->indexUltim, index);
 		if (this->primLiber == index)
 			this->actualizarePrimLiber();
 
@@ -66,6 +68,12 @@ TValoare DO::adauga(TCheie c, TValoare v)
 		{
 			this->keyMin = c;
 			this->indexMin = index;
+		}
+
+		if (this->keyMax < c)
+		{
+			this->keyMax = c;
+			this->indexMax = index;
 		}
 
 		return NULL_TVALOARE;
@@ -99,6 +107,7 @@ TValoare DO::adauga(TCheie c, TValoare v)
 		this->prev[index] = this->primLiber;
 	}
 
+	this->indexUltim = std::max(this->indexUltim, this->primLiber);
 	this->actualizarePrimLiber();
 
 	if (this->keyMin > c)
@@ -107,11 +116,17 @@ TValoare DO::adauga(TCheie c, TValoare v)
 		this->indexMin = index;
 	}
 
+	if (this->keyMax < c)
+	{
+		this->keyMax = c;
+		this->indexMax = index;
+	}
+
 	return NULL_TVALOARE;
 }
 
 //cauta o cheie si returneaza valoarea asociata (daca dictionarul contine cheia) sau null
-TValoare DO::cauta(TCheie c) const 
+TValoare DO::cauta(TCheie c) const // O(n)
 {
 	int index = this->d(c);
 	while (this->prev[index] != -1)
@@ -132,7 +147,7 @@ TValoare DO::cauta(TCheie c) const
 }
 
 //sterge o cheie si returneaza valoarea asociata (daca exista) sau null
-TValoare DO::sterge(TCheie c) 
+TValoare DO::sterge(TCheie c) // O(n)
 {
 	int index = this->d(c);
 	while (this->prev[index] != -1)
@@ -145,7 +160,7 @@ TValoare DO::sterge(TCheie c)
 
 		if (this->elem[index].first == c)
 		{
-			TValoare valStearsa = this->elem[index].second;
+			const TValoare valStearsa = this->elem[index].second;
 			if (this->primLiber > index)
 				this->primLiber = index;
 			--this->len;
@@ -155,14 +170,30 @@ TValoare DO::sterge(TCheie c)
 			if (this->urm[index] != -1)
 				this->prev[this->urm[index]] = this->prev[index];
 
+			if (this->indexUltim == index)
+				while (this->elem[this->indexUltim] == std::make_pair(-INT_MAX, -INT_MAX))
+					if (--this->indexUltim == -1)
+						break;
+
 			if (this->keyMin == c)
 			{
 				TCheie min = INT_MAX;
-				for (int i = 0; i < this->capacity; ++i)
+				for (int i = 0; i <= this->indexUltim; ++i)
 					if (this->elem[i] != std::make_pair(-INT_MAX, -INT_MAX) && min > this->elem[i].first)
 					{
 						this->keyMin = min = this->elem[i].first;
 						this->indexMin = i;
+					}
+			}
+
+			if (this->keyMax == c)
+			{
+				TCheie max = INT_MIN;
+				for (int i = 0; i <= this->indexUltim; ++i)
+					if (this->elem[i] != std::make_pair(-INT_MAX, -INT_MAX) && max < this->elem[i].first)
+					{
+						this->keyMin = max = this->elem[i].first;
+						this->indexMax = i;
 					}
 			}
 
@@ -176,18 +207,18 @@ TValoare DO::sterge(TCheie c)
 }
 
 //returneaza numarul de perechi (cheie, valoare) din dictionar
-int DO::dim() const 
+int DO::dim() const // theta(1)
 {
 	return this->len;
 }
 
 //verifica daca dictionarul e vid
-bool DO::vid() const 
+bool DO::vid() const // theta(1)
 {
 	return this->len == 0;
 }
 
-Iterator DO::iterator() const 
+Iterator DO::iterator() const // theta(1)
 {
 	return Iterator(*this);
 }

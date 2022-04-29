@@ -25,10 +25,11 @@ class DO
 		int urm[MAX];
 		int prev[MAX];
 		int primLiber;
+		int indexUltim;
 		Relatie rel;
 
-		int indexMin;
-		TCheie keyMin;
+		int indexMin, indexMax;
+		TCheie keyMin, keyMax;
 
 		void actualizarePrimLiber();
 		const int hashCode(TCheie e) const { return abs(e); }

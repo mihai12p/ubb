@@ -230,6 +230,40 @@ void testIterator(Relatie r) {
 	}
 }
 
+void testIteratorBidirectional(Relatie r)
+{
+	DO d = DO(r);
+	Iterator it = d.iterator();
+	assert(!it.valid());
+	it.prim();
+	assert(!it.valid());
+	int cMin = 100;
+	int cMax = 300;
+	vector<int> chei = cheiInOrdineAleatoare(cMin, cMax);
+	int n = chei.size();
+	for (int i = 0; i < n; i++) {
+		assert(d.adauga(chei[i], chei[n - i - 1]) == NULL_TVALOARE);
+	}
+
+	Iterator itD = d.iterator();
+	itD.ultim();
+	assert(itD.valid());
+
+	TCheie cPrec = itD.element().first;
+	for (int i = 1; i < 100; i++) {
+		assert(cPrec == itD.element().first);
+	}
+	itD.anterior();
+	while (itD.valid()) {
+		TCheie c = itD.element().first;
+		assert(cMin <= c && c <= cMax);
+		assert(d.cauta(c) != NULL_TVALOARE);
+		assert(!r(cPrec, c));
+		cPrec = c;
+		itD.anterior();
+	}
+}
+
 void testCantitativ(){
 	DO d = DO(cresc);
 	int cMin = -3000;
@@ -268,6 +302,7 @@ void testCantitativ(){
 void testIterator() {
 	testIterator(cresc);
 	testIterator(desc);
+	testIteratorBidirectional(cresc);
 }
 
 void testAllExtins() {

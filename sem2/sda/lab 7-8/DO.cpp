@@ -206,6 +206,53 @@ TValoare DO::sterge(TCheie c) // O(n)
 	return NULL_TVALOARE;
 }
 
+/*
+Complexitati:
+	- caz favorabil: cheia si valoarea cautate se alfa in dictionar deci se inlocuieste valoarea => se executa O(n) pasi
+	- caz defavorabil: cheia si valoarea cautate nu se alfa in dictionar => se executa O(n) pasi
+	- caz total: deoarece CF = CD (mereu vor trebui parcurse toate cele n elemente), CT = O(n), unde n este numarul de elemente
+																								dispersate la d(cheie)
+Pseudocod:
+	Subalgoritm inlocuieste()
+		{pre: k : TCheie, valoareVeche : TValoare, valoareNoua : TValoare}
+		{post: se inlocuieste valoareVeche cu valoareNoua in dictionar}
+
+		index <- [this].d(k)
+		cat timp [this].prev[index] != -1 executa
+			index <- [this].prev[index]
+		sfarsit_cat_timp
+
+		cat timp index != -1 executa
+			daca (![this].rel([this].elem[index].first, k)) atunci
+				@break
+			sfarsit_daca
+
+			daca ([this].elem[index] = @pereche(k, valoareVeche)) atunci
+				[this].elem[index].second <- valoareNoua
+			sfarsit_daca
+
+			index <- [this].urm[index]
+		sfarsit_cat_timp
+	Sfarsit_subalg
+*/
+void DO::inlocuieste(TCheie k, TValoare valoareVeche, TValoare valoareNoua)
+{
+	int index = this->d(k);
+	while (this->prev[index] != -1)
+		index = this->prev[index];
+
+	while (index != -1)
+	{
+		if (!this->rel(this->elem[index].first, k))
+			break;
+
+		if (this->elem[index] == std::make_pair(k, valoareVeche))
+			this->elem[index].second = valoareNoua;
+
+		index = this->urm[index];
+	}
+}
+
 //returneaza numarul de perechi (cheie, valoare) din dictionar
 int DO::dim() const // theta(1)
 {

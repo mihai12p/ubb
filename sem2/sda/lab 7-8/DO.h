@@ -50,6 +50,12 @@ class DO
 		//sterge o cheie si returneaza valoarea asociata (daca exista) sau null: NULL_TVALOARE
 		TValoare sterge(TCheie c);
 
+		// inlocuieste valoarea mapate in prezent cheii k cu valoarea valoareNoua, dar numai in cazul in care valoarea curenta 
+		//		este egala cu valoareVeche. 
+		// daca valoarea curenta nu este valoareVeche sau in cazul in care k nu este in cheie a dictionarului, 
+		//		dictionarul nu este modificat
+		void inlocuieste(TCheie k, TValoare valoareVeche, TValoare valoareNoua);
+
 		//returneaza numarul de perechi (cheie, valoare) din dictionar
 		int dim() const;
 

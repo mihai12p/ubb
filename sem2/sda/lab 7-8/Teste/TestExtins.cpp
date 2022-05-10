@@ -299,6 +299,27 @@ void testCantitativ(){
     assert(d.vid());
 }
 
+void testInlocuieste()
+{
+	DO d = DO(cresc);
+	int cMin = 100;
+	int cMax = 200;
+
+	populeazaDOVidIdentic(d, cMin, cMax);
+	for (int c = cMin; c <= cMax; c++) {
+		assert(d.cauta(c) == c);
+	}
+
+	d.inlocuieste(100, 100, 101);
+	assert(d.cauta(100) == 101);
+
+	d.inlocuieste(100, 100, 102);
+	assert(d.cauta(100) == 101);
+
+	d.inlocuieste(99, 100, 103);
+	assert(d.cauta(99) == NULL_TVALOARE);
+}
+
 void testIterator() {
 	testIterator(cresc);
 	testIterator(desc);
@@ -312,4 +333,5 @@ void testAllExtins() {
 	testSterge();
 	testIterator();
 	testCantitativ();
+	testInlocuieste();
 }

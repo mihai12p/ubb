@@ -28,12 +28,12 @@
       </li>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem2/poo"> 
-          :alien:  Programare orientata obiect
+          :alien:  Programare orientată obiect
         </a>
       </li>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem2/sda"> 
-          :heart:  Structuri de date si algoritmi
+          :heart:  Structuri de date și algoritmi
         </a>
       </li>
       <li>

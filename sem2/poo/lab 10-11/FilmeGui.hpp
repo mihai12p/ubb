@@ -11,6 +11,8 @@
 #include <qmessagebox.h>
 #include <qtablewidget.h>
 #include <qheaderview.h>
+#include <qcheckbox.h>
+#include <qplaintextedit.h>
 
 class FilmeGUI : public QWidget
 {
@@ -22,6 +24,14 @@ class FilmeGUI : public QWidget
 	QPushButton* btnSterge;
 	QPushButton* btnModifica;
 	QPushButton* btnCauta;
+	QPushButton* btnFiltreaza;
+	QPushButton* btnSorteaza;
+	QPushButton* btnInchiriaza;
+	QPushButton* btnGolesteCos;
+	QPushButton* btnRaportCos;
+	QPushButton* btnExportCos;
+	QPushButton* btnRefresh;
+	QPushButton* btnUndo;
 
 	void initGUI();
 	void connectSignalsSlots();
@@ -30,6 +40,12 @@ class FilmeGUI : public QWidget
 	void stergeFilmExistent();
 	void modificaFilmExistent();
 	void cautaFilmExistent();
+	void filtreazaFilmeExistente();
+	void sorteazaFilmeExistente();
+	void inchiriazaFilmExistent();
+	void raportCosFilme();
+	void exportCosFilme();
+	void undo();
 
 	public:
 		FilmeGUI(Service& srv) : srv{ srv }

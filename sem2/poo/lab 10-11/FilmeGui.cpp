@@ -430,10 +430,9 @@ void FilmeGUI::raportCosFilme()
 
 	const std::unordered_map<int, int> raportCos = srv.raport();
 
-	QPlainTextEdit* textRaport = new QPlainTextEdit;
-	textRaport->setReadOnly(true);
+	QListWidget* textRaport = new QListWidget;
 	for (const auto& i : raportCos)
-		textRaport->appendPlainText("An: " + QString::number(i.first) + " - Inchirieri: " + QString::number(i.second));
+		textRaport->addItem(new QListWidgetItem("An: " + QString::number(i.first) + " - Inchirieri: " + QString::number(i.second)));
 
 	detaliiFilmExistent->addRow(textRaport);
 

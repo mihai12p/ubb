@@ -57,30 +57,21 @@ TElem Matrice::element(int i, int j) const // O(h)
 
 void Matrice::adaugaNod(nod* nodDeLegat) // O(h)
 {
+	nod* prev = nullptr;
 	nod* curent = this->rad;
 	while (curent)
+		prev = curent, curent = (curent->elem.first.first > nodDeLegat->elem.first.first || (curent->elem.first.first == nodDeLegat->elem.first.first && curent->elem.first.second > nodDeLegat->elem.first.second)) ? curent->st : curent->dr;
+
+	if (prev == nullptr)
 	{
-		if (curent->elem.first.first > nodDeLegat->elem.first.first || (curent->elem.first.first == nodDeLegat->elem.first.first && curent->elem.first.second > nodDeLegat->elem.first.second))
-		{
-			if (curent->st == nullptr)
-			{
-				curent->st = nodDeLegat;
-				break;
-			}
-			else
-				curent = curent->st;
-		}
-		else
-		{
-			if (curent->dr == nullptr)
-			{
-				curent->dr = nodDeLegat;
-				break;
-			}
-			else
-				curent = curent->dr;
-		}
+		this->rad = nodDeLegat;
+		return;
 	}
+
+	if (prev->elem.first.first > nodDeLegat->elem.first.first || (prev->elem.first.first == nodDeLegat->elem.first.first && prev->elem.first.second > nodDeLegat->elem.first.second))
+		prev->st = nodDeLegat;
+	else
+		prev->dr = nodDeLegat;
 }
 
 TElem Matrice::modifica(int i, int j, TElem e) // O(h) + O(h) = O(h)
@@ -122,8 +113,7 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(h) + O(h) = O(h)
 			return vecheaVal;
 		}
 
-		prev = curent;
-		curent = (curent->elem.first.first > i || (curent->elem.first.first == i && curent->elem.first.second > j)) ? curent->st : curent->dr;
+		prev = curent, curent = (curent->elem.first.first > i || (curent->elem.first.first == i && curent->elem.first.second > j)) ? curent->st : curent->dr;
 	}
 
 	if (e == NULL_TELEMENT)
@@ -134,10 +124,7 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(h) + O(h) = O(h)
 	nou->elem.second = e;
 	nou->st = nou->dr = nullptr;
 
-	if (this->rad == nullptr)
-		this->rad = nou;
-	else
-		this->adaugaNod(nou);
+	this->adaugaNod(nou);
 
 	return NULL_TELEMENT;
 }

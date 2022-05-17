@@ -60,9 +60,6 @@ TValoare DO::adauga(TCheie c, TValoare v) // O(cap)
 	{
 		++this->len;
 		this->elem[index] = { c, v };
-		this->indexUltim = std::max(this->indexUltim, index);
-		if (this->primLiber == index)
-			this->actualizarePrimLiber();
 
 		if (this->keyMin > c)
 		{
@@ -75,6 +72,10 @@ TValoare DO::adauga(TCheie c, TValoare v) // O(cap)
 			this->keyMax = c;
 			this->indexMax = index;
 		}
+
+		this->indexUltim = std::max(this->indexUltim, index);
+		if (this->primLiber == index)
+			this->actualizarePrimLiber();
 
 		return NULL_TVALOARE;
 	}
@@ -107,20 +108,20 @@ TValoare DO::adauga(TCheie c, TValoare v) // O(cap)
 		this->prev[index] = this->primLiber;
 	}
 
-	this->indexUltim = std::max(this->indexUltim, this->primLiber);
-	this->actualizarePrimLiber();
-
 	if (this->keyMin > c)
 	{
 		this->keyMin = c;
-		this->indexMin = index;
+		this->indexMin = this->primLiber;
 	}
 
 	if (this->keyMax < c)
 	{
 		this->keyMax = c;
-		this->indexMax = index;
+		this->indexMax = this->primLiber;
 	}
+
+	this->indexUltim = std::max(this->indexUltim, this->primLiber);
+	this->actualizarePrimLiber();
 
 	return NULL_TVALOARE;
 }

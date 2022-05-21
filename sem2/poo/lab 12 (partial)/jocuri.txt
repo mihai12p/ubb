@@ -1,0 +1,50 @@
+1
+God Of War
+90
+PlayStation
+18
+2
+Halo Infinite
+320
+XBOX
+16
+3
+Mario Kart Deluxe 8
+230
+Nintendo
+3
+4
+The Last of Us Part II
+190
+PlayStation
+18
+5
+Forza 7
+190
+XBOX
+3
+6
+Sekiro: Shadows Die Twice
+300
+PC
+18
+7
+Ratchet&Clank
+150
+PlayStation
+7
+8
+The Legend Of Zelda
+350
+Nintendo
+12
+9
+Half-Life: Alyx
+250
+PC
+18
+10
+Sid Meier's Civilization VI
+300
+PC
+12

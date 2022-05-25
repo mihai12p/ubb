@@ -128,3 +128,55 @@ TElem Matrice::modifica(int i, int j, TElem e) // O(h) + O(h) = O(h)
 
 	return NULL_TELEMENT;
 }
+
+/*
+Complexitati:
+	- caz total: deoarece CF = CD (mereu trebuie parcurs tot arborele pentru a determina suma elementelor de pe o coloana j), CT = theta(n)
+Pseudocod:
+	Subalgoritm suma(j)
+		{pre: j = coloana unui element din matrice}
+		{post: sum: suma elementelor de pe coloana j}
+
+		daca (j nu este pozitie valida in matrice) atunci
+			@arunca exceptie
+		sfarsit_daca
+
+		suma <- 0
+		curent <- [this].rad
+		@subalgoritm vsd
+			daca curent = NIL atunci
+				ret
+			sfarsit_daca
+			daca [curent].elem.first.second = j atunci
+				suma <- suma + [curent].elem.second
+			sfarsit_daca
+			@vsd([curent].st)
+			@vsd([curent].dr)
+		@sfarsit_subalg
+		vsd(curent)
+		ret suma
+	Sfarsit_subalg
+*/
+TElem Matrice::suma(int j) // theta(n)
+{
+	if (j >= this->nrColoane() || j < 0)
+		throw std::exception();
+
+	TElem suma = 0;
+
+	std::function<void(nod*)> vsd = [&](nod* curent)
+	{
+		if (curent == nullptr)
+			return;
+
+		if (curent->elem.first.second == j)
+			suma += curent->elem.second;
+
+		vsd(curent->st);
+		vsd(curent->dr);
+	};
+
+	vsd(this->rad);
+
+	return suma;
+}

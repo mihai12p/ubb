@@ -8,6 +8,9 @@
     <ClCompile Include="Film.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FilmeGui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Repo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -20,28 +23,25 @@
     <ClCompile Include="Valid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FilmeGui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="lab 10-11.rc" />
+    <ResourceCompile Include="lab 13-14.rc" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="gui_main.qrc" />
+    <QtRcc Include="lab1314.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="gui_main.ui" />
+    <QtUic Include="lab1314.ui" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lab 10-11.ico" />
+    <None Include="lab 13-14.ico" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{917383f3-ad31-4c73-8637-a4a77e2db8b6}</UniqueIdentifier>
+      <UniqueIdentifier>{d1474bbe-4f53-4c10-8035-97ffa6297f39}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{ed63a6aa-bba2-4886-894a-6223e27c46e7}</UniqueIdentifier>
+      <UniqueIdentifier>{1c383491-0ce7-40e1-a376-5634051695a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Film.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FilmeGui.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Repo.hpp">
@@ -63,7 +66,7 @@
     <ClInclude Include="Valid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FilmeGui.hpp">
+    <ClInclude Include="Observer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

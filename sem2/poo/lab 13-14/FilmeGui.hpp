@@ -2,6 +2,7 @@
 
 #include "Service.hpp"
 #include "Observer.h"
+#include "MyQList.h"
 
 #include <qwidget.h>
 #include <qboxlayout.h>
@@ -11,7 +12,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qmessagebox.h>
-#include <qtablewidget.h>
 #include <qheaderview.h>
 #include <qcheckbox.h>
 #include <qplaintextedit.h>
@@ -22,7 +22,9 @@ class FilmeGUI : public QWidget, public Observer
 	Service& srv;
 
 	QHBoxLayout* mainLayout = new QHBoxLayout;
-	QListWidget* listaFilmeStanga = new QListWidget;
+
+	MyQList* model;
+	QListView* listaFilmeStanga = new QListView;
 
 	QPushButton* btnCosCRUDGUI = new QPushButton("&Cos CRUD");
 	QPushButton* btnCosReadOnly = new QPushButton("&Cos artistic");
@@ -43,7 +45,7 @@ class FilmeGUI : public QWidget, public Observer
 
 	void initGUI();
 	void connectSignalsSlots();
-	void reincarcaLista(const std::vector<Film>& filme, const std::unique_ptr<Film> filmCautat = nullptr);
+	void reincarcaLista(const std::vector<Film>& filme, std::unique_ptr<Film> filmCautat = nullptr);
 	void adaugaFilmNou();
 	void stergeFilmExistent();
 	void modificaFilmExistent();
@@ -59,6 +61,8 @@ class FilmeGUI : public QWidget, public Observer
 		FilmeGUI(Service& srv) : srv{ srv }
 		{
 			initGUI();
+			model = new MyQList{ srv.getAll() };
+			listaFilmeStanga->setModel(model);
 			connectSignalsSlots();
 			reincarcaLista(srv.getAll());
 		}

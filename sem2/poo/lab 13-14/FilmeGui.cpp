@@ -9,8 +9,9 @@ void FilmeGUI::initGUI()
 	QVBoxLayout* listaFilmeSiButoane = new QVBoxLayout;
 	parteaStanga->setLayout(listaFilmeSiButoane);
 
-	listaFilmeStanga->setMinimumWidth(330);
+	listaFilmeStanga->setUniformItemSizes(true);
 	listaFilmeStanga->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	listaFilmeStanga->setMinimumWidth(330);
 	listaFilmeStanga->setFocusPolicy(Qt::NoFocus);
 	listaFilmeSiButoane->addWidget(listaFilmeStanga);
 
@@ -69,19 +70,9 @@ void FilmeGUI::connectSignalsSlots()
 	QObject::connect(btnRefresh, &QPushButton::clicked, this, [&]() { FilmeGUI::reincarcaLista(srv.getAll()); });
 }
 
-void FilmeGUI::reincarcaLista(const std::vector<Film>& filme, const std::unique_ptr<Film> filmCautat)
+void FilmeGUI::reincarcaLista(const std::vector<Film>& filme, std::unique_ptr<Film> filmCautat)
 {
-	listaFilmeStanga->clear();
-	listaFilmeStanga->insertItem(0, new QListWidgetItem("Index | Titlu | Gen | An | Actor | Inchiriat"));
-	int index = 1;
-	for (const auto& film : filme)
-	{
-		QListWidgetItem* item = new QListWidgetItem(QString::number(index) + " | " + QString::fromStdString(film.getTitlu() + " | " + film.getGen()) + " | " + QString::number(film.getAn()) + " | " + QString::fromStdString(film.getActor()) + " | " + QString::number(film.getInchiriat()));
-		if (filmCautat && film == *filmCautat.get())
-			item->setData(Qt::BackgroundRole, QBrush{ Qt::green, Qt::SolidPattern });
-		listaFilmeStanga->insertItem(index, item);
-		++index;
-	}
+	model->setFilme(filme, std::move(filmCautat));
 }
 
 void FilmeGUI::adaugaFilmNou()

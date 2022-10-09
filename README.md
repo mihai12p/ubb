@@ -43,4 +43,6 @@
       </li>
     </ul>
   </li>
+  <li>:ledger: Semestrul :three:
+  </li>
 </ul>

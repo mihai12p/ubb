@@ -47,7 +47,7 @@
     <ul>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem3/map">
-          :part_alternation_mark:  Algoritmica grafelor
+          :trollface:  Metode avansate de programare
         </a>
       </li>
     </ul>

@@ -44,5 +44,12 @@
     </ul>
   </li>
   <li>:ledger: Semestrul :three:
+    <ul>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem3/map">
+          :part_alternation_mark:  Algoritmica grafelor
+        </a>
+      </li>
+    </ul>
   </li>
 </ul>

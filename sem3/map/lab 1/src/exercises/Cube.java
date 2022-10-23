@@ -1,3 +1,5 @@
+package exercises;
+
 public class Cube extends Square
 {
     int height;

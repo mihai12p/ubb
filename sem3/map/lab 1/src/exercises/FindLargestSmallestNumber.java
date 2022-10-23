@@ -1,3 +1,5 @@
+package exercises;
+
 public class FindLargestSmallestNumber
 {
     public static void main(String[] args)

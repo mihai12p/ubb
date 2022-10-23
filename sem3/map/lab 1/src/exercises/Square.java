@@ -1,3 +1,5 @@
+package exercises;
+
 public class Square
 {
     private int length, breadth;

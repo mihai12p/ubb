@@ -50,6 +50,11 @@
           :trollface:  Metode avansate de programare
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem3/plf">
+          :circus_tent:  Programare logică și funcțională
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

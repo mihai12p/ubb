@@ -13,7 +13,8 @@ cmmdc(A, B, D) :- R is A mod B,
                   cmmdc(B, R, D).
 
 %                 {
-%cmmdcL(l1...ln) = cmmdcL(cmmdc(l1, l2)...ln)
+%cmmdcL(l1...ln) = l1, n = 1
+%                  cmmdcL(cmmdc(l1, l2)...ln), altfel
 %                 }
 %Lista=Intreg*
 %cmmdcL(L:Lista, D:Intreg)

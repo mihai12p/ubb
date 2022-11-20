@@ -1,7 +1,6 @@
 %             {
 %              A, B = 0
-%cmmdc(A, B) = B, A % B = 0
-%              cmmdc(B, A % B), altfel
+%cmmdc(A, B) = cmmdc(B, A % B), altfel
 %             }
 %cmmdc(A:Intreg, B:Intreg, D:Intreg)
 %Modele de flux: (i, i, o), (i, i, i)

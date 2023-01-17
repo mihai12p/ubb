@@ -2,18 +2,21 @@ package socialnetwork.service;
 
 import socialnetwork.Config;
 import socialnetwork.domain.Friendship;
+import socialnetwork.domain.Message;
 import socialnetwork.domain.User;
 import socialnetwork.domain.validator.FriendshipValidator;
 import socialnetwork.domain.validator.UserValidator;
 import socialnetwork.domain.validator.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.FriendshipInDatabase;
+import socialnetwork.repository.database.MessageInDatabase;
 import socialnetwork.repository.database.UserInDatabase;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * {@code Service} is the class that coordinates the behaviour of the application.
@@ -25,11 +28,13 @@ public class Service
      */
     private final Repository<Integer, User> userRepository;
     private final Repository<Integer, Friendship> friendshipRepository;
+    private final Repository<Integer, Message> messageRepository;
 
     public Service()
     {
         this.userRepository = new UserInDatabase(Config.getProperty("database_url"), Config.getProperty("database_username"), Config.getProperty("database_password"), new UserValidator());
         this.friendshipRepository = new FriendshipInDatabase(Config.getProperty("database_url"), Config.getProperty("database_username"), Config.getProperty("database_password"), new FriendshipValidator());
+        this.messageRepository = new MessageInDatabase(Config.getProperty("database_url"), Config.getProperty("database_username"), Config.getProperty("database_password"), null);
     }
 
     /**
@@ -285,5 +290,23 @@ public class Service
         User user = new User();
         user.setUsername(username);
         return this.userRepository.findOne(user.hashCode());
+    }
+
+    public void addMessage(User user1, User user2, String content) throws IllegalArgumentException
+    {
+        Message message = new Message(user1.getId(), user2.getId(), content, new Timestamp(System.currentTimeMillis()));
+        message.setId(message.hashCode());
+        this.messageRepository.save(message);
+        System.out.println("Message has been sent.");
+    }
+
+    public ArrayList<Message> getMessagesBetweenUsers(User user1, User user2)
+    {
+        ArrayList<Message> messagesList = new ArrayList<>();
+        this.messageRepository.findAll().forEach(messagesList::add);
+
+        messagesList.sort(Comparator.comparing(Message::getDate_sent));
+
+        return messagesList;
     }
 }

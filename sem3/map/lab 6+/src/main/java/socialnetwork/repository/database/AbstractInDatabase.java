@@ -6,10 +6,7 @@ import socialnetwork.domain.validator.ValidatorStrategy;
 import socialnetwork.repository.Repository;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public abstract class AbstractInDatabase<ID, E extends Entity<ID>> implements Repository<ID, E>
 {
@@ -85,7 +82,10 @@ public abstract class AbstractInDatabase<ID, E extends Entity<ID>> implements Re
     @Override
     public Optional<E> save(E entity) throws ValidationException
     {
-        this.validator.validate(entity);
+        if (this.validator != null)
+        {
+            this.validator.validate(entity);
+        }
 
         Optional<E> optEntity = this.findOne(entity.getId());
         if (optEntity.isPresent())
@@ -129,7 +129,10 @@ public abstract class AbstractInDatabase<ID, E extends Entity<ID>> implements Re
     @Override
     public Optional<E> update(E entity) throws ValidationException
     {
-        this.validator.validate(entity);
+        if (this.validator != null)
+        {
+            this.validator.validate(entity);
+        }
 
         try (Connection connection = this.getConnection())
         {

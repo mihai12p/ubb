@@ -95,6 +95,23 @@ public class Main extends Application
         this.stage.show();
     }
 
+    private void updateMessages(TextArea messages, User loggedUser, User friend)
+    {
+        messages.clear();
+
+        service.getMessagesBetweenUsers(loggedUser, friend).forEach(message ->
+        {
+            if (loggedUser.getId() == message.getIdUser1() && friend.getId() == message.getIdUser2())
+            {
+                messages.appendText(loggedUser.getUsername() + " | " + message.getDate_sent() + "\n" + message.getContent() + "\n\n");
+            }
+            else if (friend.getId() == message.getIdUser1() && loggedUser.getId() == message.getIdUser2())
+            {
+                messages.appendText(friend.getUsername() + " | " + message.getDate_sent() + "\n" + message.getContent() + "\n\n");
+            }
+        });
+    }
+
     private void loggedInUser(User loggedUser)
     {
         BooleanProperty booleanProperty = new SimpleBooleanProperty(false);
@@ -119,9 +136,12 @@ public class Main extends Application
         userInformation.add(new Label(loggedUser.getEmail()), 1, 5);
 
         Button addFriendToUserButton = new Button("Adauga prieten");
+        Button addFriendRequestToUserButton = new Button("Accepta cerere prietenie");
         Button removeFriendFromUserButton = new Button("Sterge prieten");
+        Button removeFriendRequestFromUserButton = new Button("Sterge cerere prietenie");
         Button listFriendRequests = new Button("Show friend requests");
         Button searchUserButton = new Button("Cauta utilizator");
+        Button messageUserButton = new Button("Mesaj");
         TextField searchedUserUsername = new TextField();
         searchedUserUsername.setPromptText("Username");
         searchUserButton.setOnAction(event ->
@@ -158,6 +178,7 @@ public class Main extends Application
                 alert.show();
             }
         });
+        addFriendRequestToUserButton.onActionProperty().bind(addFriendToUserButton.onActionProperty());
 
         removeFriendFromUserButton.setOnAction(event ->
         {
@@ -165,6 +186,57 @@ public class Main extends Application
             {
                 service.removeFriendFromUser(loggedUser.getUsername(), friends.getSelectionModel().getSelectedItem().getUsername());
                 service.removeFriendFromUser(friends.getSelectionModel().getSelectedItem().getUsername(), loggedUser.getUsername());
+            }
+            catch (IllegalArgumentException | ValidationException exception)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR, exception.toString());
+                alert.show();
+            }
+        });
+
+        removeFriendRequestFromUserButton.setOnAction(event ->
+        {
+            try
+            {
+                service.removeFriendFromUser(loggedUser.getUsername(), friends.getSelectionModel().getSelectedItem().getUsername());
+            }
+            catch (IllegalArgumentException | ValidationException exception)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR, exception.toString());
+                alert.show();
+            }
+        });
+
+        messageUserButton.setOnAction(event ->
+        {
+            try
+            {
+                Stage messageWindow = new Stage();
+
+                VBox messagesWindow = new VBox();
+                TextArea messages = new TextArea();
+                messages.setEditable(false);
+                ScrollPane scrollMessages = new ScrollPane(messages);
+
+                User friend = friends.getSelectionModel().getSelectedItem();
+
+                TextField typeMessage = new TextField();
+                typeMessage.setPromptText("Type your message");
+                typeMessage.setMinHeight(30d);
+                typeMessage.setOnAction(messageEvent ->
+                {
+                    service.addMessage(loggedUser, friend, typeMessage.getText());
+                    updateMessages(messages, loggedUser, friend);
+                });
+
+                messagesWindow.getChildren().addAll(scrollMessages, typeMessage);
+
+                updateMessages(messages, loggedUser, friend);
+
+                Scene messageScene = new Scene(messagesWindow, 400, messagesWindow.getMaxHeight());
+                messageWindow.setTitle("Message Window");
+                messageWindow.setScene(messageScene);
+                messageWindow.show();
             }
             catch (IllegalArgumentException | ValidationException exception)
             {
@@ -188,7 +260,10 @@ public class Main extends Application
         friends.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             searchUserLayout.getChildren().remove(addFriendToUserButton);
+            searchUserLayout.getChildren().remove(addFriendRequestToUserButton);
             searchUserLayout.getChildren().remove(removeFriendFromUserButton);
+            searchUserLayout.getChildren().remove(removeFriendRequestFromUserButton);
+            searchUserLayout.getChildren().remove(messageUserButton);
 
             if (newValue == null)
             {
@@ -198,16 +273,43 @@ public class Main extends Application
             Friendship friendshipRequest = service.searchFriendshipRequest(loggedUser.getUsername(), newValue.getUsername());
             if (friendshipRequest != null)
             {
-                if (!searchUserLayout.getChildren().contains(removeFriendFromUserButton))
+                Friendship friendshipRequestInversed = service.searchFriendshipRequest(newValue.getUsername(), loggedUser.getUsername());
+                if (friendshipRequestInversed != null)
                 {
-                    searchUserLayout.getChildren().add(removeFriendFromUserButton);
+                    if (!searchUserLayout.getChildren().contains(removeFriendFromUserButton))
+                    {
+                        searchUserLayout.getChildren().add(removeFriendFromUserButton);
+                    }
+
+                    if (!searchUserLayout.getChildren().contains(messageUserButton))
+                    {
+                        searchUserLayout.getChildren().add(messageUserButton);
+                    }
+                }
+                else
+                {
+                    if (!searchUserLayout.getChildren().contains(removeFriendRequestFromUserButton))
+                    {
+                        searchUserLayout.getChildren().add(removeFriendRequestFromUserButton);
+                    }
                 }
             }
             else
             {
-                if (!searchUserLayout.getChildren().contains(addFriendToUserButton))
+                Friendship friendshipRequestInversed = service.searchFriendshipRequest(newValue.getUsername(), loggedUser.getUsername());
+                if (friendshipRequestInversed != null)
                 {
-                    searchUserLayout.getChildren().add(addFriendToUserButton);
+                    if (!searchUserLayout.getChildren().contains(addFriendRequestToUserButton))
+                    {
+                        searchUserLayout.getChildren().add(addFriendRequestToUserButton);
+                    }
+                }
+                else
+                {
+                    if (!searchUserLayout.getChildren().contains(addFriendToUserButton))
+                    {
+                        searchUserLayout.getChildren().add(addFriendToUserButton);
+                    }
                 }
             }
         });
@@ -263,8 +365,8 @@ public class Main extends Application
         borderPane.setCenter(createAccountAll);
         borderPane.setBottom(friends);
 
-        Scene createAccountScene = new Scene(borderPane, 400, 300);
-        this.stage.setScene(createAccountScene);
+        Scene loggedInScene = new Scene(borderPane, 470, 320);
+        this.stage.setScene(loggedInScene);
         this.stage.show();
     }
 
@@ -315,7 +417,7 @@ public class Main extends Application
     }
 
     @Override
-    public void start(Stage stage) throws Exception
+    public void start(Stage stage)
     {
         this.stage = stage;
 

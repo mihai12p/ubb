@@ -55,6 +55,11 @@
           :circus_tent:  Programare logică și funcțională
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem3/rc">
+          :globe_with_meridians:  Reţele de calculatoare
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

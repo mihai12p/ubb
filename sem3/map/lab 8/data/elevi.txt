@@ -1,0 +1,120 @@
+﻿1;Alessandro Garza;Scoala Gimnaziala “Horea”;1
+2;Jim Singh;Scoala Gimnaziala “Horea”;1
+3;Aran Farmer;Scoala Gimnaziala “Horea”;1
+4;Alexandra Cardenas;Scoala Gimnaziala “Horea”;1
+5;Mercedes Hale;Scoala Gimnaziala “Horea”;1
+6;Fay Aguilar;Scoala Gimnaziala “Horea”;1
+7;Fintan Oconnell;Scoala Gimnaziala “Horea”;1
+8;Duncan Sullivan;Scoala Gimnaziala “Horea”;1
+9;Alastair Stevenson;Scoala Gimnaziala “Horea”;1
+10;Maryam Bender;Scoala Gimnaziala “Horea”;1
+11;Tegan Mckee;Scoala Gimnaziala “Horea”;1
+12;Bridget Brennan;Scoala Gimnaziala “Horea”;1
+13;Karen Morrison;Scoala Gimnaziala “Horea”;1
+14;Jake Davila;Scoala Gimnaziala “Horea”;1
+15;Julia Colon;Scoala Gimnaziala “Horea”;1
+16;Finnley Howard;Liceul Teoretic "Lucian Blaga";3
+17;Layla Sawyer;Liceul Teoretic "Lucian Blaga";3
+18;Miranda Pineda;Liceul Teoretic "Lucian Blaga";3
+19;Leia Welch;Liceul Teoretic "Lucian Blaga";3
+20;Tyrone Bolton;Liceul Teoretic "Lucian Blaga";3
+21;Edith Stuart;Liceul Teoretic "Lucian Blaga";3
+22;Jude Pitts;Liceul Teoretic "Lucian Blaga";3
+23;Malachi Farley;Liceul Teoretic "Lucian Blaga";3
+24;Mohammed Hart;Liceul Teoretic "Lucian Blaga";3
+25;Ahmad Reilly;Liceul Teoretic "Lucian Blaga";3
+26;Miles Mcgowan;Liceul Teoretic "Lucian Blaga";3
+27;Angus Higgins;Liceul Teoretic "Lucian Blaga";3
+28;Aya Reyes;Liceul Teoretic "Lucian Blaga";3
+29;Regan Cherry;Liceul Teoretic "Lucian Blaga";3
+30;Edie Edwards;Liceul Teoretic "Lucian Blaga";3
+31;Emma Chang;Liceul Teoretic "Onisifor Ghibu";14
+32;Idris Burke;Liceul Teoretic "Onisifor Ghibu";14
+33;Leslie Ponce;Liceul Teoretic "Onisifor Ghibu";14
+34;Lance Craig;Liceul Teoretic "Onisifor Ghibu";14
+35;Ilyas Kline;Liceul Teoretic "Onisifor Ghibu";14
+36;Alexia Mcpherson;Liceul Teoretic "Onisifor Ghibu";14
+37;Keenan Gill;Liceul Teoretic "Onisifor Ghibu";14
+38;Zachery Ford;Liceul Teoretic "Onisifor Ghibu";14
+39;Hanna Conway;Liceul Teoretic "Onisifor Ghibu";14
+40;Carrie Meza;Liceul Teoretic "Onisifor Ghibu";14
+41;Myah Morton;Liceul Teoretic "Onisifor Ghibu";14
+42;Erica Cline;Liceul Teoretic "Onisifor Ghibu";14
+43;Traci House;Liceul Teoretic "Onisifor Ghibu";14
+44;Ernest Barker;Liceul Teoretic "Onisifor Ghibu";14
+45;Oscar Shaffer;Liceul Teoretic "Onisifor Ghibu";14
+46;Stanley Nixon;Seminarul Teologic Ortodox;24
+47;Aurora Padilla;Seminarul Teologic Ortodox;24
+48;Jake Farmer;Seminarul Teologic Ortodox;24
+49;Ffion Flores;Seminarul Teologic Ortodox;24
+50;Aminah Sandoval;Seminarul Teologic Ortodox;24
+51;Declan Greer;Seminarul Teologic Ortodox;24
+52;Awais Ballard;Seminarul Teologic Ortodox;24
+53;Cade Gould;Seminarul Teologic Ortodox;24
+54;Miguel Stewart;Seminarul Teologic Ortodox;24
+55;Cole Barker;Seminarul Teologic Ortodox;24
+56;Eesa Medina;Seminarul Teologic Ortodox;24
+57;Elif Moyer;Seminarul Teologic Ortodox;24
+58;Jed Hensley;Seminarul Teologic Ortodox;24
+59;Samara Nielsen;Seminarul Teologic Ortodox;24
+60;Matteo Stanley;Seminarul Teologic Ortodox;24
+61;Zara Barton;Liceul de Informatica "Tiberiu Popoviciu";25
+62;Judy Chandler;Liceul de Informatica "Tiberiu Popoviciu";25
+63;Marion Hill;Liceul de Informatica "Tiberiu Popoviciu";25
+64;Azaan Dalton;Liceul de Informatica "Tiberiu Popoviciu";25
+65;Cyrus Hurst;Liceul de Informatica "Tiberiu Popoviciu";25
+66;Ollie Barnett;Liceul de Informatica "Tiberiu Popoviciu";25
+67;Annabelle Ferrell;Liceul de Informatica "Tiberiu Popoviciu";25
+68;Belle Bowers;Liceul de Informatica "Tiberiu Popoviciu";25
+69;Kobi Sherman;Liceul de Informatica "Tiberiu Popoviciu";25
+70;Ruqayyah Hudson;Liceul de Informatica "Tiberiu Popoviciu";25
+71;Gladys Yang;Liceul de Informatica "Tiberiu Popoviciu";25
+72;Frazer Mccall;Liceul de Informatica "Tiberiu Popoviciu";25
+73;Safwan Humphrey;Liceul de Informatica "Tiberiu Popoviciu";25
+74;Hector Hahn;Liceul de Informatica "Tiberiu Popoviciu";25
+75;Maia Little;Liceul de Informatica "Tiberiu Popoviciu";25
+76;Junaid Maddox;Liceul cu Program Sportiv Cluj-Napoca;15
+77;Grover Pitts;Liceul cu Program Sportiv Cluj-Napoca;15
+78;Nettie Bauer;Liceul cu Program Sportiv Cluj-Napoca;15
+79;Lili Jefferson;Liceul cu Program Sportiv Cluj-Napoca;15
+80;Jed Donaldson;Liceul cu Program Sportiv Cluj-Napoca;15
+81;Rihanna Rosales;Liceul cu Program Sportiv Cluj-Napoca;15
+82;Audrey Patterson;Liceul cu Program Sportiv Cluj-Napoca;15
+83;Safiyyah Franco;Liceul cu Program Sportiv Cluj-Napoca;15
+84;Kyron Butler;Liceul cu Program Sportiv Cluj-Napoca;15
+85;Kobe Olsen;Liceul cu Program Sportiv Cluj-Napoca;15
+86;Macie Beasley;Liceul cu Program Sportiv Cluj-Napoca;15
+87;John Schaefer;Liceul cu Program Sportiv Cluj-Napoca;15
+88;Zakaria Rose;Liceul cu Program Sportiv Cluj-Napoca;15
+89;Allen Hayes;Liceul cu Program Sportiv Cluj-Napoca;15
+90;Milly Schultz;Liceul cu Program Sportiv Cluj-Napoca;15
+91;Walter Manning;Colegiul National „Emil Racovita”;8
+92;Krystal Peck;Colegiul National „Emil Racovita”;8
+93;Sion Herman;Colegiul National „Emil Racovita”;8
+94;Jennie Ayers;Colegiul National „Emil Racovita”;8
+95;Fatma Harrington;Colegiul National „Emil Racovita”;8
+96;Kimberly Buck;Colegiul National „Emil Racovita”;8
+97;Robbie Fuller;Colegiul National „Emil Racovita”;8
+98;Aran Duncan;Colegiul National „Emil Racovita”;8
+99;Christine Riley;Colegiul National „Emil Racovita”;8
+100;Liberty Greer;Colegiul National „Emil Racovita”;8
+101;Preston Kane;Colegiul National „Emil Racovita”;8
+102;Julian Garrett;Colegiul National „Emil Racovita”;8
+103;Elsie Hart;Colegiul National „Emil Racovita”;8
+104;Mathilda Haynes;Colegiul National „Emil Racovita”;8
+105;Jana Rivers;Colegiul National „Emil Racovita”;8
+106;Elouise Dale;Colegiul National "George Cosbuc";9
+107;Alice Rowland;Colegiul National "George Cosbuc";9
+108;Otis Avila;Colegiul National "George Cosbuc";9
+109;Marjorie Jimenez;Colegiul National "George Cosbuc";9
+110;Gideon Mason;Colegiul National "George Cosbuc";9
+111;Euan Bowen;Colegiul National "George Cosbuc";9
+112;Eliana Sharpe;Colegiul National "George Cosbuc";9
+113;Clark Patrick;Colegiul National "George Cosbuc";9
+114;Awais Reynolds;Colegiul National "George Cosbuc";9
+115;Zaynab Hansen;Colegiul National "George Cosbuc";9
+116;Mikolaj Jordan;Colegiul National "George Cosbuc";9
+117;Brogan Welch;Colegiul National "George Cosbuc";9
+118;Mariya Chandler;Colegiul National "George Cosbuc";9
+119;Iestyn Francis;Colegiul National "George Cosbuc";9
+120;Hector Ho;Colegiul National "George Cosbuc";9

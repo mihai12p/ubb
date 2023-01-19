@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>lab_8</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="data\echipe.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>echipe.txt</DependentUpon>
+    </Compile>
+    <Compile Update="data\elevi.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>elevi.txt</DependentUpon>
+    </Compile>
+    <Compile Update="data\jucatori.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>jucatori.txt</DependentUpon>
+    </Compile>
+    <Compile Update="data\meciuri.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>meciuri.txt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\echipe.txt">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>echipe.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="data\elevi.txt">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>elevi.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="data\jucatori.txt">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>jucatori.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="data\meciuri.txt">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>meciuri.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

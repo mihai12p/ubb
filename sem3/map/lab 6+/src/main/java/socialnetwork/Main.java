@@ -227,6 +227,7 @@ public class Main extends Application
                 {
                     service.addMessage(loggedUser, friend, typeMessage.getText());
                     updateMessages(messages, loggedUser, friend);
+                    typeMessage.clear();
                 });
 
                 messagesWindow.getChildren().addAll(scrollMessages, typeMessage);

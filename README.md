@@ -62,4 +62,18 @@
       </li>
     </ul>
   </li>
+  <li>:ledger: Semestrul :four:
+    <ul>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem4/ia">
+          :mountain_bicyclist:  Inteligență artificială
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem4/mpp">
+          :space_invader:  Medii de proiectare și programare
+        </a>
+      </li>
+    </ul>
+  </li>
 </ul>

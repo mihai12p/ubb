@@ -1,0 +1,15 @@
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\bin\Debug\net6.0\mpp-proiect-csharp-vreauladudu.exe
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\bin\Debug\net6.0\mpp-proiect-csharp-vreauladudu.deps.json
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\bin\Debug\net6.0\mpp-proiect-csharp-vreauladudu.runtimeconfig.json
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\bin\Debug\net6.0\mpp-proiect-csharp-vreauladudu.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\bin\Debug\net6.0\mpp-proiect-csharp-vreauladudu.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.csproj.AssemblyReference.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.GeneratedMSBuildEditorConfig.editorconfig
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.AssemblyInfoInputs.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.AssemblyInfo.cs
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.csproj.CoreCompileInputs.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\refint\mpp-proiect-csharp-vreauladudu.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\mpp-proiect-csharp-vreauladudu.genruntimeconfig.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\obj\Debug\net6.0\ref\mpp-proiect-csharp-vreauladudu.dll

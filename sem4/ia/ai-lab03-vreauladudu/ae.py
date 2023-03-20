@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 from fcOptimisation.NaturalChromosome import Chromosome
 from random import randint
 
-FILE_TO_LOAD = "lesmiserables"
+FILE_TO_LOAD = "football"
+
+#Time complexity: O(n^2*m*c)
+#Space complexity: O(n*m)
 
 def ReadGML(FileName: str) -> dict:
     if FileName.endswith("karate.gml") or FileName.endswith("roedunet.gml") or FileName.endswith("redbestel.gml") or FileName.endswith("kdl.gml"):
@@ -43,12 +46,32 @@ def PlotNetwork(Network: list, CommunitiesColor: list):
     nx.draw_networkx_edges(graph, pos, alpha = 0.3)
     plt.show()
 
-def Modularity(Chromosome: list) -> float:
+def Modularity1(Chromosome: list, resolution = 0.7) -> float:
+    M = network['edgesCount']
+
+    def communityContribution(CommunityID: int):
+        Lc = 0
+        communityNodesList = []
+        for nodeIndex, community in enumerate(Chromosome):
+            if community == CommunityID:
+                communityNodesList.append(nodeIndex)
+
+        for i in communityNodesList:
+            for j in communityNodesList:
+                if network['matrix'][i][j]:
+                    Lc += 1 / 2
+
+        sumDegree = sum(len(originalAdjencyList[nodeIndex]) for nodeIndex, community in enumerate(Chromosome) if community == CommunityID)
+        return Lc / M - resolution * ((sumDegree / (2 * M)) ** 2)
+
+    return sum(map(communityContribution, set(Chromosome)))
+
+def Modularity2(Chromosome: list) -> float:
     Q = 0.0
     M = 2 * network['edgesCount']
     for i in range(0, network['nodesCount']):
         for j in range(0, network['nodesCount']):
-            if (Chromosome[i] == Chromosome[j]):
+            if Chromosome[i] == Chromosome[j]:
                Q += network['matrix'][i][j] - network['degrees'][i] * network['degrees'][j] / M
     return Q / M
 
@@ -113,7 +136,7 @@ if __name__ == "__main__":
                 originalAdjencyList[lineIndex].append(rowIndex)
 
     gaParam = {'popSize' : nodesCount, 'generations' : 100}
-    problParam = {'function' : Modularity, 'noDim' : nodesCount, 'network' : network, 'adj' : originalAdjencyList}
+    problParam = {'function' : Modularity1, 'noDim' : nodesCount, 'network' : network, 'adj' : originalAdjencyList}
     ga = GA(gaParam, problParam)
     ga.initialisation()
     ga.evaluation()

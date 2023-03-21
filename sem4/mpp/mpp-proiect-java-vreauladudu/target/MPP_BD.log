@@ -1,0 +1,117 @@
+21 Mar 2023 22:59:23,041 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,044 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,045 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,045 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,046 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,046 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,048 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,048 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,049 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,049 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,049 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,050 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,051 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,051 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,052 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,052 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,053 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:23,053 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:23,053 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:23,054 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:23,055 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:23,056 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:23,056 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:23,056 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:23,214 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Motorcycle{id='7', brand='Kawasaki', capacity=_1000}, Motorcycle{id='1', brand='Honda', capacity=_125}, Motorcycle{id='2', brand='Suzuki', capacity=_600}, Motorcycle{id='4', brand='Yamaha', capacity=_1000}, Motorcycle{id='6', brand='Beta', capacity=_125}, Motorcycle{id='3', brand='Honda', capacity=_250}, Motorcycle{id='5', brand='Husqvarna', capacity=_250}])
+21 Mar 2023 22:59:23,215 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:23,215 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:23,216 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:23,216 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:23,216 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:23,216 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:23,218 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Participant{id='5', name='Rares', motorcycleID=3}, Participant{id='2', name='Andrei', motorcycleID=4}, Participant{id='3', name='Alex', motorcycleID=7}, Participant{id='4', name='Ion', motorcycleID=1}, Participant{id='1', name='Florin', motorcycleID=2}])
+21 Mar 2023 22:59:23,219 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:23,219 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:23,219 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:23,219 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:23,220 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:23,220 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:23,221 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([User{id='1', username='mihai', password='test'}])
+21 Mar 2023 22:59:55,193 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,196 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,197 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,197 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,198 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,198 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,199 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,200 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,200 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,200 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,201 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,201 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,202 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,202 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,203 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,203 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,204 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 22:59:55,204 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 22:59:55,204 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:55,205 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:55,206 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:55,206 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:55,206 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:55,207 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:55,354 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Motorcycle{id='7', brand='Kawasaki', capacity=_1000}, Motorcycle{id='1', brand='Honda', capacity=_125}, Motorcycle{id='2', brand='Suzuki', capacity=_600}, Motorcycle{id='4', brand='Yamaha', capacity=_1000}, Motorcycle{id='6', brand='Beta', capacity=_125}, Motorcycle{id='3', brand='Honda', capacity=_250}, Motorcycle{id='5', brand='Husqvarna', capacity=_250}])
+21 Mar 2023 22:59:55,356 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:55,356 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:55,356 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:55,356 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:55,356 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:55,356 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:55,358 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Participant{id='5', name='Rares', motorcycleID=3}, Participant{id='2', name='Andrei', motorcycleID=4}, Participant{id='3', name='Alex', motorcycleID=7}, Participant{id='4', name='Ion', motorcycleID=1}, Participant{id='1', name='Florin', motorcycleID=2}])
+21 Mar 2023 22:59:55,358 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 22:59:55,359 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 22:59:55,359 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 22:59:55,359 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 22:59:55,359 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 22:59:55,359 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 22:59:55,361 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([User{id='1', username='mihai', password='test'}])
+21 Mar 2023 23:01:09,911 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,915 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,915 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,916 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,916 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,917 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,918 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,918 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,918 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,919 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,919 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,920 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,921 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,921 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,922 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,922 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,922 TRACE moto.configuration.DatabaseConfig 17 getProperties - Enter
+21 Mar 2023 23:01:09,923 TRACE moto.configuration.DatabaseConfig 31 getProperties - Exit with({jdbc.url=jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db})
+21 Mar 2023 23:01:09,923 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 23:01:09,923 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 23:01:09,924 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 23:01:09,925 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 23:01:09,925 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 23:01:09,925 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 23:01:10,069 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Motorcycle{id='7', brand='Kawasaki', capacity=_1000}, Motorcycle{id='1', brand='Honda', capacity=_125}, Motorcycle{id='2', brand='Suzuki', capacity=_600}, Motorcycle{id='4', brand='Yamaha', capacity=_1000}, Motorcycle{id='6', brand='Beta', capacity=_125}, Motorcycle{id='3', brand='Honda', capacity=_250}, Motorcycle{id='5', brand='Husqvarna', capacity=_250}])
+21 Mar 2023 23:01:10,071 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 23:01:10,071 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 23:01:10,071 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 23:01:10,072 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 23:01:10,072 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 23:01:10,072 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 23:01:10,073 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([Participant{id='5', name='Rares', motorcycleID=3}, Participant{id='2', name='Andrei', motorcycleID=4}, Participant{id='3', name='Alex', motorcycleID=7}, Participant{id='4', name='Ion', motorcycleID=1}, Participant{id='1', name='Florin', motorcycleID=2}])
+21 Mar 2023 23:01:10,074 TRACE moto.repository.database.AbstractDatabase 82 findAll - Enter
+21 Mar 2023 23:01:10,074 TRACE moto.repository.database.AbstractDatabase 29 getConnection - Enter
+21 Mar 2023 23:01:10,075 INFO  moto.repository.database.AbstractDatabase 30 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/db/moto.db
+21 Mar 2023 23:01:10,075 INFO  moto.repository.database.AbstractDatabase 31 getConnection - user: null
+21 Mar 2023 23:01:10,075 INFO  moto.repository.database.AbstractDatabase 32 getConnection - password: null
+21 Mar 2023 23:01:10,075 TRACE moto.repository.database.AbstractDatabase 33 getConnection - Exit
+21 Mar 2023 23:01:10,077 TRACE moto.repository.database.AbstractDatabase 97 findAll - Exit with([User{id='1', username='mihai', password='test'}])

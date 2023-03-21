@@ -5,7 +5,8 @@ import moto.repository.IRepository;
 
 import java.sql.*;
 import java.util.HashSet;
-import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRepository<ID, E>
 {
@@ -13,6 +14,7 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
     private final String username;
     private final String password;
     private final String table;
+    private static final Logger logger = LogManager.getLogger();
 
     public AbstractDatabase(String host, String username, String password, String table)
     {
@@ -24,10 +26,22 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
 
     private Connection getConnection() throws SQLException
     {
-        return DriverManager.getConnection(this.host, this.username, this.password);
+        logger.traceEntry();
+        logger.info("trying to connect to database ... {}", this.host);
+        logger.info("user: {}", this.username);
+        logger.info("password: {}", this.password);
+        logger.traceExit();
+        if (this.username != null && this.password != null)
+        {
+            return DriverManager.getConnection(this.host, this.username, this.password);
+        }
+        else
+        {
+            return DriverManager.getConnection(this.host);
+        }
     }
 
-    public abstract Optional<E> extractEntity(ResultSet resultSet) throws SQLException;
+    public abstract E extractEntity(ResultSet resultSet) throws SQLException;
 
     protected abstract PreparedStatement findStatement(Connection connection, ID id) throws SQLException;
     protected abstract PreparedStatement saveStatement(Connection connection, E entity) throws SQLException;
@@ -35,8 +49,9 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
     protected abstract PreparedStatement updateStatement(Connection connection, E entity) throws SQLException;
 
     @Override
-    public Optional<E> find(ID id) throws IllegalArgumentException
+    public E find(ID id) throws IllegalArgumentException
     {
+        logger.traceEntry();
         if (id == null)
         {
             throw new IllegalArgumentException("id must not be null");
@@ -47,42 +62,51 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
             ResultSet resultSet = findStatement(connection, id).executeQuery();
             if (resultSet.next())
             {
-                return extractEntity(resultSet);
+                E entity = extractEntity(resultSet);
+                logger.traceExit(entity);
+                return entity;
             }
         }
         catch (SQLException exception)
         {
+            logger.error(exception);
             exception.printStackTrace();
         }
-        return Optional.empty();
+        logger.traceExit();
+        return null;
     }
 
     @Override
     public Iterable<E> findAll()
     {
+        logger.traceEntry();
         HashSet<E> entities = new HashSet<>();
         try (Connection connection = this.getConnection())
         {
             ResultSet resultSet = connection.prepareStatement("SELECT * from " + this.table).executeQuery();
             while (resultSet.next())
             {
-                this.extractEntity(resultSet).ifPresent(entities::add);
+                entities.add(this.extractEntity(resultSet));
             }
         }
         catch (SQLException exception)
         {
+            logger.error(exception);
             exception.printStackTrace();
         }
+        logger.traceExit(entities);
         return entities;
     }
 
     @Override
-    public Optional<E> save(E entity)
+    public E save(E entity)
     {
-        Optional<E> optEntity = this.find(entity.getId());
-        if (optEntity.isPresent())
+        logger.traceEntry();
+        E searchedEntity = this.find(entity.getId());
+        if (searchedEntity != null)
         {
-            return optEntity;
+            logger.traceExit(searchedEntity);
+            return searchedEntity;
         }
 
         try (Connection connection = this.getConnection())
@@ -91,21 +115,26 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
         }
         catch (SQLException exception)
         {
+            logger.error(exception);
             exception.printStackTrace();
         }
-        return this.find(entity.getId());
+
+        E savedEntity = this.find(entity.getId());
+        logger.traceExit(savedEntity);
+        return savedEntity;
     }
 
     @Override
-    public Optional<E> remove(ID id) throws IllegalArgumentException
+    public E remove(ID id) throws IllegalArgumentException
     {
+        logger.traceEntry();
         if (id == null)
         {
             throw new IllegalArgumentException("id must not be null");
         }
 
-        Optional<E> optEntity = this.find(id);
-        if (optEntity.isPresent())
+        E searchedEntity = this.find(id);
+        if (searchedEntity != null)
         {
             try (Connection connection = this.getConnection())
             {
@@ -113,23 +142,28 @@ public abstract class AbstractDatabase<ID, E extends Entity<ID>> implements IRep
             }
             catch (SQLException exception)
             {
+                logger.error(exception);
                 exception.printStackTrace();
             }
         }
-        return optEntity;
+        logger.traceExit(searchedEntity);
+        return searchedEntity;
     }
 
     @Override
-    public Optional<E> update(E entity)
+    public E update(E entity)
     {
+        logger.traceEntry();
         try (Connection connection = this.getConnection())
         {
             this.updateStatement(connection, entity).executeUpdate();
         }
         catch (SQLException exception)
         {
+            logger.error(exception);
             exception.printStackTrace();
         }
-        return Optional.of(entity);
+        logger.traceExit(entity);
+        return entity;
     }
 }

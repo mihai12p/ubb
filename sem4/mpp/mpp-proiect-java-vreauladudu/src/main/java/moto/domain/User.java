@@ -24,4 +24,13 @@ public class User extends Entity<Integer>
     {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + this.getId() + '\'' +
+                ", username='" + this.username + '\'' +
+                ", password='" + this.password + '\'' +
+                '}';
+    }
 }

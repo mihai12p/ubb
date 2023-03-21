@@ -3,8 +3,7 @@ package moto.domain;
 public class Participant extends Entity<Integer>
 {
     private String name;
-    private Motorcycle motorcycle;
-    private Team team;
+    private Integer motorcycleID;
 
     public String getName()
     {
@@ -16,23 +15,22 @@ public class Participant extends Entity<Integer>
         this.name = name;
     }
 
-    public Motorcycle getMotorcycle()
+    public Integer getMotorcycleID()
     {
-        return this.motorcycle;
+        return this.motorcycleID;
     }
 
-    public void setMotorcycle(Motorcycle motorcycle)
+    public void setMotorcycleID(Integer motorcycleID)
     {
-        this.motorcycle = motorcycle;
+        this.motorcycleID = motorcycleID;
     }
 
-    public Team getTeam()
-    {
-        return this.team;
-    }
-
-    public void setTeam(Team team)
-    {
-        this.team = team;
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "id='" + this.getId() + '\'' +
+                ", name='" + this.name + '\'' +
+                ", motorcycleID=" + this.motorcycleID +
+                '}';
     }
 }

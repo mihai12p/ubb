@@ -1,9 +1,14 @@
 package moto;
 
+import moto.service.Service;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        System.out.println("Hello world!");
+        Service service = new Service();
+        service.listMotorcycles();
+        service.listParticipants();
+        service.listUsers();
     }
 }

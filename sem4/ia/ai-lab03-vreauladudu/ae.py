@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 from fcOptimisation.NaturalChromosome import Chromosome
 from random import randint
 
-FILE_TO_LOAD = "football"
+FILE_TO_LOAD = "lesmiserables"
 
 #Time complexity: O(n^2*m*c)
 #Space complexity: O(n*m)
 
 def ReadGML(FileName: str) -> dict:
-    if FileName.endswith("karate.gml") or FileName.endswith("roedunet.gml") or FileName.endswith("redbestel.gml") or FileName.endswith("kdl.gml"):
+    if FileName.endswith("karate.gml") or FileName.endswith("roedunet.gml") or FileName.endswith("redbestel.gml") or FileName.endswith("kdl.gml") or FileName.endswith("power.gml"):
         graph = nx.read_gml(FileName, label='id')
     else:
         graph = nx.read_gml(FileName)
@@ -49,7 +49,7 @@ def PlotNetwork(Network: list, CommunitiesColor: list):
 def Modularity1(Chromosome: list, resolution = 0.7) -> float:
     M = network['edgesCount']
 
-    def communityContribution(CommunityID: int):
+    def communityContribution(CommunityID: int) -> float:
         Lc = 0
         communityNodesList = []
         for nodeIndex, community in enumerate(Chromosome):
@@ -59,7 +59,7 @@ def Modularity1(Chromosome: list, resolution = 0.7) -> float:
         for i in communityNodesList:
             for j in communityNodesList:
                 if network['matrix'][i][j]:
-                    Lc += 1 / 2
+                    Lc += 0.5
 
         sumDegree = sum(len(originalAdjencyList[nodeIndex]) for nodeIndex, community in enumerate(Chromosome) if community == CommunityID)
         return Lc / M - resolution * ((sumDegree / (2 * M)) ** 2)
@@ -101,7 +101,7 @@ class GA:
                 best = chromosome
         return best
 
-    def selection(self):
+    def selection(self) -> int:
         pos1 = randint(0, self.__param['popSize'] - 1)
         pos2 = randint(0, self.__param['popSize'] - 1)
         if self.__population[pos1].fitness > self.__population[pos2].fitness:
@@ -135,7 +135,7 @@ if __name__ == "__main__":
             if network['matrix'][lineIndex][rowIndex]:
                 originalAdjencyList[lineIndex].append(rowIndex)
 
-    gaParam = {'popSize' : nodesCount, 'generations' : 100}
+    gaParam = {'popSize' : 20, 'generations' : 200}
     problParam = {'function' : Modularity1, 'noDim' : nodesCount, 'network' : network, 'adj' : originalAdjencyList}
     ga = GA(gaParam, problParam)
     ga.initialisation()

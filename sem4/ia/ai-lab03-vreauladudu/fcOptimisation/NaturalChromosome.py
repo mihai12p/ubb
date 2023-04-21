@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import random, randint, choice
 
 class Chromosome:
     def __init__(self, problParam = None):
@@ -50,11 +50,15 @@ class Chromosome:
         return offspring
     
     def mutation(self):
-        pos = randint(0, len(self.__repres) - 1)
-        otherCommunity = choice(self.__repres)
-        while self.__repres[pos] == otherCommunity:
+        if random() <= 0.85:
+            pos = randint(0, len(self.__repres) - 1)
             otherCommunity = choice(self.__repres)
-        
+            tries, maxTries = 0, 5
+            while self.__repres[pos] == otherCommunity and tries < maxTries:
+                otherCommunity = choice(self.__repres)
+                tries += 1
+            self.__repres[pos] = otherCommunity
+
     def __str__(self):
         return '\nChromo: ' + str(self.__repres) + ' has fit: ' + str(self.__fitness)
     

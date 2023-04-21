@@ -1,0 +1,35 @@
+.border {
+    border: 1px solid black;
+    max-width: fit-content;
+}
+
+.border ul {
+    display: flex;
+    margin: 10px;
+    padding: 0;
+}
+
+div.item {
+    display: block;
+    text-align: center;
+    width: 120px;
+}
+
+img {
+    width: 124px;
+    height: 164px;
+}
+
+span.caption {
+    display: block;
+}
+
+.border ul li {
+    background-color: cyan;
+    width: 164px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 5px 5px 5px;
+}

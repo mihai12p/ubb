@@ -1,0 +1,38 @@
+body, html {
+    margin: 0;
+    height: 100%;
+}
+
+header {
+    background-color: red;
+    font-size: 30px;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+}
+
+.menu {
+    background-color: yellow;
+    height: 25px;
+    text-align: center;
+}
+
+footer {
+    background-color: pink;
+    font-size: 30px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+}
+
+.main {
+    background-color: green;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 185px);
+}
+
+.main > p {
+    font-size: 25px;
+}

@@ -1,0 +1,99 @@
+.social {
+    /* display: flex; */
+    justify-content: left;
+    align-items: center;
+}
+
+.social li {
+    width: 84px;
+    height: 84px;
+    /* display: inline-block; */
+}
+
+.image1-disabled {
+    background: url('social.png') calc(-84px*0) calc(84px*1);
+}
+
+.image2-disabled {
+    background: url('social.png') calc(-84px*1) calc(84px*1);
+}
+
+.image3-disabled {
+    background: url('social.png') calc(-84px*2) 84px;
+}
+
+.image4-disabled {
+    background: url('social.png') calc(-84px*3) 84px;
+}
+
+.image5-disabled {
+    background: url('social.png') calc(-84px*4) 84px;
+}
+
+.image6-disabled {
+    background: url('social.png') calc(-84px*5) 84px;
+}
+
+.image7-disabled {
+    background: url('social.png') calc(-84px*6) 84px;
+}
+
+.image8-disabled {
+    background: url('social.png') calc(-84px*7) 84px;
+}
+
+.image9-disabled {
+    background: url('social.png') calc(-84px*8) 84px;
+}
+
+.image10-disabled {
+    background: url('social.png') calc(-84px*9) 84px;
+}
+
+.image11-disabled {
+    background: url('social.png') calc(-84px*10) 84px;
+}
+
+.image1-disabled:hover {
+    background: url('social.png') calc(-84px*0) 0;
+}
+
+.image2-disabled:hover {
+    background: url('social.png') calc(-84px*1) 0;
+}
+
+.image3-disabled:hover {
+    background: url('social.png') calc(-84px*2) 0;
+}
+
+.image4-disabled:hover {
+    background: url('social.png') calc(-84px*3) 0;
+}
+
+.image5-disabled:hover {
+    background: url('social.png') calc(-84px*4) 0;
+}
+
+.image6-disabled:hover {
+    background: url('social.png') calc(-84px*5) 0;
+}
+
+.image7-disabled:hover {
+    background: url('social.png') calc(-84px*6) 0;
+}
+
+.image8-disabled:hover {
+    background: url('social.png') calc(-84px*7) 0;
+}
+
+.image9-disabled:hover {
+    background: url('social.png') calc(-84px*8) 0;
+}
+
+.image10-disabled:hover {
+    background: url('social.png') calc(-84px*9) 0;
+}
+
+.image11-disabled:hover {
+    background: url('social.png') calc(-84px*10) 0;
+}

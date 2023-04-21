@@ -1,0 +1,31 @@
+body {
+    width: 500px;
+}
+
+.parinte {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.stanga {
+    width: 200px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dreapta {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dreapta img {
+    max-width: 200px;
+    max-height: 100%;
+    height: auto;
+}

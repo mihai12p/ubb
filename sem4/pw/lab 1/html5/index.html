@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Vacan&#355;&#259;</title>
+</head>
+<body>
+<div>
+	<table>
+        <tbody>
+            <tr>
+                <th>Bilet vacan&#355;&#259;</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="colgroup">Nume</th>
+                <td colspan="6"><input type="text" size="101" name="lastname" value="Test&#259;lescu"></td>
+
+                <th>
+                    <label for="birthday">Data na&#351;terii</label><br>
+                    <input type="date" id="birthday" name="birthday" min="1980-01-01" max="2024-01-01" step="1">
+                </th>
+            </tr>
+            <tr>
+                <th scope="colgroup">Prenume</th>
+                <td colspan="7"><input type="text" size="101" name="firstname" value="Ion"></td>
+            </tr>
+            <tr>
+                <th scope="colgroup">Adres&#259;</th>
+                <td colspan="7">
+                    <input type="text" size="119" name="address" value="str. T&#226;rgovi&#351;te, nr. 1, bl. 1">
+                </td>
+            </tr>
+            <tr>
+                <th scope="colgroup">E-mail</th>
+                <td colspan="7">
+                    <input type="text" size="119" name="email" value="iontestalescu@gmail.com">
+                </td>
+            </tr>
+            <tr>
+                <th scope="colgroup">Telefon</th>
+                <td colspan="5">
+                    <input type="text" size="101" name="telefon" value="0712345678">
+                </td>
+
+                <th colspan="2" scope="colgroup">Sex
+                    <input type="radio" name="gen" value="Male">M
+                    <input type="radio" name="gen" value="Female">F
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <th>Destina&#355;ii &#351;i informa&#355;ii</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th colspan="1" scope="col">Nr. crt.</th>
+                <th colspan="1" scope="col">Cod</th>
+                <th colspan="1" scope="col">Denumire</th>
+                <th colspan="4" scope="col">Pre&#355;</th>
+            </tr>
+            <tr>
+                <th scope="col">1</th>
+                <td colspan="1"><input type="text" maxlength="5" name="cod1" value="12345"></td>
+                <td colspan="1"><input type="text" maxlength="5" name="destinatie1" value="Thailanda"></td>
+                <td colspan="4"><input type="text" maxlength="5" name="pret1" value="2000€"></td>
+            </tr>
+            <tr>
+                <th scope="col">2</th>
+                <td colspan="1"><input type="text" maxlength="5" name="cod2" value="23456"></td>
+                <td colspan="1"><input type="text" maxlength="5" name="destinatie2" value="Tenerife"></td>
+                <td colspan="4"><input type="text" maxlength="5" name="pret2" value="3500€"></td>
+            </tr>
+            <tr>
+                <th scope="col">3</th>
+                <td colspan="1"><input type="text" maxlength="5" name="cod3" value="66666"></td>
+                <td colspan="1"><input type="text" maxlength="5" name="destinatie3" value="Caraibe"></td>
+                <td colspan="4"><input type="text" maxlength="5" name="pret3" value="5000€"></td>
+            </tr>
+            <tr>
+                <th>Nr. persoane</th>
+                <td colspan="3"><select name="persoane" id="nrAdulti">
+                    <option value="" selected>Num&#259;rul de adul&#355;i</option>
+                    <option value="unu">1</option>
+                    <option value="doi">2</option>
+                    <option value="trei">3</option>
+                    <option value="patru">4</option>
+                </select></td>
+                <td colspan="3"><select name="persoane" id="nrCopii">
+                    <option value="" selected>Num&#259;rul de copii</option>
+                    <option value="unu">0</option>
+                    <option value="unu">1</option>
+                    <option value="doi">2</option>
+                    <option value="trei">3</option>
+                    <option value="patru">4</option>
+                </select></td>
+            </tr>
+            <tr>
+                <th>Op&#355;iuni</th>
+                <td colspan="6">
+                    <table>
+                        <tr>
+                            <th>Avion</th>
+                            <td>
+                                <input type="radio" name="tipZbor" value="lowCost">Low cost
+                                <input type="radio" name="tipZbor" value="luxury"><strong>Luxury</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Obiective</th>
+                            <td>
+                                <input type="checkbox" id="vizite1" name="muzeu" value="Muzeu" checked>Muzee
+                                <input type="checkbox" id="vizite2" name="zoo" value="Muzeu" checked>Zoo
+                                <input type="checkbox" id="vizite3" name="monumente" value="Muzeu" checked>Monumente
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Tip vacan&#355;&#259;</th>
+                            <td>
+                                <input type="radio" name="tipVacanta" value="basic">Basic
+                                <input type="radio" name="tipVacanta" value="allInclusive" disabled>All-inclusive
+                                <input type="radio" name="tipVacanta" value="ultraInclusive"><b>Ultra-inclusive</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th>Bagaje</th>
+                <td colspan="6"><textarea id="bagaje" name="bagaje" rows="3" cols="105">Introduce&#355;i bagajele</textarea></td>
+            </tr>
+            <tr>
+                <th>Observa&#355;ii</th>
+                <td colspan="6"><textarea id="observatii" name="observatii" rows="3" cols="105">Introduce&#355;i observa&#355;iile</textarea></td>
+            </tr>
+            <tr>
+                <th>Alte informa&#355;ii</th>
+                <td colspan="3">&#206;ntreb&#259;ri frecvente<ol type="i">
+                    <li>Mai trebuie alte pl&#259;&#355;i pe l&#226;ng&#259; pre&#355;ul specificat?</li>
+                    <li>
+                        <ul>
+                            <li>Transport</li>
+                            <li>Intr&#259;ri obiective</li>
+                        </ul>
+                    </li>
+                    <li>Este nevoie de permis de conducere?</li>
+                    <li>Este nevoie de viz&#259;?</li>
+                    <li>Este nevoie de pa&#351;aport?</li>
+                </ol>
+                <td colspan="3">R&#259;spunsuri<ol start="1">
+                    <li>Depinde de tipul de vacan&#355;&#259; ales</li>
+                    <li>
+                        <ul>
+                            <li>Basic - da, pentru transport &#351;i intr&#259;ri obiective</li>
+                            <li>All-inclusive - da, pentru intr&#259;ri obiective</li>
+                            <li>Ultra-inclusive - nu</li>
+                        </ul>
+                    </li>
+                    <li>Permisul de conducere este op&#355;ional.</li>
+                    <li>&#206;n func&#355;ie de destina&#355;ie poate fi necesar&#259; viza.</li>
+                    <li>Da, pa&#351;aportul este obligatoriu.</li>
+                </ol></td>
+            </tr>
+        </tbody>
+	</table>
+</div>
+<div>
+    <br>
+    <form>
+        <fieldset>
+            <legend><span>Informa&#355;ii Thailanda</span></legend>
+            <p><a href="https://ro.wikipedia.org/wiki/Thailanda" target="_blank"><img src="../vacanta.jpg" alt="Thailanda" width="600" height="400"></a></p> 
+            <h1>Thailanda</h1>
+            <h2>Suprafa&#355;&#259;</h2>
+            <input type="text" id="suprafata" name="suprafata" value="513.120 km²" readonly>
+            <h3>Cel mai jos punct</h3>
+            <input type="text" id="josPunct" name="josPunct" value="Golful Thailandei" readonly>
+            <h4>Cel mai mare ora&#351;</h4>
+            <input type="text" id="mareOras" name="mareOras" value="Bangkok" readonly>
+            <h5>Densitate</h5>
+            <input type="text" id="densitate" name="densitate" value="121 loc/km²" readonly>
+            <h6>Fus orar</h6>
+            <input type="text" id="fusOrar" name="fusOrar" value="UTC+7" readonly>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

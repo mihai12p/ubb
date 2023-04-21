@@ -1,0 +1,36 @@
+.dialog {
+    margin-left: 70px;
+}
+
+.dialog li {
+    display: inline-flex;
+    justify-content: left;
+    align-items: center;
+    padding-right: 100px;
+    margin-right: auto;
+    border-radius: 25px;
+}
+
+.dialog li:before {
+    width: 135px;
+    height: 104px;
+    content: "";
+    transform: translateX(-110px);
+    border-radius: 40%;
+    box-shadow: 0.5vmin 0, 2vmin -0.5vmin rgb(0, 153, 255), 2vmin -0.5vmin 0 0.5vmin;
+}
+
+.alice, .bob {
+    text-align: center;
+    background-color: cyan;
+    border-radius: 20px;
+    border: 2px solid black;
+}
+
+.dialog li.alice:before {
+    background: url('faces.jpeg') 2px 3px;
+}
+
+.dialog li.bob:before {
+    background: url('faces.jpeg') 10px 103px;
+}

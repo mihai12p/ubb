@@ -1,0 +1,55 @@
+body, html {
+    margin: 0;
+    height: 100%;
+}
+
+#pagina {
+    height: 100%;
+}
+
+header {
+    background-color: red;
+    font-size: 30px;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+footer {
+    background-color: pink;
+    font-size: 30px;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+#parinte {
+    height: 70%;
+    display: flex;
+}
+
+.lista {
+    background-color: yellow;
+    height: 100%;
+    width: 15%;
+}
+
+.lista li {
+    font-size: 22px;
+    padding: 0 100px 0 10px;
+    border-bottom: solid 2px black;
+}
+
+.main {
+    background-color: green;
+    height: 100%;
+    width: 85%;
+    font-size: 30px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}

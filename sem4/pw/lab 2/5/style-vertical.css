@@ -1,0 +1,37 @@
+.border {
+    border: 1px solid black;
+    max-width: 300px;
+    background-color: yellow;
+}
+
+.border ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+div.item {
+    display: flex;
+    text-align: center;
+    width: 120px;
+}
+
+img {
+    width: 100px;
+    height: 164px;
+}
+
+span.caption {
+    display: flex;
+    margin: 15px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.border ul li {
+    width: 144px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

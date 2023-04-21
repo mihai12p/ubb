@@ -1,0 +1,61 @@
+span.item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0 0 3px 0;
+}
+
+span label {
+    padding-right: 5px;
+}
+
+.input-wrapper {
+    box-sizing: border-box;
+    background-image: url("http://3.bp.blogspot.com/-4oAWWCcNNz4/Tjr3nKNyVUI/AAAAAAAAPLU/Pouua-pNsEY/s1600/sq.gif");    
+    background-size: 20px;
+    width: 360px;
+    height: 20px;
+    padding-left: 5px;
+}
+
+.input-wrapper2 {
+    box-sizing: border-box;
+    background-image: url("http://3.bp.blogspot.com/-4oAWWCcNNz4/Tjr3nKNyVUI/AAAAAAAAPLU/Pouua-pNsEY/s1600/sq.gif");    
+    background-size: 20px;
+    width: 260px;
+    height: 20px;
+    padding-left: 5px;
+}
+
+#nume {
+    background: none;
+    display: block;
+    width: 360px;
+    padding: 3px 0 0;
+    border: none;
+    font-family: monospace;
+    font-size: 14px;
+    letter-spacing: 12px;
+}
+
+#prenume {
+    background: none;
+    display: block;
+    width: 360px;
+    padding: 3px 0 0;
+    border: none;
+    font-family: monospace;
+    font-size: 14px;
+    letter-spacing: 12px;
+}
+
+#cnp {
+    background: none;
+    display: block;
+    width: 260px;
+    padding: 3px 0 0;
+    border: none;
+    font-family: monospace;
+    font-size: 14px;
+    letter-spacing: 12px;
+}

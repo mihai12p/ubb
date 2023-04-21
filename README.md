@@ -74,6 +74,11 @@
           :space_invader:  Medii de proiectare și programare
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem4/pw">
+          :globe_with_meridians:  Programare web
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

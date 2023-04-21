@@ -1,0 +1,7 @@
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\obj\Debug\domain.csproj.AssemblyReference.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\obj\Debug\domain.csproj.CoreCompileInputs.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\bin\Debug\domain.dll.config
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\bin\Debug\domain.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\bin\Debug\domain.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\obj\Debug\domain.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\domain\obj\Debug\domain.pdb

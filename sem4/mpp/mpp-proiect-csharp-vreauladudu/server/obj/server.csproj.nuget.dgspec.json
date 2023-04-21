@@ -1,0 +1,158 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\server\\server.csproj": {}
+  },
+  "projects": {
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj",
+        "projectName": "domain",
+        "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\networking\\networking.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\networking\\networking.csproj",
+        "projectName": "networking",
+        "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\networking\\networking.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj"
+              },
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\services\\services.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\services\\services.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\persistence\\persistence.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\persistence\\persistence.csproj",
+        "projectName": "persistence",
+        "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\persistence\\persistence.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\server\\server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\server\\server.csproj",
+        "projectName": "server",
+        "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\12\\.nuget\\packages\\",
+        "outputPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\server\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\12\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj"
+              },
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\networking\\networking.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\networking\\networking.csproj"
+              },
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\persistence\\persistence.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\persistence\\persistence.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[1.0.117, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\services\\services.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\services\\services.csproj",
+        "projectName": "services",
+        "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\services\\services.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj": {
+                "projectPath": "D:\\facultate-repo\\sem4\\mpp\\mpp-proiect-csharp-vreauladudu\\domain\\domain.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    }
+  }
+}

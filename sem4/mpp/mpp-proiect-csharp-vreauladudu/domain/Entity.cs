@@ -1,8 +1,10 @@
-﻿namespace mpp_proiect_csharp_vreauladudu.domain
+﻿using System;
+
+namespace mpp_proiect_csharp_vreauladudu.domain
 {
     [Serializable]
-    internal class Entity<ID>
+    public class Entity<ID>
     {
-        public ID? id { get; set; }
+        public ID Id { get; set; }
     }
 }

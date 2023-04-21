@@ -1,0 +1,13 @@
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\obj\Debug\networking.csproj.AssemblyReference.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\obj\Debug\networking.csproj.CoreCompileInputs.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\networking.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\networking.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\obj\Debug\networking.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\obj\Debug\networking.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\obj\Debug\networking.csproj.CopyComplete
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\domain.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\services.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\domain.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\domain.dll.config
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\services.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\networking\bin\Debug\services.dll.config

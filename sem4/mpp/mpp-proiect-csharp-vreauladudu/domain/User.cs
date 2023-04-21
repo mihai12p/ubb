@@ -1,8 +1,11 @@
-﻿namespace mpp_proiect_csharp_vreauladudu.domain
+﻿using System;
+
+namespace mpp_proiect_csharp_vreauladudu.domain
 {
-    internal class User : Entity<int>
+    [Serializable]
+    public class User : Entity<int>
     {
-        public String? username { get; set; }
-        public String? password { get; set; }
+        public String Username { get; set; }
+        public String Password { get; set; }
     }
 }

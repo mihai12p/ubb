@@ -1,9 +1,16 @@
-﻿namespace mpp_proiect_csharp_vreauladudu.domain
+﻿using System;
+
+namespace mpp_proiect_csharp_vreauladudu.domain
 {
-    internal class Participant : Entity<int>
+    [Serializable]
+    public class Participant : Entity<int>
     {
-        public String? name { get; set; }
-        public Motorcycle? motorcycle { get; set; }
-        public Team? team { get; set; }
+        public String Name { get; set; }
+        public int MotorcycleID { get; set; }
+
+        public override string ToString()
+        {
+            return "ID: " + this.Id + " | Name: " + this.Name + " | MotorcycleId: " + this.MotorcycleID;
+        }
     }
 }

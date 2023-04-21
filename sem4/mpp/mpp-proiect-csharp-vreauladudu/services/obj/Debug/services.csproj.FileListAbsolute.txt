@@ -1,0 +1,11 @@
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\obj\Debug\services.csproj.AssemblyReference.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\obj\Debug\services.csproj.CoreCompileInputs.cache
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\services.dll.config
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\services.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\services.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\domain.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\domain.pdb
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\bin\Debug\domain.dll.config
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\obj\Debug\services.csproj.CopyComplete
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\obj\Debug\services.dll
+D:\facultate-repo\sem4\mpp\mpp-proiect-csharp-vreauladudu\services\obj\Debug\services.pdb

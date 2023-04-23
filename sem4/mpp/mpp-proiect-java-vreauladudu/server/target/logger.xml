@@ -2988,3 +2988,114 @@
 23 Apr 2023 04:45:53,303 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
 23 Apr 2023 04:45:57,075 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
 23 Apr 2023 04:45:57,076 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:14,095 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:14,100 INFO  moto.repository.database.DatabaseUtils 34 getConnection - trying to connect to database ... jdbc:sqlite:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/persistence/src/main/java/moto/db/moto.db
+23 Apr 2023 18:21:14,100 INFO  moto.repository.database.DatabaseUtils 35 getConnection - user: null
+23 Apr 2023 18:21:14,100 INFO  moto.repository.database.DatabaseUtils 36 getConnection - password: null
+23 Apr 2023 18:21:14,276 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:20,658 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:20,659 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:20,845 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:20,846 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:20,847 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:20,849 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([ID: 6 | Brand: Beta | Capacitate: 125, ID: 5 | Brand: Husqvarna | Capacitate: 250, ID: 1 | Brand: Honda | Capacitate: 125, ID: 2 | Brand: Suzuki | Capacitate: 600, ID: 3 | Brand: Honda | Capacitate: 250, ID: 4 | Brand: Yamaha | Capacitate: 1000, ID: 7 | Brand: Kawasaki | Capacitate: 1000])
+23 Apr 2023 18:21:20,978 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:20,978 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:20,978 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:20,979 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([ID: 6 | Brand: Beta | Capacitate: 125, ID: 5 | Brand: Husqvarna | Capacitate: 250, ID: 1 | Brand: Honda | Capacitate: 125, ID: 2 | Brand: Suzuki | Capacitate: 600, ID: 3 | Brand: Honda | Capacitate: 250, ID: 4 | Brand: Yamaha | Capacitate: 1000, ID: 7 | Brand: Kawasaki | Capacitate: 1000])
+23 Apr 2023 18:21:24,450 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:24,451 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:30,925 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:30,926 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:31,107 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:31,108 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:31,108 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:31,109 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([ID: 6 | Brand: Beta | Capacitate: 125, ID: 5 | Brand: Husqvarna | Capacitate: 250, ID: 1 | Brand: Honda | Capacitate: 125, ID: 2 | Brand: Suzuki | Capacitate: 600, ID: 3 | Brand: Honda | Capacitate: 250, ID: 4 | Brand: Yamaha | Capacitate: 1000, ID: 7 | Brand: Kawasaki | Capacitate: 1000])
+23 Apr 2023 18:21:31,228 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:31,228 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:31,229 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:31,230 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([ID: 6 | Brand: Beta | Capacitate: 125, ID: 5 | Brand: Husqvarna | Capacitate: 250, ID: 1 | Brand: Honda | Capacitate: 125, ID: 2 | Brand: Suzuki | Capacitate: 600, ID: 3 | Brand: Honda | Capacitate: 250, ID: 4 | Brand: Yamaha | Capacitate: 1000, ID: 7 | Brand: Kawasaki | Capacitate: 1000])
+23 Apr 2023 18:21:35,133 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:35,134 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:35,245 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:35,245 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:35,352 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:35,353 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:36,378 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:36,378 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:36,488 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:36,488 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:36,597 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:36,597 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:44,983 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:44,983 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,097 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,098 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,207 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,208 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,317 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,317 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,423 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,424 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,532 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,533 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,642 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,642 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,753 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,753 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:45,861 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:45,862 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:46,601 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:46,601 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:46,716 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:46,716 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,871 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:57,872 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,872 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,872 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([ID: 3 | Name: Alex | MotorcycleId:7, ID: 4 | Name: Ion | MotorcycleId:1, ID: 6 | Name: Ionut | MotorcycleId:1, ID: 1 | Name: Florin | MotorcycleId:2, ID: 5 | Name: Rares | MotorcycleId:3, ID: 2 | Name: Andrei | MotorcycleId:4])
+23 Apr 2023 18:21:57,873 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,873 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,873 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,873 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.AbstractDatabase 84 save - Enter
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.AbstractDatabase 34 find - Enter
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.AbstractDatabase 55 find - Exit
+23 Apr 2023 18:21:57,876 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,877 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,884 TRACE moto.repository.database.AbstractDatabase 34 find - Enter
+23 Apr 2023 18:21:57,885 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,885 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,885 TRACE moto.repository.database.AbstractDatabase 46 find - Exit with(ID: 7 | Name: Ionute | MotorcycleId:1)
+23 Apr 2023 18:21:57,885 TRACE moto.repository.database.AbstractDatabase 103 save - Exit with(ID: 7 | Name: Ionute | MotorcycleId:1)
+23 Apr 2023 18:21:57,886 TRACE moto.repository.database.AbstractDatabase 62 findAll - Enter
+23 Apr 2023 18:21:57,886 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:57,886 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:57,886 TRACE moto.repository.database.AbstractDatabase 77 findAll - Exit with([moto.User@4d439dab, moto.User@78e724cd])
+23 Apr 2023 18:21:58,003 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,004 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,112 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,112 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,221 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,221 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,328 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,328 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,435 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,435 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,543 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,544 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,651 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,651 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:21:58,760 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:21:58,761 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:22:06,680 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:22:06,680 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:22:06,792 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:22:06,792 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:22:06,901 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:22:06,901 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:22:19,407 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:22:19,407 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit
+23 Apr 2023 18:22:20,205 TRACE moto.repository.database.DatabaseUtils 27 getConnection - Enter
+23 Apr 2023 18:22:20,205 TRACE moto.repository.database.DatabaseUtils 54 getConnection - Exit

@@ -8,15 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import moto.User;
-import moto.services.IMotoService;
 import moto.services.MotoException;
 
 public class LoginController
 {
-    private IMotoService server;
     private MotoController motoController;
-    private User user;
 
     @FXML
     TextField username;
@@ -24,11 +20,6 @@ public class LoginController
     TextField password;
 
     Parent mainParent;
-
-    public void setServer(IMotoService server)
-    {
-        this.server = server;
-    }
 
     public void setParent(Parent parent)
     {

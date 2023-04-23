@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class MotoRpcConcurrentServer extends AbstractConcurrentServer
 {
-    private IMotoService motoServer;
+    private final IMotoService motoServer;
 
     public MotoRpcConcurrentServer(int port, IMotoService motoServer)
     {
@@ -20,9 +20,7 @@ public class MotoRpcConcurrentServer extends AbstractConcurrentServer
     protected Thread createWorker(Socket client)
     {
         MotoClientRpcReflectionWorker worker = new MotoClientRpcReflectionWorker(motoServer, client);
-
-        Thread th = new Thread(worker);
-        return th;
+        return new Thread(worker);
     }
 
     @Override

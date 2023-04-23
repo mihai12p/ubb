@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public abstract class AbstractServer
 {
-    private int port;
+    private final int port;
     private ServerSocket serverSocket = null;
 
     public AbstractServer(int port)

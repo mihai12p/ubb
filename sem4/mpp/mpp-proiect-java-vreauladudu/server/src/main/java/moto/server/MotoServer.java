@@ -22,10 +22,10 @@ import java.util.stream.StreamSupport;
 
 public class MotoServer implements IMotoService
 {
-    private MotorcycleRepository motorcycles;
-    private ParticipantRepository participants;
-    private UserRepository users;
-    private Map<Integer, IMotoObserver> loggedClients;
+    private final MotorcycleRepository motorcycles;
+    private final ParticipantRepository participants;
+    private final UserRepository users;
+    private final Map<Integer, IMotoObserver> loggedClients;
 
     public MotoServer(MotorcycleRepository motorcycles, ParticipantRepository participants, UserRepository users)
     {

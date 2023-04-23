@@ -19,8 +19,8 @@ import java.util.Map;
 
 public class MotoClientRpcReflectionWorker implements Runnable, IMotoObserver
 {
-    private IMotoService server;
-    private Socket connection;
+    private final IMotoService server;
+    private final Socket connection;
 
     private ObjectInputStream inputStream;
     private ObjectOutput outputStream;
@@ -115,7 +115,7 @@ public class MotoClientRpcReflectionWorker implements Runnable, IMotoObserver
     public void participantAdded(Participant participant)
     {
         Response response = new Response.Builder().type(ResponseType.PARTICIPANT_ADDED).data(participant).build();
-        System.out.println("Participant added1 " + participant);
+        System.out.println("Participant added " + participant);
         try
         {
             this.sendResponse(response);
@@ -126,7 +126,7 @@ public class MotoClientRpcReflectionWorker implements Runnable, IMotoObserver
         }
     }
 
-    private static Response OkResponse = new Response.Builder().type(ResponseType.OK).build();
+    private static final Response OkResponse = new Response.Builder().type(ResponseType.OK).build();
 
     private Response handleLOGIN(Request request)
     {

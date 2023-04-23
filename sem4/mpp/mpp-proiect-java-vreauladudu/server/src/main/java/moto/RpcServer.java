@@ -17,7 +17,7 @@ import java.util.Properties;
 
 public class RpcServer
 {
-    private static int port = 55001;
+    private static final int port = 55001;
 
     public static void main(String[] args)
     {

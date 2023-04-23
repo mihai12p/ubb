@@ -28,6 +28,6 @@ public class Participant extends Entity<Integer>
     @Override
     public String toString()
     {
-        return "ID: " + this.getId() + " | Name: " + this.name + " | MotorcycleId:" + this.motorcycleID;
+        return "ID: " + this.getId() + " | Name: " + this.name + " | MotorcycleId: " + this.motorcycleID;
     }
 }

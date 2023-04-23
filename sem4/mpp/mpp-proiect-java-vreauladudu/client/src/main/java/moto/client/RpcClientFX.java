@@ -22,15 +22,13 @@ public class RpcClientFX extends Application
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("loginwindow.fxml"));
         Parent root = loader.load();
 
-        LoginController loginController = loader.<LoginController>getController();
-        loginController.setServer(server);
-
         FXMLLoader cloader = new FXMLLoader(getClass().getClassLoader().getResource("motowindow.fxml"));
         Parent croot = cloader.load();
 
         MotoController motoController = cloader.<MotoController>getController();
         motoController.setServer(server);
 
+        LoginController loginController = loader.<LoginController>getController();
         loginController.setMotoClientController(motoController);
         loginController.setParent(croot);
 

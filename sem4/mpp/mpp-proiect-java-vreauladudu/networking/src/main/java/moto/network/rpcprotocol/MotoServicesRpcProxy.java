@@ -18,8 +18,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class MotoServicesRpcProxy implements IMotoService
 {
-    private String host;
-    private Integer port;
+    private final String host;
+    private final Integer port;
 
     private IMotoObserver client;
 
@@ -27,7 +27,7 @@ public class MotoServicesRpcProxy implements IMotoService
     private ObjectOutputStream outputStream;
     private Socket connection;
 
-    private BlockingQueue<Response> Responses;
+    private final BlockingQueue<Response> Responses;
     private volatile boolean isFinished;
 
     public MotoServicesRpcProxy(String host, Integer port)

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moto.client.gui.MotoController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="341.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+      <children>
+            <ListView fx:id="capacities" layoutX="14.0" layoutY="47.0" prefHeight="154.0" prefWidth="116.0" />
+            <ListView fx:id="raceParticipants" layoutX="138.0" layoutY="47.0" prefHeight="154.0" prefWidth="223.0" />
+            <ListView fx:id="motorcycles" layoutX="371.0" layoutY="47.0" prefHeight="154.0" prefWidth="255.0" />
+            <Label layoutX="51.0" layoutY="21.0" text="Lista curse" />
+            <Label layoutX="219.0" layoutY="21.0" text="Participanti" />
+            <Label layoutX="456.0" layoutY="21.0" text="Motociclete" />
+            <Button layoutX="15.0" layoutY="209.0" mnemonicParsing="false" onAction="#findParticipantsByBrand" text="Cauta participanti" />
+            <TextField fx:id="motorcycleBrand" layoutX="145.0" layoutY="209.0" promptText="Echipa" />
+            <ListView fx:id="participantsByBrand" layoutX="15.0" layoutY="239.0" prefHeight="123.0" prefWidth="278.0" />
+            <TextField fx:id="motorcycleCapacity" layoutX="306.0" layoutY="251.0" promptText="Capacitate motocicleta" />
+            <TextField fx:id="participantName" layoutX="306.0" layoutY="287.0" promptText="Nume" />
+            <TextField fx:id="motorcycleRaceBrand" layoutX="306.0" layoutY="324.0" promptText="Echipa" />
+            <Button layoutX="488.0" layoutY="251.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="130.0" onAction="#addParticipant" text="Adauga participant" />
+            <Button layoutX="571.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+            <Label layoutX="234.0" layoutY="178.0" text="Numar participanti:" />
+            <Label fx:id="participantsCount" layoutX="347.0" layoutY="178.0" text="0" />
+            <Label layoutX="308.0" layoutY="226.0" text="Adauga participant nou" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

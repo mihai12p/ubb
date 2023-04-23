@@ -1,0 +1,14 @@
+package moto.network.rpcprotocol;
+
+public enum RequestType
+{
+    LOGIN,
+    LOGOUT,
+    LIST_RACES,
+    LIST_MOTORCYCLES,
+    LIST_MOTORCYCLES_BY_CAPACITY,
+    FIND_PARTICIPANTS,
+    LIST_MOTORCYCLES_BY_BRAND,
+    FIND_MOTORCYCLE,
+    ADD_PARTICIPANT;
+}

@@ -12,7 +12,7 @@ namespace mpp_proiect_csharp_vreauladudu
         [STAThread]
         static void Main()
         {
-            IMotoService server = new MotoServerObjectProxy("127.0.0.1", 55555);
+            IMotoService server = new MotoServerObjectProxy("127.0.0.1", 55001);
             MotoClientController controller = new MotoClientController(server);
 
             Application.EnableVisualStyles();

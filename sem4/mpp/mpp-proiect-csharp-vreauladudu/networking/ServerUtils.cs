@@ -29,7 +29,7 @@ namespace ServerTemplate
                 Console.WriteLine("Waiting for clients ...");
                 TcpClient client = this.Server.AcceptTcpClient();
                 Console.WriteLine("Client connected ...");
-                processRequest(client);
+                this.processRequest(client);
             }
         }
 

@@ -166,7 +166,7 @@ namespace networking
             }
             else if (request is FindMotorcycleRequest)
             {
-                Console.WriteLine("ListMotorcycles request...");
+                Console.WriteLine("FindMotorcycle request...");
                 FindMotorcycleRequest motorcycleRequest = (FindMotorcycleRequest)request;
                 try
                 {

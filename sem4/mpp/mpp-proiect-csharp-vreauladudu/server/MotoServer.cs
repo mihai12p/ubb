@@ -120,7 +120,7 @@ namespace Server.Impl
                 participant.Name = participantName;
                 participant.MotorcycleID = motorcycle.Id;
                 this.participants.save(participant);
-                notifyOthersParticipantAdded(participant);
+                this.notifyOthersParticipantAdded(participant);
             }
             catch (Exception exception)
             {

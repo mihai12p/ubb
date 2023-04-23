@@ -1,2 +1,9 @@
-rootProject.name = 'mpp-proiect-java-vreauladudu'
+rootProject.name = "mpp-proiect-java-vreauladudu"
+include 'services'
+include 'domain'
+include 'domain'
+include 'persistence'
+include 'networking'
+include 'server'
+include 'client'
 

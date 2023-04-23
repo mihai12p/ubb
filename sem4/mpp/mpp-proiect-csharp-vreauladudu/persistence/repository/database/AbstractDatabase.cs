@@ -7,13 +7,11 @@ namespace mpp_proiect_csharp_vreauladudu.repository.database
 {
     public abstract class AbstractDatabase<ID, E> : IRepository<ID, E> where E : Entity<ID>
     {
-        private DatabaseUtils DatabaseUtils;
         public String Table { get; set; }
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected AbstractDatabase(string table)
         {
-            this.DatabaseUtils = new DatabaseUtils();
             this.Table = table;
         }
 

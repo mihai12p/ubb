@@ -35,7 +35,7 @@ namespace Server
             UserRepository users = new UserDatabase();
             IMotoService service = new MotoServer(motorcycles, participants, users);
 
-            SerialMotoServer server = new SerialMotoServer("127.0.0.1", 55555, service);
+            SerialMotoServer server = new SerialMotoServer("127.0.0.1", 55001, service);
             server.Start();
             Console.WriteLine("Server started...");
             Console.ReadLine();

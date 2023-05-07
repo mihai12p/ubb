@@ -10,14 +10,27 @@ import moto.client.gui.MotoController;
 import moto.network.rpcprotocol.MotoServicesRpcProxy;
 import moto.services.IMotoService;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class RpcClientFX extends Application
 {
-    private static int port = 55001;
-    private static String host = "localhost";
-
     public void start(Stage stage) throws Exception
     {
-        IMotoService server = new MotoServicesRpcProxy(this.host, this.port);
+        Properties clientProperties = new Properties();
+        try
+        {
+            clientProperties.load(RpcClientFX.class.getResourceAsStream("/motoclient.properties"));
+            System.out.println("Client properties set.");
+            clientProperties.list(System.out);
+        }
+        catch (IOException exception)
+        {
+            System.err.println("Cannot find motoclient.properties " + exception);
+            return;
+        }
+
+        IMotoService server = new MotoServicesRpcProxy(clientProperties.getProperty("client.host"), Integer.parseInt(clientProperties.getProperty("client.port")));
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("loginwindow.fxml"));
         Parent root = loader.load();

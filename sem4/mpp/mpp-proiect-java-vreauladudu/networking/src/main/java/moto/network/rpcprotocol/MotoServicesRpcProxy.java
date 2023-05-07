@@ -112,7 +112,7 @@ public class MotoServicesRpcProxy implements IMotoService
         }
     }
 
-    private Response readResponse() throws MotoException
+    private Response readResponse()
     {
         Response response = null;
         try
@@ -126,7 +126,7 @@ public class MotoServicesRpcProxy implements IMotoService
         return response;
     }
 
-    private void initializeConnection() throws MotoException
+    private void initializeConnection()
     {
         try
         {

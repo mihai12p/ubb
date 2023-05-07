@@ -9,6 +9,8 @@ import moto.repository.UserRepository;
 import moto.repository.database.MotorcycleDatabase;
 import moto.repository.database.ParticipantDatabase;
 import moto.repository.database.UserDatabase;
+import moto.repository.hibernate.HibernateUtils;
+import moto.repository.hibernate.UserHibernate;
 import moto.server.MotoServer;
 import moto.services.IMotoService;
 
@@ -17,8 +19,6 @@ import java.util.Properties;
 
 public class RpcServer
 {
-    private static final int port = 55001;
-
     public static void main(String[] args)
     {
         Properties serverProperties = new Properties();
@@ -36,10 +36,10 @@ public class RpcServer
 
         MotorcycleRepository motorcycles = new MotorcycleDatabase(serverProperties);
         ParticipantRepository participants = new ParticipantDatabase(serverProperties);
-        UserRepository users = new UserDatabase(serverProperties);
+        UserRepository users = new UserHibernate();
         IMotoService service = new MotoServer(motorcycles, participants, users);
 
-        AbstractServer server = new MotoRpcConcurrentServer(port, service);
+        AbstractServer server = new MotoRpcConcurrentServer(Integer.parseInt(serverProperties.getProperty("server.port")), service);
         try
         {
             server.start();
@@ -52,6 +52,7 @@ public class RpcServer
         {
             try
             {
+                HibernateUtils.close();
                 server.stop();
             }
             catch (ServerException exception)

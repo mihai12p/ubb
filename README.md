@@ -79,6 +79,11 @@
           :globe_with_meridians:  Programare web
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem4/sgbd">
+          :floppy_disk:  Sisteme de gestiune a bazelor de date
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

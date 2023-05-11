@@ -6,4 +6,5 @@ include 'persistence'
 include 'networking'
 include 'server'
 include 'client'
+include 'rest-services'
 

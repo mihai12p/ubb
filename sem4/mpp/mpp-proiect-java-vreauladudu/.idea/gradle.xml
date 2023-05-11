@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/networking" />
             <option value="$PROJECT_DIR$/persistence" />
+            <option value="$PROJECT_DIR$/rest-services" />
             <option value="$PROJECT_DIR$/server" />
             <option value="$PROJECT_DIR$/services" />
           </set>

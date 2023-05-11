@@ -5,75 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab3cbc87-7b81-479d-b046-302af878cce2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/domain/src/main/resources/motoclient.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistence/src/main/java/moto/repository/hibernate/HibernateUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistence/src/main/java/moto/repository/hibernate/UserHibernate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/org/hibernate/dialect/SQLiteDialect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/org/hibernate/dialect/identity/SQLiteDialectIdentityColumnSupport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/ProjectEvaluation/mpp-proiect-csharp-vreauladudu.metadata.v6.1" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/ProjectEvaluation/mpp-proiect-csharp-vreauladudu.metadata.v6.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/ProjectEvaluation/mpp-proiect-csharp-vreauladudu.projects.v6.1" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/ProjectEvaluation/mpp-proiect-csharp-vreauladudu.projects.v6.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/FileContentIndex/54599b99-f8ee-4e7e-956e-fe66b5f139d6.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/FileContentIndex/5479f495-d8da-45c1-ab83-dd97d3571d49.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/FileContentIndex/e0de82f2-0ef7-443e-a444-4f55d24575cc.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/FileContentIndex/e50b1e1d-4cec-4dc2-870d-4576c8246001.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/.vs/mpp-proiect-csharp-vreauladudu/v17/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/domain/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/domain/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/domain/obj/Debug/domain.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/domain/obj/Debug/domain.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/networking.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/networking.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/networking.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/networking.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/bin/Debug/services.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/networking/obj/Debug/networking.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/obj/Debug/mpp-proiect-csharp-vreauladudu.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/obj/Debug/mpp-proiect-csharp-vreauladudu.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/bin/Debug/persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/bin/Debug/persistence.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/bin/Debug/persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/bin/Debug/persistence.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/persistence/obj/Debug/persistence.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/networking.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/networking.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/networking.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/networking.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/persistence.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/persistence.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/server.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/bin/Debug/net6.0/services.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/apphost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/Debug/net6.0/server.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/server.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/server/obj/server.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/bin/Debug/services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/bin/Debug/services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/bin/Debug/services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/bin/Debug/services.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../mpp-proiect-csharp-vreauladudu/services/obj/Debug/services.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/src/main/java/moto/RestServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/src/main/java/moto/rest/RestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/src/main/java/moto/rest/client/MotoClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/src/main/java/moto/rest/client/RestClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rest-services/src/main/resources/restservices.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5ca98d1f-0150-451f-8f1c-d92f113b2da0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5ca98d1f-0150-451f-8f1c-d92f113b2da0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/moto/client/RpcClientFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/moto/client/RpcClientFX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/domain/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/moto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/moto/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/moto/network/rpcprotocol/MotoServicesRpcProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/moto/network/rpcprotocol/MotoServicesRpcProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/client/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/persistence/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/persistence/src/main/java/moto/db/moto.db" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/src/main/java/moto/db/moto.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/moto/RpcServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/moto/RpcServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/resources/motoserver.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/motoserver.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/target/logger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/target/logger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistence/src/main/java/moto/repository/database/MotorcycleDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/persistence/src/main/java/moto/repository/database/MotorcycleDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +53,9 @@
         <task path="$PROJECT_DIR$/persistence">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/rest-services">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -121,31 +71,18 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
-                <item name="client" type="2d1252cf:ModuleNode" />
+                <item name="rest-services" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
+                <item name="rest-services" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
-                <item name="client" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="application" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
-                <item name="server" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
-                <item name="server" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mpp-proiect-java-vreauladudu" type="f1a62948:ProjectNode" />
-                <item name="server" type="2d1252cf:ModuleNode" />
+                <item name="rest-services" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="application" type="c8890929:TasksNode$1" />
               </path>
@@ -180,22 +117,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/server/src/main/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.44252872&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "19",
+    "last_directory_selection": "D:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/server/src/main/java",
+    "last_opened_file_path": "D:/facultate-repo/sem4/mpp/mpp-proiect-java-vreauladudu/rest-services/src/main/resources",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.44252872"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\facultate-repo\sem4\mpp\mpp-proiect-java-vreauladudu\rest-services\src\main\resources" />
+      <recent name="D:\facultate-repo\sem4\mpp\mpp-proiect-java-vreauladudu\client\src\main\resources" />
       <recent name="D:\facultate-repo\sem4\mpp\mpp-proiect-java-vreauladudu\domain\src\main\resources" />
       <recent name="D:\facultate-repo\sem4\mpp\mpp-proiect-java-vreauladudu" />
     </key>
@@ -212,31 +151,23 @@
       <command value="participantsInformation" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.mpp-proiect-java-vreauladudu:client [run]">
+  <component name="RunManager" selected="Application.RestClient">
+    <configuration name="RestClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="moto.rest.client.RestClient" />
+      <module name="mpp-proiect-java-vreauladudu.rest-services.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="moto.rest.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ambele" type="CompoundRunConfigurationType">
       <toRun name="mpp-proiect-java-vreauladudu:client [run]" type="GradleRunConfiguration" />
       <toRun name="mpp-proiect-java-vreauladudu:server [run]" type="GradleRunConfiguration" />
-      <method v="2" />
-    </configuration>
-    <configuration name="mpp-proiect-java-vreauladudu:client [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/client" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="mpp-proiect-java-vreauladudu:client [run]" type="GradleRunConfiguration" factoryName="Gradle" singleton="false">
@@ -323,10 +254,10 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="mpp-proiect-java-vreauladudu:server [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="mpp-proiect-java-vreauladudu:rest-services [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/server" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/rest-services" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -334,7 +265,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="buildDependents" />
+            <option value="bootRun" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -365,23 +296,31 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="RestServices" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="mpp-proiect-java-vreauladudu.rest-services.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="moto.RestServices" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.RestClient" />
       <item itemvalue="Compound.ambele" />
       <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:client [run]" />
       <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:server [run]" />
+      <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:rest-services [bootRun]" />
       <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:networking [build]" />
       <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:persistence [build]" />
-      <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:server [buildDependents]" />
       <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:domain [build]" />
-      <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:client [build]" />
+      <item itemvalue="Spring Boot.RestServices" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RestClient" />
+        <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:rest-services [bootRun]" />
         <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:domain [build]" />
         <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:networking [build]" />
         <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:persistence [build]" />
-        <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:server [buildDependents]" />
-        <item itemvalue="Gradle.mpp-proiect-java-vreauladudu:client [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -413,6 +352,9 @@
       <workItem from="1683470987235" duration="4286000" />
       <workItem from="1683488074752" duration="2249000" />
       <workItem from="1683490354843" duration="103000" />
+      <workItem from="1683544294758" duration="3000" />
+      <workItem from="1683695502996" duration="1299000" />
+      <workItem from="1683828050946" duration="10553000" />
     </task>
     <servers />
   </component>

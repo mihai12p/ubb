@@ -2,6 +2,7 @@ package moto.repository.database;
 
 import moto.Motorcycle;
 import moto.repository.MotorcycleRepository;
+import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@Component
 public class MotorcycleDatabase extends AbstractDatabase<Integer, Motorcycle> implements MotorcycleRepository
 {
     public MotorcycleDatabase(Properties properties)

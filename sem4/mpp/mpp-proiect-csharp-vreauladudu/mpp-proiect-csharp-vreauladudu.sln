@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "domain", "domain\domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "persistence", "persistence\persistence.csproj", "{8F55B69A-6812-4351-8536-1C444A3E0D5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rest-client", "rest-client\rest-client.csproj", "{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{8F55B69A-6812-4351-8536-1C444A3E0D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F55B69A-6812-4351-8536-1C444A3E0D5C}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F55B69A-6812-4351-8536-1C444A3E0D5C}.Release|x86.Build.0 = Release|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Debug|x86.Build.0 = Debug|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Release|x86.ActiveCfg = Release|Any CPU
+		{3BBBEC8D-A033-420F-926A-F7C53FF3CA3D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

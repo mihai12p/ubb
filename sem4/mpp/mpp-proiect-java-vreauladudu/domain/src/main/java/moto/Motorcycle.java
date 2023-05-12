@@ -1,10 +1,14 @@
 package moto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Motorcycle extends Entity<Integer>
 {
+    @JsonProperty("brand")
     private String brand;
+    @JsonProperty("capacity")
     private Integer capacity;
 
     public String getBrand()

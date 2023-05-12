@@ -16,13 +16,13 @@ public class RestClient
 
         show(() -> System.out.println(motoClient.save(motorcycle)));
         show(() -> Arrays.stream(motoClient.findAll()).toList().forEach(System.out::println));
-        show(() -> System.out.println(motoClient.find(2)));
+        show(() -> System.out.println(motoClient.find(8)));
         show(() ->
         {
             motorcycle.setBrand("MOTOUPDATE");
             System.out.println(motoClient.update(motorcycle));
         });
-        show(() -> motoClient.remove(9));
+        show(() -> motoClient.remove(8));
     }
 
     private static void show(Runnable task)

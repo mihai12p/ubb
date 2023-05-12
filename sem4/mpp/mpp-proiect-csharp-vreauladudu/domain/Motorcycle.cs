@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace mpp_proiect_csharp_vreauladudu.domain
 {
-    [Serializable]
+    [Serializable, JsonObject]
     public class Motorcycle : Entity<int>
     {
+        [JsonProperty("brand")]
         public String Brand { get; set; }
+        [JsonProperty("capacity")]
         public int Capacity { get; set; }
 
         public override bool Equals(object obj)

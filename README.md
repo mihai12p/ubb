@@ -84,6 +84,11 @@
           :floppy_disk:  Sisteme de gestiune a bazelor de date
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem4/iss">
+          :hospital:  Ingineria sistemelor soft
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

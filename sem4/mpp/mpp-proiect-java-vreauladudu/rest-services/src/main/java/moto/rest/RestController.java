@@ -28,10 +28,10 @@ public class RestController
         Motorcycle motorcycle = this.motorcycles.find(id);
         if (motorcycle == null)
         {
-            return new ResponseEntity<String>("Motorcycle not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Motorcycle not found", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Motorcycle>(motorcycle, HttpStatus.OK);
+        return new ResponseEntity<>(motorcycle, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -51,9 +51,10 @@ public class RestController
         return this.motorcycles.save(motorcycle);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public Motorcycle update(@RequestBody Motorcycle motorcycle)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Motorcycle update(@RequestBody Motorcycle motorcycle, @PathVariable Integer id)
     {
+        motorcycle.setId(id);
         System.out.println("Update motorcycle " + motorcycle + "...");
         return this.motorcycles.update(motorcycle);
     }
@@ -62,6 +63,6 @@ public class RestController
     public ResponseEntity<?> remove(@PathVariable Integer id)
     {
         System.out.println("Remove motorcycle with id " + id + "...");
-        return new ResponseEntity<Motorcycle>(this.motorcycles.remove(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.motorcycles.remove(id), HttpStatus.OK);
     }
 }

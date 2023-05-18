@@ -47,9 +47,9 @@ public class MotoClient
         });
     }
 
-    public Motorcycle update(Motorcycle motorcycle)
+    public Motorcycle update(Motorcycle motorcycle, Integer id)
     {
-        return execute(() -> this.restTemplate.exchange(URL, HttpMethod.PUT, new HttpEntity<Motorcycle>(motorcycle), Motorcycle.class)).getBody();
+        return execute(() -> this.restTemplate.exchange(String.format("%s/%d", URL, id), HttpMethod.PUT, new HttpEntity<>(motorcycle), Motorcycle.class)).getBody();
     }
 
     public void remove(Integer id)

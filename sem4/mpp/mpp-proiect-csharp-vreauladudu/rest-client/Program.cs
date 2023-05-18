@@ -19,7 +19,7 @@ namespace restclient
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             Motorcycle motorcycle = new Motorcycle();
-            motorcycle.Brand = "HondaTESTREST_Java";
+            motorcycle.Brand = "HondaTESTREST_CSharp";
             motorcycle.Capacity = 125;
 
 
@@ -31,14 +31,14 @@ namespace restclient
                 Console.WriteLine(m);
             }
 
-            result = await find(8);
+            result = await find(result.Id);
             Console.WriteLine("Find motorcycle {0}", result);
 
             motorcycle.Brand = "MOTOUPDATE";
-            result = await update(motorcycle);
+            result = await update(motorcycle, result.Id);
             Console.WriteLine("Update motorcycle {0}", result);
 
-            await remove(8);
+            await remove(result.Id);
         }
 
         static async Task<Motorcycle[]?> findAll()
@@ -75,15 +75,14 @@ namespace restclient
                 result = await response.Content.ReadAsAsync<Motorcycle>();
                 motorcycle.Id = result.Id;
             }
-            Console.WriteLine("AAA" + motorcycle);
             return result;
         }
 
-        static async Task<Motorcycle?> update(Motorcycle motorcycle)
+        static async Task<Motorcycle?> update(Motorcycle motorcycle, int id)
         {
             Motorcycle? result = null;
 
-            HttpResponseMessage response = await client.PutAsJsonAsync(URL, motorcycle);
+            HttpResponseMessage response = await client.PutAsJsonAsync(URL + "/" + id.ToString(), motorcycle);
             if (response.IsSuccessStatusCode)
             {
                 result = await response.Content.ReadAsAsync<Motorcycle>();

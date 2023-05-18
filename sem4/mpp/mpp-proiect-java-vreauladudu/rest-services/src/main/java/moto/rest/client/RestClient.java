@@ -20,7 +20,7 @@ public class RestClient
         show(() ->
         {
             motorcycle.setBrand("MOTOUPDATE");
-            System.out.println(motoClient.update(motorcycle));
+            System.out.println(motoClient.update(motorcycle, 8));
         });
         show(() -> motoClient.remove(8));
     }

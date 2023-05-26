@@ -4,10 +4,12 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qdatastream.h>
 
-class User : public Entity<qint32>
+class QX_DLL_EXPORT_HELPER User : public Entity<qint32>
 {
 public:
     User() : Entity(0) { };
+    virtual ~User() { }
+
     User(const QString& username, const QString& password) : Entity(0), username(username), password(password) { }
     User(qint32 id, const QString& username, const QString& password) : Entity(id), username(username), password(password) { }
 
@@ -30,26 +32,47 @@ public:
     {
         this->password = password;
     }
-
-    friend QDataStream& operator<<(QDataStream& dataStream, const User& user)
+    
+    const QString& getLicense() const
     {
-        dataStream << user.getId() << user.getUsername() << user.getPassword();
-        return dataStream;
+        return this->license;
     }
 
-    friend QDataStream& operator>>(QDataStream& dataStream, User& user)
+    void setLicense(const QString& license)
     {
-        qint32 id;
-        QString username{ };
-        QString password{ };
-        dataStream >> id >> username >> password;
-        user.setId(id);
-        user.setUsername(username);
-        user.setPassword(password);
-        return dataStream;
+        this->license = license;
     }
 
-private:
+    virtual bool IsAdministrator()
+    {
+        return this->isAdministrator;
+    }
+
+public:
     QString username{ };
     QString password{ };
+    QString license{ };
+    bool    isAdministrator = false;
+};
+
+QX_REGISTER_PRIMARY_KEY(User, qint32)
+QX_REGISTER_HPP_EXPORT_DLL(User, qx::trait::no_base_class_defined, 1)
+
+class Administrator : public User
+{
+public:
+    Administrator(const QString& username, const QString& password) : User(username, password)
+    {
+        this->isAdministrator = true;
+    }
+
+    Administrator(qint32 id, const QString& username, const QString& password) : User(id, username, password)
+    {
+        this->isAdministrator = true;
+    }
+
+    bool IsAdministrator() override
+    {
+        return true;
+    }
 };

@@ -1,5 +1,9 @@
 #include "LoginWindow.hpp"
 #include <QtWidgets/QApplication>
+#include <QxOrm.h>
+
+#pragma comment(lib, "domain.lib")
+#pragma comment(lib, "QxOrmd.lib")
 
 int main(int argc, char** argv)
 {

@@ -4,6 +4,7 @@
 #include <QtNetwork/qtcpsocket.h>
 #include "Response.hpp"
 #include "Request.hpp"
+#include "IService.hpp"
 #include "../domain/User.hpp"
 
 class ServerWorker : public QObject
@@ -11,17 +12,20 @@ class ServerWorker : public QObject
     Q_OBJECT
 
 public:
-    explicit ServerWorker(QObject* parent = nullptr);
+    explicit ServerWorker(quint16 port, IService* service, QObject* parent = nullptr);
     ~ServerWorker();
 
 private:
     void HandleRequest(QDataStream& inputStream, QTcpSocket* clientSocket);
 
-    template<typename T>
-    qint64 SendResponse(QTcpSocket* clientSocket, Response<T> response)
+    template <typename T>
+    qint64 SendResponse(QTcpSocket* clientSocket, RequestType requestType, IResponse* response)
     {
-        this->outputStream << response.getResponseType() << response.GetData();
-        qInfo() << this->block;
+        this->outputStream << requestType << response->getResponseType() << response->GetData();
+        if (requestType == RequestType::TAKE_ACTION && response->getResponseType() == ResponseType::OK)
+        {
+            this->outputStream << response->GetAdditionalData();
+        }
         qint64 bytesWritten = clientSocket->write(this->block);
         clientSocket->flush();
         this->block.clear();
@@ -30,6 +34,8 @@ private:
         return bytesWritten;
     }
 
+    void NotifyOthers(QTcpSocket* sender, RequestType requestType, IResponse* response);
+
 private slots:
     void OnConnect();
     void OnDisconnect();
@@ -37,8 +43,10 @@ private slots:
 
 private:
     QTcpServer server{ };
-    QSet<QTcpSocket*> connections = { 0 };
+    QList<QTcpSocket*> connections{ };
 
     QByteArray block{ };
     QDataStream outputStream{ &block, QIODevice::WriteOnly };
+
+    IService* service = nullptr;
 };

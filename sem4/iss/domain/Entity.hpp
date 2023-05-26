@@ -1,6 +1,8 @@
 #pragma once
 
-template <class T>
+#include <QxOrm.h>
+
+template <typename T>
 class Entity
 {
 public:
@@ -16,6 +18,6 @@ public:
         this->id = id;
     }
 
-private:
+public:
     T id = 0;
 };

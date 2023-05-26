@@ -17,6 +17,24 @@
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
     </Filter>
+    <Filter Include="Header Files\persistence">
+      <UniqueIdentifier>{0534fcb0-f7a9-44ef-92e2-cfc3b1d19e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\persistence">
+      <UniqueIdentifier>{170f20c2-6907-4488-9ae0-3838ccabf20e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\persistence\database">
+      <UniqueIdentifier>{ea7029c4-27d1-4859-8f15-6717123e3b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\persistence\database">
+      <UniqueIdentifier>{88c9f694-f486-4b54-ab95-fab9ce57b74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\service">
+      <UniqueIdentifier>{54987eb7-a5b6-4411-95cc-e5708d5683a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\service">
+      <UniqueIdentifier>{5bcf8e5d-e2f5-453d-9bdb-c4b6c4590a10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,6 +43,15 @@
     <ClCompile Include="ServerWorker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ServerService.cpp">
+      <Filter>Source Files\service</Filter>
+    </ClCompile>
+    <ClCompile Include="UserDatabase.cpp">
+      <Filter>Source Files\persistence\database</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionDatabase.cpp">
+      <Filter>Source Files\persistence\database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Request.hpp">
@@ -32,6 +59,30 @@
     </ClInclude>
     <ClInclude Include="Response.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserRepository.hpp">
+      <Filter>Header Files\persistence</Filter>
+    </ClInclude>
+    <ClInclude Include="IRepository.hpp">
+      <Filter>Header Files\persistence</Filter>
+    </ClInclude>
+    <ClInclude Include="ADatabase.hpp">
+      <Filter>Header Files\persistence\database</Filter>
+    </ClInclude>
+    <ClInclude Include="UserDatabase.hpp">
+      <Filter>Header Files\persistence\database</Filter>
+    </ClInclude>
+    <ClInclude Include="IService.hpp">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerService.hpp">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionDatabase.hpp">
+      <Filter>Header Files\persistence\database</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionRepository.hpp">
+      <Filter>Header Files\persistence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

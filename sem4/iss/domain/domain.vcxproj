@@ -11,8 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Action.hpp" />
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Process.hpp" />
+    <ClInclude Include="ResultsInterpreter.hpp" />
+    <ClInclude Include="Scan.hpp" />
     <ClInclude Include="User.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="ResultsInterpreter.cpp" />
+    <ClCompile Include="Scan.cpp" />
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2D8A7790-D19C-4E94-895D-83726D20BA84}</ProjectGuid>
@@ -23,7 +33,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
@@ -59,9 +69,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IncludePath>D:\facultate-repo\sem4\iss\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\facultate-repo\sem4\iss\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>QxOrmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>

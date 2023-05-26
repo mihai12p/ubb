@@ -32,7 +32,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.5.0_msvc2019_64</QtInstall>
-    <QtModules>core;network</QtModules>
+    <QtModules>core;network;sql</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -55,9 +55,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <LibraryPath>D:\facultate-repo\sem4\iss\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>D:\facultate-repo\sem4\iss\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -83,12 +90,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActionDatabase.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ServerService.cpp" />
     <ClCompile Include="ServerWorker.cpp" />
+    <ClCompile Include="UserDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionDatabase.hpp" />
+    <ClInclude Include="ActionRepository.hpp" />
+    <ClInclude Include="ADatabase.hpp" />
+    <ClInclude Include="IRepository.hpp" />
+    <ClInclude Include="IService.hpp" />
     <ClInclude Include="Request.hpp" />
     <ClInclude Include="Response.hpp" />
+    <ClInclude Include="ServerService.hpp" />
+    <ClInclude Include="UserDatabase.hpp" />
+    <ClInclude Include="UserRepository.hpp" />
     <QtMoc Include="ServerWorker.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,7 +13,9 @@ public:
 
 private slots:
     void HandleError(QAbstractSocket::SocketError socketError);
-    void Login();
+
+    void login();
+    void continueLogin();
 
 private:
     Ui::LoginWindowClass ui;

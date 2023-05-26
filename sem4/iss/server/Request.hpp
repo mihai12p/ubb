@@ -6,6 +6,7 @@ enum class RequestType : qint16
 {
     LOGIN = 0,
     LOGOUT = 1,
+    TAKE_ACTION = 2,
 
     MAX_REQUEST_TYPE
 };
@@ -24,7 +25,7 @@ private:
     RequestType requestType;
 };
 
-template<class T>
+template <class T>
 class Request : public IRequest
 {
 public:

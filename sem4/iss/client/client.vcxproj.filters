@@ -42,13 +42,33 @@
     <ClCompile Include="ClientWorker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DetailsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClientController.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="MainWindow.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DetailsWindow.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="ClientWorker.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="MainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DetailsWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

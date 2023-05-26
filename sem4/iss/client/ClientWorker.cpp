@@ -1,4 +1,9 @@
 #include "ClientWorker.hpp"
+#include <Windows.h>
+#include <TlHelp32.h>
+#include <Psapi.h>
+
+#undef ERROR
 
 ClientWorker::ClientWorker(const QString& host, int port, QObject* parent) : QObject(parent)
 {
@@ -24,30 +29,34 @@ void ClientWorker::OnTimeout()
 
 void ClientWorker::ResponseReceived()
 {
-    qDebug() << "Hello from thread " << QThread::currentThread();
-
     QByteArray block = { 0 };
     QDataStream inputStream(&block, QIODevice::ReadOnly);
     inputStream.setDevice(&this->socket);
     inputStream.setVersion(QDataStream::Qt_6_5);
 
-    IResponse* response = nullptr;
     {
         inputStream.startTransaction();
+
+        RequestType requestType;
+        inputStream >> requestType;
 
         ResponseType responseType;
         inputStream >> responseType;
 
-        if (responseType == ResponseType::OK)
+        QString data{ };
+        inputStream >> data;
+        IResponse* response = new Response<QString>(responseType, data);
+
+        if (requestType == RequestType::TAKE_ACTION && responseType == ResponseType::OK)
         {
-            qint16 data = 0;
-            inputStream >> data;
-            response = new Response<decltype(data)>(responseType, data);
+            Process process{ };
+            inputStream >> process;
+            response->SetAdditionalData(process);
         }
 
         if (response && inputStream.commitTransaction())
         {
-            emit responseRead(response);
+            emit responseRead(requestType, response);
         }
     }
 }
@@ -55,7 +64,6 @@ void ClientWorker::ResponseReceived()
 void ClientWorker::OnDisconnect()
 {
     this->isConnected = false;
-    this->timeoutTimer.stop();
 
     disconnect(&this->socket, &QTcpSocket::connected, 0, 0);
     disconnect(&this->socket, &QTcpSocket::disconnected, 0, 0);
@@ -70,7 +78,6 @@ void ClientWorker::OnDisconnect()
         this->socket.abort();
     }
 }
-
 
 void ClientWorker::InitializeConnection()
 {
@@ -94,24 +101,107 @@ void ClientWorker::OnConnect()
     connect(this, &ClientWorker::responseRead, &ClientWorker::HandleResponse);
 }
 
-void ClientWorker::HandleResponse(IResponse* response)
+void ClientWorker::HandleResponse(RequestType requestType, IResponse* response)
 {
-    if (response->getResponseType() == ResponseType::OK)
+    if (requestType == RequestType::LOGIN)
     {
-        qDebug() << "Hello from YESSSSSSSS " << QThread::currentThread();
+        if (response->getResponseType() == ResponseType::OK)
+        {
+            emit this->continueLogin();
+        }
+        else if (response->getResponseType() == ResponseType::ERROR)
+        {
+            this->client = nullptr;
+            emit this->errorOccurred(response->GetData());
+        }
     }
-    else
+    else if (requestType == RequestType::LOGOUT)
     {
-        qDebug() << "Hello from NOPE " << QThread::currentThread();
+        if (response->getResponseType() == ResponseType::ERROR)
+        {
+            emit this->errorOccurred(response->GetData());
+        }
+    }
+    else if (requestType == RequestType::TAKE_ACTION)
+    {
+        if (response->getResponseType() == ResponseType::OK)
+        {
+            ResultsInterpreter resultsInterpreter(response->GetAdditionalData());
+            resultsInterpreter.TakeAction();
+            Sleep(500);
+            emit rescanComputer();
+        }
+        else if (response->getResponseType() == ResponseType::DENY)
+        {
+            emit this->errorOccurred(response->GetData());
+        }
     }
 
-    delete response;
+    if (response)
+    {
+        delete response;
+    }
 }
 
-void ClientWorker::Login(User& user)
+void ClientWorker::login(const User& user, QTcpSocket* client)
 {
     this->InitializeConnection();
 
     Request request(RequestType::LOGIN, user);
     this->SendRequest<User>(request);
+    this->client = client;
+}
+
+void ClientWorker::logout(const User& user, QTcpSocket* client)
+{
+    Request request(RequestType::LOGOUT, user);
+    this->SendRequest<User>(request);
+}
+
+QList<Process> ClientWorker::scanComputer()
+{
+    FullScan scan;
+    scan.PerformScan();
+    return scan.getResults();
+}
+
+QList<QString> ClientWorker::getProcessDetails(qint32 PID)
+{
+    QList<QString> details{ };
+
+    HANDLE snapHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snapHandle == INVALID_HANDLE_VALUE)
+    {
+        emit this->errorOccurred("Invalid snapHandle value");
+        return details;
+    }
+
+    PROCESSENTRY32W pe32{ };
+    pe32.dwSize = sizeof(PROCESSENTRY32W);
+
+    if (!Process32FirstW(snapHandle, &pe32))
+    {
+        CloseHandle(snapHandle);
+        emit this->errorOccurred("Process32FirstW has failed");
+        return details;
+    }
+
+    do
+    {
+        if (pe32.th32ProcessID == PID)
+        {
+            Process process(pe32.th32ProcessID, pe32.th32ParentProcessID, QString::fromWCharArray(pe32.szExeFile, wcslen(pe32.szExeFile)));
+            details = process.getDetails();
+            break;
+        }
+    } while (Process32NextW(snapHandle, &pe32));
+
+    CloseHandle(snapHandle);
+    return details;
+}
+
+void ClientWorker::takeAction(const Process& selectedProcess, QTcpSocket* client)
+{
+    Request request(RequestType::TAKE_ACTION, selectedProcess);
+    this->SendRequest<Process>(request);
 }

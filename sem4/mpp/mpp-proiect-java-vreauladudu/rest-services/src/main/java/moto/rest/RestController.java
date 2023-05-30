@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @org.springframework.web.bind.annotation.RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/moto/motorcycles")
 public class RestController
 {

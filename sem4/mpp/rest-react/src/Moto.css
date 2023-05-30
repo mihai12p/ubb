@@ -1,0 +1,36 @@
+body {
+    background-image: url("https://s3.eu-west-1.amazonaws.com/cdn.motorbikemag.es/wp-content/uploads/2020/06/Husqvarna-TE-300i-2021-enduro-1-1200x800.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.MotorcycleApp {
+    text-align: center;
+    color:rgb(45, 0, 248);
+    font-size: 20px;
+}
+
+.MotorcycleApp input {
+    font-size: 15px;
+}
+
+.MotorcycleApp button {
+    font-size: 15px;
+}
+
+.MotorcycleApp tbody {
+    color:rgb(0, 74, 248);
+}
+
+.MotorcycleApp label {
+    color:rgb(0, 249, 21);
+}
+
+.MotorcycleApp h1 {
+    color:rgb(255, 255, 0);
+}
+
+table.center {
+    margin-left:auto;
+    margin-right:auto;
+}

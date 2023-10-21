@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main ( )
+{
+    int a = 0 , b = 0 , rest = 0 ;
+    std::cin >> a >> b ;
+
+    while ( b != 0 )
+    {
+        int rest = a % b ;
+        a = b ;
+        b = rest ;
+    }
+    std::cout << a ;
+
+    return 0 ;
+}

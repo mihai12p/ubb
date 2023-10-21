@@ -3,3 +3,6 @@ sem4/iss/include/
 sem4/iss/inl/
 sem4/iss/docs/Monitoring System - Use cases.doc
 sem4/iss/docs/proiect iss.docx
+
+**/*.py[cod]
+**/target/*.xml

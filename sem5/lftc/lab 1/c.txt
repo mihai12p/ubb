@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main ( )
+{
+    int i = 0 , numar = 0 , suma = 0 , n = 0 ;
+    std::cin >> n ;  
+
+    while ( i < n )
+    {
+        std::cin >> numar ;
+        suma = suma + numar ;
+        i = i + 1 ;
+    }
+    std::cout << suma ;
+
+    return 0 ;
+}

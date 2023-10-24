@@ -80,15 +80,7 @@ class LexiTable(MutableSequence):
 
             if value == existing_value:
                 return
-
-            if len(value) == len(existing_value):
-                if value < existing_value:
-                    end = mid - 1
-                    index = mid
-                else:
-                    start = mid + 1
-                    index = start
-            elif len(value) < len(existing_value):
+            elif value < existing_value:
                 end = mid - 1
                 index = mid
             else:

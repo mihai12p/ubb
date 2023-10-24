@@ -57,7 +57,7 @@
       </li>
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem3/rc">
-          :globe_with_meridians:  Reţele de calculatoare
+          :incoming_envelope:  Reţele de calculatoare
         </a>
       </li>
     </ul>
@@ -87,6 +87,20 @@
       <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem4/iss">
           :hospital:  Ingineria sistemelor soft
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li>:ledger: Semestrul :five:
+    <ul>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/lftc">
+          :computer:  Limbaje formale şi tehnici de compilare
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/pdm">
+          :no_mobile_phones:  Programare pentru dispozitive mobile
         </a>
       </li>
     </ul>

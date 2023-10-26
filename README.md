@@ -103,6 +103,21 @@
           :no_mobile_phones:  Programare pentru dispozitive mobile
         </a>
       </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/ss">
+          :shell:  Securitate software
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/ccp">
+          :milky_way:  Criptografie cu cheie publică
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/ppd">
+          :recycle:  Programare paralelă și distribuită
+        </a>
+      </li>
     </ul>
   </li>
 </ul>

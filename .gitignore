@@ -6,3 +6,8 @@ sem4/iss/docs/proiect iss.docx
 
 **/*.py[cod]
 **/target/*.xml
+**/.vs/*
+**/*.exe
+**/.idea/*
+**/out/production/*
+**/data*.in

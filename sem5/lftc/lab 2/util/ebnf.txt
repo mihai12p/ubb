@@ -1,0 +1,10 @@
+fisier = stari alfabet tranzitii stari_finale.
+stari = "STATES: " lista_stari.
+lista_stari = ID { "," ID }.
+alfabet = "ALPHABET: " lista_simboluri.
+lista_simboluri = simbol { "," simbol }.
+simbol = ID | CONST | "-".
+tranzitii = "TRANSITIONS: " lista_tranzitii.
+lista_tranzitii = tranzitie { "," tranzitie }.
+tranzitie = ID ">" simbol ">" ID.
+stari_finale = "FINAL: " lista_stari.

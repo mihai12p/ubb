@@ -1,0 +1,19 @@
+Pentru numerele in baza 10, un numar este divizibil cu 3 daca suma cifrelor sale este divizibila cu 3.
+Pentru numerele in baza 2, un numar este divizil cu 3 daca suma resturilor impartirii la 3 corespunzatoare bitilor setati la 1 este divizibila cu 3.
+
+S0: starea in care numarul este divizibil cu 3
+S1: starea in care restul impartirii numarului la 3 este 1
+S2: starea in care restul impartirii numarului la 3 este 2
+
+Stare initiala: S0 pentru ca 0 este divizibil cu 3
+S0>0>S0 -> numarul ramane divizibil cu 3 daca adaugam un 0 la dreapta
+S0>1>S1 -> numarul va avea restul 1 la impartirea cu 3 daca adaugam 1 la dreapta
+S1>0>S2 -> numarul va avea restul 2 la impartirea cu 3 daca adaugam un 0 la dreapta
+S1>1>S0 -> numarul va fi divizibil cu 3 daca adaugam un 1 la dreapta
+S2>0>S1 -> numarul va avea restul 1 la impartirea cu 3 daca adaugam 0 la dreapta
+S2>1>S2 -> numarul va avea restul 2 la impartirea cu 3 daca adaugam 1 la dreapta
+
+Exemple:
+1) 110 -> S0>S1>S0>S0 adica 6 este divizibil cu 3
+2) 101 -> S0>S2>S2 adica 5 are restul 2 la impartirea cu 3
+3) 100 -> S0>S1>S2>S1 adica 4 are restul 1 la impartirea cu 3

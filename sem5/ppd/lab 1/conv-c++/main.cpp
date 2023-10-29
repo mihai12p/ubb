@@ -40,6 +40,8 @@ ReadInputDataStatic(
         }
     }
 
+    fin.close();
+
     for (int c = 1; c <= Displacement; ++c)
     {
         for (int i = Displacement; i < m + Displacement; ++i)
@@ -145,6 +147,7 @@ PrintDataStatic(
         }
         fout << '\n';
     }
+    fout.close();
 }
 
 void
@@ -170,7 +173,6 @@ PrintDataDynamic(
         fout << '\n';
     }
 }
-
 
 void
 CalculateConvSequentialStatic(
@@ -427,7 +429,7 @@ int main(int argc, char** argv)
         }
 
         PrintDataDynamic(displacement, resultMatrix, isSequential);
-        
+
         for (int i = 0; i < MAX_LINES; ++i)
         {
             delete[] resultMatrix[i];

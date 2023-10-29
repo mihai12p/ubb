@@ -3,7 +3,7 @@ import subprocess
 
 JAVA_EXE_PATH = r'C:\Users\example\.jdks\jbr-17.0.7\bin\java.exe'
 JAVA_CLASS_PATH = r'D:\ppd\lab 1\myjava\out\production\myjava'
-CPP_EXE_PATH = r'D:\\ppd\lab 1\mycpp'
+CPP_EXE_PATH = r'D:\ppd\lab 1\mycpp'
 TASK = 'line'  # line/column
 
 if __name__ == '__main__':

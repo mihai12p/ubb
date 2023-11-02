@@ -44,8 +44,11 @@ class FiniteAutomaton:
         print('Alphabet:', self.__alphabet)
         print('Transitions:', self.__transitions)
         print('Final States:', self.__final_states)
+        print('Is deterministic:', self.__is_deterministic())
 
     def is_sequence_accepted(self, sequence: str) -> bool:
+        assert self.__is_deterministic(), 'The AF is not deterministic, will not check the sequence'
+
         current_state = self.__initial_state
 
         for symbol in sequence:
@@ -65,4 +68,23 @@ class FiniteAutomaton:
             if current_state in self.__final_states:
                 last_accepted_pos = index
 
-        return sequence[:last_accepted_pos+1] if last_accepted_pos != -1 else ''
+        if last_accepted_pos != -1:
+            return sequence[:last_accepted_pos+1]
+        elif self.__initial_state in self.__final_states:
+            return 'epsilon'
+
+        return ''
+
+    def __is_deterministic(self) -> bool:
+        if not self.__initial_state:
+            return False
+
+        for state in self.__states:
+            for symbol in self.__alphabet:
+                if state not in self.__transitions:
+                    return False
+
+                if symbol not in self.__transitions[state] or type(self.__transitions[state][symbol]) == list:
+                    return False
+
+        return True

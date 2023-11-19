@@ -1,0 +1,7 @@
+FiniteAutomaton
+    Q: List[String] 		   	// Mulțimea de stări
+    E: List[String] 		   	// Alfabetul (simbolurile de intrare)
+    T: List[Tuple(String, String)] // Funcția de tranzitie
+    q0: String 			   	 // Starea de început
+    F: List[String] 		   	// Mulțimea de stări finale
+    isDet: Boolean 		   	 // Indică dacă automatul este deterministic sau nu

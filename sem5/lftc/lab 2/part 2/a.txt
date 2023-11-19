@@ -1,0 +1,14 @@
+#include <iostream>
+
+int main()
+{
+    const double PI = 3.14159265358979323846;
+    double raza = 0.0;
+    std::cin >> raza;
+
+    double aria = PI * raza * raza;
+    double perimetru = 2 * PI * raza;
+    std::cout << aria << " " << perimetru;
+
+    return 0;
+}

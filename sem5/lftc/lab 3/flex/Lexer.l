@@ -9,7 +9,7 @@ PSYMBOL gInternalTable = NULL;
 %option noyywrap
 
 DIGIT   [0-9]
-NUMBER  {DIGIT}+(\.{DIGIT}+)?
+NUMBER  (0[xX][0-9A-Fa-f]+)|(0[0-7]+)|({DIGIT}+(\.{DIGIT}+)?)
 ID      [a-zA-Z][a-zA-Z0-9]{0,7}
 
 %%

@@ -1,0 +1,3 @@
+[submodule "sem5/ss/proiect/extern/thread-pool"]
+	path = sem5/ss/proiect/extern/thread-pool
+	url = https://github.com/bshoshany/thread-pool.git

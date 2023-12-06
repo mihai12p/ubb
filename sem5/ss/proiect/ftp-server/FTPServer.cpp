@@ -2,11 +2,13 @@
 #include "FTPServer.hpp"
 #include "Utils.h"
 
-#define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT "21"
+#define DEFAULT_BUFLEN  512
+#define DEFAULT_PORT    "21"
 
 FTPServer::FTPServer()
 {
+    srand(static_cast<ULONG>(time(nullptr)));
+
     this->threadPool = std::make_unique<BS::thread_pool_light>(16);
 
     WSADATA wsaData = { 0 };
@@ -35,21 +37,21 @@ FTPServer::~FTPServer()
     }
 }
 
-NTSTATUS
+VOID
 FTPServer::Start()
 {
     ADDRINFOA hints = { 0 };
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
-    //hints.ai_flags = AI_PASSIVE;
+    hints.ai_flags = AI_PASSIVE;
 
     PADDRINFOA result = nullptr;
     int status = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
     if (status)
     {
         std::cout << "getaddrinfo failed with status " << status << std::endl;
-        return STATUS_UNSUCCESSFUL;
+        return;
     }
 
     this->listenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
@@ -57,7 +59,7 @@ FTPServer::Start()
     {
         std::cout << "socket failed with status " << WSAGetLastError() << std::endl;
         freeaddrinfo(result);
-        return STATUS_UNSUCCESSFUL;
+        return;
     }
 
     status = bind(this->listenSocket, result->ai_addr, (int)result->ai_addrlen);
@@ -65,7 +67,7 @@ FTPServer::Start()
     {
         std::cout << "bind failed with status " << WSAGetLastError() << std::endl;
         freeaddrinfo(result);
-        return STATUS_UNSUCCESSFUL;
+        return;
     }
 
     freeaddrinfo(result);
@@ -74,14 +76,12 @@ FTPServer::Start()
     if (status == SOCKET_ERROR)
     {
         std::cout << "listen failed with status " << WSAGetLastError() << std::endl;
-        return STATUS_UNSUCCESSFUL;
+        return;
     }
 
     std::cout << "Server is ready and listening on port " << DEFAULT_PORT << std::endl;
 
     this->HandleConnections();
-
-    return STATUS_SUCCESS;
 }
 
 VOID
@@ -95,23 +95,24 @@ FTPServer::HandleConnections()
         if (*clientSocket == INVALID_SOCKET)
         {
             std::cout << "accept failed with status " << WSAGetLastError() << std::endl;
+            closesocket(*clientSocket);
             delete clientSocket;
         }
         else
         {
             this->threadPool->push_task([&, clientInfo]
-                {
-                    char clientIP[INET_ADDRSTRLEN] = { 0 };
-                    inet_ntop(AF_INET, &clientInfo.sin_addr, clientIP, INET_ADDRSTRLEN);
+            {
+                CHAR clientIP[INET_ADDRSTRLEN] = { 0 };
+                inet_ntop(AF_INET, &clientInfo.sin_addr, clientIP, INET_ADDRSTRLEN);
 
-                    std::cout << "Client connected from IP: " << clientIP << std::endl;
+                std::cout << "Client connected from IP: " << clientIP << std::endl;
 
-                    CLIENT_CONTEXT clientContext = { .Socket = *clientSocket, .CurrentDir = R"(D:\facultate-repo)", .IPv4 = clientInfo.sin_addr };
-                    this->HandleConnection(clientContext);
+                CLIENT_CONTEXT clientContext = { .Socket = *clientSocket, .CurrentDir = R"(D:\facultate-repo)", .IPv4 = clientInfo.sin_addr };
+                this->HandleConnection(clientContext);
 
-                    closesocket(*clientSocket);
-                    delete clientSocket;
-                });
+                closesocket(*clientSocket);
+                delete clientSocket;
+            });
         }
     }
 }
@@ -119,12 +120,12 @@ FTPServer::HandleConnections()
 VOID
 FTPServer::HandleConnection(_Inout_ CLIENT_CONTEXT& ClientContext)
 {
-    this->SendString(ClientContext, "220 FTP Server Ready\r\n");
+    this->SendString(ClientContext, "220 FTP Server Ready");
 
     int status = 0;
     do
     {
-        char buffer[DEFAULT_BUFLEN] = { 0 };
+        CHAR buffer[DEFAULT_BUFLEN] = { 0 };
         int bufferSize = sizeof(buffer);
 
         status = recv(ClientContext.Socket, buffer, bufferSize, 0);
@@ -156,8 +157,9 @@ FTPServer::ProcessCommand(_In_ const std::string& Command, _Inout_ CLIENT_CONTEX
     }
 
     const std::string& processedCommand = Command.substr(0, Command.size() - 2);
-    const std::string& command = processedCommand.substr(0, processedCommand.find_first_of(" "));
-    const std::string& argument = processedCommand.substr(processedCommand.find_first_of(" ") + 1);
+    size_t separatorPosition = processedCommand.find_first_of(" ");
+    const std::string& command = processedCommand.substr(0, separatorPosition);
+    const std::string& argument = processedCommand.substr((separatorPosition != std::string::npos ? separatorPosition + 1 : processedCommand.size()));
 
     if (!command.compare("USER"))
     {
@@ -240,7 +242,12 @@ _Use_decl_annotations_
 bool
 FTPServer::SendString(_In_ const SOCKET& Socket, _In_ const std::string& Message)
 {
-    return send(Socket, Message.c_str(), static_cast<int>(Message.size()), 0) != SOCKET_ERROR;
+    std::string message = Message;
+    if (!message.ends_with("\r\n"))
+    {
+        message += "\r\n";
+    }
+    return send(Socket, message.c_str(), static_cast<int>(message.size()), 0) != SOCKET_ERROR;
 }
 
 _Use_decl_annotations_
@@ -249,14 +256,15 @@ FTPServer::HandleUSER(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     ClientContext.Access = CLIENT_ACCESS::NotLoggedIn;
 
     CHAR message[MESSAGE_MAX_LENGTH] = { 0 };
-    _snprintf_s(message, sizeof(message), _TRUNCATE, "331 User %s OK. Password required\r\n", Argument.c_str());
-    strcpy_s(ClientContext.UserName, Argument.c_str());
+    _snprintf_s(message, sizeof(message), _TRUNCATE, "331 User %s OK. Password required", Argument.c_str());
+    strcpy_s(ClientContext.UserName, sizeof(ClientContext.UserName), Argument.c_str());
+    ClientContext.UserName[USERNAME_MAX_LENGTH - 1] = ANSI_NULL;
     return this->SendString(ClientContext, message);
 }
 
@@ -266,31 +274,31 @@ FTPServer::HandlePASS(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     const std::string& userName = ClientContext.UserName;
-    if (!userName.starts_with(HARDCODED_USER) || !Argument.starts_with(HARDCODED_PASSWORD))
+    if (userName.size() == 0 || userName.compare(HARDCODED_USER) || Argument.compare(HARDCODED_PASSWORD))
     {
-        return this->SendString(ClientContext, "530 Invalid user name or password.\r\n");
+        return this->SendString(ClientContext, "530 Invalid user name or password.");
     }
 
     ClientContext.Access = CLIENT_ACCESS::Full;
-    return this->SendString(ClientContext, "230 User logged in\r\n");
+    return this->SendString(ClientContext, "230 User logged in");
 }
 
 _Use_decl_annotations_
 bool
 FTPServer::HandleSYST(_In_ const CLIENT_CONTEXT& ClientContext)
 {
-    return this->SendString(ClientContext, "215 Windows_NT version 10.0\r\n");
+    return this->SendString(ClientContext, "215 Windows_NT version 10.0");
 }
 
 _Use_decl_annotations_
 bool
 FTPServer::HandleFEAT(_In_ const CLIENT_CONTEXT& ClientContext)
 {
-    return this->SendString(ClientContext, "211-Extensions supported:\r\n PASV\r\n UTF8\r\n211 End.\r\n");
+    return this->SendString(ClientContext, "211-Extensions supported:\r\n PASV\r\n211 End.");
 }
 
 _Use_decl_annotations_
@@ -299,11 +307,11 @@ FTPServer::HandlePWD(_In_ const CLIENT_CONTEXT& ClientContext)
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     CHAR message[MESSAGE_MAX_LENGTH] = { 0 };
-    _snprintf_s(message, sizeof(message), _TRUNCATE, "257 \"%s\" is a current directory.\r\n", ClientContext.CurrentDir);
+    _snprintf_s(message, sizeof(message), _TRUNCATE, "257 \"%s\" is a current directory.", ClientContext.CurrentDir);
     return this->SendString(ClientContext, message);
 }
 
@@ -313,17 +321,18 @@ FTPServer::HandleCWD(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::stri
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
-    if (Argument.size() <= 1)
+    if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     if (Argument.contains("\\"))
     {
-        strcpy_s(ClientContext.CurrentDir, Argument.c_str() + 1);
+        strcpy_s(ClientContext.CurrentDir, sizeof(ClientContext.CurrentDir), Argument.c_str() + 1);
+        ClientContext.CurrentDir[MAX_PATH - 1] = ANSI_NULL;
     }
     else
     {
@@ -337,11 +346,13 @@ FTPServer::HandleCWD(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::stri
         }
         else
         {
-            strcat_s(ClientContext.CurrentDir, "\\");
-            strcat_s(ClientContext.CurrentDir, Argument.c_str());
+            strcat_s(ClientContext.CurrentDir, sizeof(ClientContext.CurrentDir), "\\");
+            strcat_s(ClientContext.CurrentDir, sizeof(ClientContext.CurrentDir), Argument.c_str());
+            ClientContext.CurrentDir[MAX_PATH - 1] = ANSI_NULL;
         }
     }
-    return this->SendString(ClientContext, "250 Requested file action okay, completed.\r\n");
+
+    return this->SendString(ClientContext, "250 Requested file action okay, completed.");
 }
 
 _Use_decl_annotations_
@@ -350,26 +361,26 @@ FTPServer::HandleTYPE(_In_ const CLIENT_CONTEXT& ClientContext, _In_ const std::
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     switch (Argument.c_str()[0])
     {
     case 'A':
     case 'a':
-        return this->SendString(ClientContext, "200 Type set to A.\r\n");
+        return this->SendString(ClientContext, "200 Type set to A.");
 
     case 'I':
     case 'i':
-        return this->SendString(ClientContext, "200 Type set to I.\r\n");
+        return this->SendString(ClientContext, "200 Type set to I.");
 
     default:
-        return this->SendString(ClientContext, "501 Syntax error in parameters or argument.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or argument.");
     }
 }
 
@@ -379,43 +390,65 @@ FTPServer::HandleLIST(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
+    }
+
+    std::string listDir = std::string(ClientContext.CurrentDir);
+    if (Argument.size() > 0 && !Argument.starts_with("-a") && !Argument.starts_with("-l"))
+    {
+        if (Argument.contains(".."))
+        {
+            return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
+        }
+
+        listDir += "\\" + Argument;
     }
 
     WIN32_FIND_DATAA fileData = { 0 };
-    HANDLE fileHandle = FindFirstFileA((std::string(ClientContext.CurrentDir) + "\\*").c_str(), &fileData);
+    HANDLE fileHandle = FindFirstFileA((listDir + "\\*").c_str(), &fileData);
     std::stringstream listStream;
     do
     {
-        listStream << ((fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? "d" : "-")
-            << "rw-r--r-- 1 owner group "
-            << fileData.nFileSizeLow << " "
-            << FiletimeToTimestamp(fileData.ftLastWriteTime) << " "
-            << fileData.cFileName << "\r\n";
+        if (strcmp(fileData.cFileName, ".") && strcmp(fileData.cFileName, ".."))
+        {
+            listStream << ((fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? "d" : "-")
+                       << "rw-r--r-- 1 owner group "
+                       << fileData.nFileSizeLow << " "
+                       << FiletimeToTimestamp(fileData.ftLastWriteTime) << " "
+                       << fileData.cFileName << "\r\n";
+        }
     } while (FindNextFileA(fileHandle, &fileData));
     FindClose(fileHandle);
 
-    this->SendString(ClientContext, "150 Opening data connection.\r\n");
+    this->SendString(ClientContext, "150 Opening data connection.");
 
-    //SOCKET dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    //SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
-    //int status = connect(dataSocket, reinterpret_cast<PSOCKADDR>(&clientAddr), sizeof(clientAddr));
-    //if (status == SOCKET_ERROR)
-    //{
-    //    return this->SendString(ClientContext, "550 File or directory unavailable.\r\n");
-    //}
-
-    SOCKET dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
-    closesocket(ClientContext.DataSocket);
-    ClientContext.DataSocket = dataSocket;
-    if (dataSocket == INVALID_SOCKET)
+    SOCKET dataSocket = { 0 };
+    if (ClientContext.DataSocketType == DATASOCKET_TYPE::Passive)
     {
-        return false;
+        dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
+        closesocket(ClientContext.DataSocket);
+        ClientContext.DataSocket = dataSocket;
+        if (dataSocket == INVALID_SOCKET)
+        {
+            closesocket(dataSocket);
+            return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
+        }
+    }
+    else if (ClientContext.DataSocketType == DATASOCKET_TYPE::Normal)
+    {
+        dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
+        int status = connect(dataSocket, reinterpret_cast<PSOCKADDR>(&clientAddr), sizeof(clientAddr));
+        if (status == SOCKET_ERROR)
+        {
+            closesocket(dataSocket);
+            return this->SendString(ClientContext, "550 File or directory unavailable.");
+        }
     }
 
     this->SendString(dataSocket, listStream.str());
     closesocket(dataSocket);
-    return this->SendString(ClientContext, "226 Transfer complete.\r\n");
+    return this->SendString(ClientContext, "226 Transfer complete.");
 }
 
 _Use_decl_annotations_
@@ -424,12 +457,12 @@ FTPServer::HandlePORT(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     int c;
@@ -445,7 +478,7 @@ FTPServer::HandlePORT(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
         }
         if (*p == 0)
         {
-            return false;
+            return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
         }
         ++p;
     }
@@ -471,12 +504,14 @@ FTPServer::HandlePORT(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
     dataIPv4.S_un.S_un_b.s_b4 = static_cast<BYTE>(dataAddr[3]);
     if (dataIPv4.S_un.S_addr != ClientContext.IPv4.S_un.S_addr)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     ClientContext.DataIPv4.S_un.S_addr = dataIPv4.S_un.S_addr;
     ClientContext.DataPort = static_cast<USHORT>((dataPort[1] << 8) + dataPort[0]);
-    return this->SendString(ClientContext, "200 Transfer complete.\r\n");
+    ClientContext.DataSocketType = DATASOCKET_TYPE::Normal;
+
+    return this->SendString(ClientContext, "200 Transfer complete.");
 }
 
 _Use_decl_annotations_
@@ -485,22 +520,22 @@ FTPServer::HandleREST(_In_ const CLIENT_CONTEXT& ClientContext, _In_ const std::
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
-    return this->SendString(ClientContext, "350 REST supported.\r\n");
+    return this->SendString(ClientContext, "350 REST supported.");
 }
 
 _Use_decl_annotations_
 bool
 FTPServer::HandleQUIT(_In_ const CLIENT_CONTEXT& ClientContext, _In_ const std::string& Argument)
 {
-    return this->SendString(ClientContext, "221 Quit.\r\n");
+    return this->SendString(ClientContext, "221 Quit.");
 }
 
 _Use_decl_annotations_
@@ -509,12 +544,12 @@ FTPServer::HandleRETR(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     bool status = false;
@@ -525,44 +560,53 @@ FTPServer::HandleRETR(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
     {
         if (!strcmp(Argument.c_str(), fileData.cFileName))
         {
-            this->SendString(ClientContext, "150 Opening data connection.\r\n");
+            this->SendString(ClientContext, "150 Opening data connection.");
 
-            //SOCKET dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-            //SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
-            //int status = connect(dataSocket, reinterpret_cast<PSOCKADDR>(&clientAddr), sizeof(clientAddr));
-            //if (status == SOCKET_ERROR)
-            //{
-            //    return this->SendString(ClientContext, "550 File or directory unavailable.\r\n");
-            //}
-
-            SOCKET dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
-            closesocket(ClientContext.DataSocket);
-            ClientContext.DataSocket = dataSocket;
-            if (dataSocket == INVALID_SOCKET)
+            SOCKET dataSocket = { 0 };
+            if (ClientContext.DataSocketType == DATASOCKET_TYPE::Passive)
             {
-                return false;
+                dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
+                closesocket(ClientContext.DataSocket);
+                ClientContext.DataSocket = dataSocket;
+                if (dataSocket == INVALID_SOCKET)
+                {
+                    closesocket(dataSocket);
+                    return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
+                }
+            }
+            else if (ClientContext.DataSocketType == DATASOCKET_TYPE::Normal)
+            {
+                dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+                SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
+                int status = connect(dataSocket, reinterpret_cast<PSOCKADDR>(&clientAddr), sizeof(clientAddr));
+                if (status == SOCKET_ERROR)
+                {
+                    closesocket(dataSocket);
+                    return this->SendString(ClientContext, "550 File or directory unavailable.");
+                }
             }
 
             std::ifstream file(std::string(ClientContext.CurrentDir) + "\\" + fileData.cFileName, std::ios::binary);
             if (!file.is_open())
             {
                 closesocket(dataSocket);
-                return this->SendString(ClientContext, "550 File not found or access denied.\r\n");
+                return this->SendString(ClientContext, "550 File not found or access denied.");
             }
 
-            char buffer[1024] = { 0 };
+            CHAR buffer[DEFAULT_BUFLEN] = { 0 };
             while (file.read(buffer, sizeof(buffer)) || file.gcount())
             {
                 if (send(dataSocket, buffer, static_cast<int>(file.gcount()), 0) == SOCKET_ERROR)
                 {
                     file.close();
                     closesocket(dataSocket);
-                    return this->SendString(ClientContext, "426 Connection closed; transfer aborted.\r\n");
+                    return this->SendString(ClientContext, "426 Connection closed; transfer aborted.");
                 }
             }
+
             file.close();
             closesocket(dataSocket);
-            status = this->SendString(ClientContext, "226 Transfer complete.\r\n");
+            status = this->SendString(ClientContext, "226 Transfer complete.");
             fileFound = true;
 
             break;
@@ -572,7 +616,7 @@ FTPServer::HandleRETR(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 
     if (!fileFound)
     {
-        status = this->SendString(ClientContext, "550 File or directory unavailable.\r\n");
+        status = this->SendString(ClientContext, "550 File or directory unavailable.");
     }
 
     return status;
@@ -584,46 +628,55 @@ FTPServer::HandleSTOR(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (ClientContext.Access == CLIENT_ACCESS::ReadOnly)
     {
-        return this->SendString(ClientContext, "550 Permission denied.\r\n");
+        return this->SendString(ClientContext, "550 Permission denied.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     std::ofstream file(std::string(ClientContext.CurrentDir) + "\\" + Argument, std::ios::binary);
     if (!file.is_open())
     {
-        this->SendString(ClientContext, "550 Cannot open file for writing.\r\n");
-        return false;
+        return this->SendString(ClientContext, "550 Cannot open file for writing.");
     }
 
-    this->SendString(ClientContext, "150 Opening data connection.\r\n");
+    this->SendString(ClientContext, "150 Opening data connection.");
 
-    //SOCKET dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    //SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
-    //int status = connect(dataSocket, (PSOCKADDR)&clientAddr, sizeof(clientAddr));
-    //if (status == SOCKET_ERROR)
-    //{
-    //    return this->SendString(ClientContext, "550 File or directory unavailable.\r\n");
-    //}
-
-    SOCKET dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
-    closesocket(ClientContext.DataSocket);
-    ClientContext.DataSocket = dataSocket;
-    if (dataSocket == INVALID_SOCKET)
+    SOCKET dataSocket = { 0 };
+    if (ClientContext.DataSocketType == DATASOCKET_TYPE::Passive)
     {
-        return false;
+        dataSocket = accept(ClientContext.DataSocket, NULL, NULL);
+        closesocket(ClientContext.DataSocket);
+        ClientContext.DataSocket = dataSocket;
+        if (dataSocket == INVALID_SOCKET)
+        {
+            file.close();
+            closesocket(dataSocket);
+            return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
+        }
+    }
+    else if (ClientContext.DataSocketType == DATASOCKET_TYPE::Normal)
+    {
+        dataSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        SOCKADDR_IN clientAddr = { .sin_family = AF_INET, .sin_port = ClientContext.DataPort, .sin_addr = ClientContext.DataIPv4 };
+        int status = connect(dataSocket, reinterpret_cast<PSOCKADDR>(&clientAddr), sizeof(clientAddr));
+        if (status == SOCKET_ERROR)
+        {
+            file.close();
+            closesocket(dataSocket);
+            return this->SendString(ClientContext, "550 File or directory unavailable.");
+        }
     }
 
     int bytesRead;
-    char buffer[1024] = { 0 };
+    CHAR buffer[DEFAULT_BUFLEN] = { 0 };
     while ((bytesRead = recv(dataSocket, buffer, sizeof(buffer), 0)) > 0)
     {
         file.write(buffer, bytesRead);
@@ -634,10 +687,10 @@ FTPServer::HandleSTOR(_Inout_ CLIENT_CONTEXT& ClientContext, _In_ const std::str
 
     if (bytesRead < 0)
     {
-        return this->SendString(ClientContext, "426 Connection closed; transfer aborted.\r\n");
+        return this->SendString(ClientContext, "426 Connection closed; transfer aborted.");
     }
 
-    return this->SendString(ClientContext, "226 Transfer complete.\r\n");
+    return this->SendString(ClientContext, "226 Transfer complete.");
 }
 
 _Use_decl_annotations_
@@ -646,28 +699,30 @@ FTPServer::HandleDELE(_In_ const CLIENT_CONTEXT& ClientContext, _In_ const std::
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     if (ClientContext.Access != CLIENT_ACCESS::Full)
     {
-        return this->SendString(ClientContext, "550 Permission denied.\r\n");
+        return this->SendString(ClientContext, "550 Permission denied.");
     }
 
     if (Argument.size() == 0)
     {
-        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.\r\n");
+        return this->SendString(ClientContext, "501 Syntax error in parameters or arguments.");
     }
 
     CHAR fullPath[MAX_PATH] = { 0 };
-    strcpy_s(fullPath, Argument.c_str() + 1);
-    if (std::remove(fullPath) != 0)
+    strcpy_s(fullPath, sizeof(fullPath), Argument.c_str() + 1);
+    fullPath[MAX_PATH - 1] = ANSI_NULL;
+
+    if (std::remove(fullPath))
     {
-        return this->SendString(ClientContext, "550 File or directory unavailable.\r\n");
+        return this->SendString(ClientContext, "550 File or directory unavailable.");
     }
     else
     {
-        return this->SendString(ClientContext, "250 Requested file action okay, completed.\r\n");
+        return this->SendString(ClientContext, "250 Requested file action okay, completed.");
     }
 }
 
@@ -677,10 +732,10 @@ FTPServer::HandleABOR(_In_ const CLIENT_CONTEXT& ClientContext)
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
-    return this->SendString(ClientContext, "226 Transfer complete. Closing data connection.\r\n");
+    return this->SendString(ClientContext, "226 Transfer complete. Closing data connection.");
 }
 
 _Use_decl_annotations_
@@ -689,43 +744,44 @@ FTPServer::HandlePASV(_Inout_ CLIENT_CONTEXT& ClientContext)
 {
     if (ClientContext.Access == CLIENT_ACCESS::NotLoggedIn)
     {
-        return this->SendString(ClientContext, "530 Please login with USER and PASS.\r\n");
+        return this->SendString(ClientContext, "530 Please login with USER and PASS.");
     }
 
     SOCKET passiveSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (passiveSocket == INVALID_SOCKET)
     {
         closesocket(passiveSocket);
-        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.\r\n");
+        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
     }
 
-    SOCKADDR_IN serverAddr = { .sin_family = AF_INET, .sin_port = htons((rand() % 5000) + 60000), .sin_addr = ClientContext.IPv4 };
+    SOCKADDR_IN serverAddr = { .sin_family = AF_INET, .sin_port = htons((rand() % 5000) + 60001), .sin_addr = ClientContext.IPv4 };
     int status = bind(passiveSocket, reinterpret_cast<PSOCKADDR>(&serverAddr), sizeof(serverAddr));
     if (status == SOCKET_ERROR)
     {
         closesocket(passiveSocket);
-        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.\r\n");
+        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
     }
 
     status = listen(passiveSocket, SOMAXCONN);
     if (status == SOCKET_ERROR)
     {
         closesocket(passiveSocket);
-        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.\r\n");
+        return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
     }
 
     ClientContext.DataIPv4 = serverAddr.sin_addr;
     ClientContext.DataPort = serverAddr.sin_port;
     ClientContext.DataSocket = passiveSocket;
+    ClientContext.DataSocketType = DATASOCKET_TYPE::Passive;
 
     CHAR message[MESSAGE_MAX_LENGTH] = { 0 };
     _snprintf_s(message, sizeof(message), _TRUNCATE,
-        "227 Entering Passive Mode (%u,%u,%u,%u,%u,%u).\r\n",
-        ClientContext.DataIPv4.s_addr & 0xFF,
-        (ClientContext.DataIPv4.s_addr >> 8) & 0xFF,
-        (ClientContext.DataIPv4.s_addr >> 16) & 0xFF,
-        (ClientContext.DataIPv4.s_addr >> 24) & 0xFF,
-        ClientContext.DataPort & 0xFF,
-        (ClientContext.DataPort >> 8) & 0xFF);
+                "227 Entering Passive Mode (%u,%u,%u,%u,%u,%u).",
+                (ClientContext.DataIPv4.s_addr) & 0xFF,
+                (ClientContext.DataIPv4.s_addr >> 8) & 0xFF,
+                (ClientContext.DataIPv4.s_addr >> 16) & 0xFF,
+                (ClientContext.DataIPv4.s_addr >> 24) & 0xFF,
+                (ClientContext.DataPort) & 0xFF,
+                (ClientContext.DataPort >> 8) & 0xFF);
     return this->SendString(ClientContext, message);
 }

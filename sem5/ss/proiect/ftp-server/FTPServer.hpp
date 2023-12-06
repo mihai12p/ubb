@@ -1,11 +1,6 @@
 #ifndef _FTP_SERVER_HPP_
 #define _FTP_SERVER_HPP_
 
-typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
-
-#define STATUS_SUCCESS                          ((NTSTATUS)0x00000000L)
-#define STATUS_UNSUCCESSFUL                     ((NTSTATUS)0xC0000001L)
-
 #define USERNAME_MAX_LENGTH         25
 #define PASSWORD_MAX_LENGTH         32
 #define MESSAGE_MAX_LENGTH          256
@@ -23,16 +18,26 @@ typedef enum class _CLIENT_ACCESS : BYTE
     MaxClientAccess
 } CLIENT_ACCESS, * PCLIENT_ACCESS;
 
+typedef enum class _DATASOCKET_TYPE : BYTE
+{
+    Unknown     = 0,
+    Normal      = 1,
+    Passive     = 2,
+
+    MaxDataSockektType
+} DATASOCKET_TYPE, * PDATASOCKET_TYPE;
+
 typedef struct _CLIENT_CONTEXT
 {
-    SOCKET        Socket = { 0 };
-    CHAR          UserName[USERNAME_MAX_LENGTH] = { 0 };
-    CHAR          CurrentDir[MAX_PATH] = { 0 };
-    CLIENT_ACCESS Access = CLIENT_ACCESS::Unknown;
-    IN_ADDR       IPv4;
-    IN_ADDR       DataIPv4;
-    USHORT        DataPort;
-    SOCKET        DataSocket = { 0 };
+    SOCKET          Socket = { 0 };
+    CHAR            UserName[USERNAME_MAX_LENGTH] = { 0 };
+    CHAR            CurrentDir[MAX_PATH] = { 0 };
+    CLIENT_ACCESS   Access = CLIENT_ACCESS::NotLoggedIn;
+    IN_ADDR         IPv4 = { 0 };
+    IN_ADDR         DataIPv4 = { 0 };
+    USHORT          DataPort = 0UL;
+    SOCKET          DataSocket = { 0 };
+    DATASOCKET_TYPE DataSocketType = DATASOCKET_TYPE::Unknown;
 } CLIENT_CONTEXT, * PCLIENT_CONTEXT;
 
 class FTPServer
@@ -50,7 +55,7 @@ public:
     FTPServer(_Inout_ FTPServer&& Other) = delete;
     FTPServer& operator=(_In_ FTPServer&& Other) = delete;
 
-    NTSTATUS
+    VOID
     Start();
 
 private:

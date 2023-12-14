@@ -144,7 +144,6 @@ FTPServer::HandleConnection(_Inout_ CLIENT_CONTEXT& ClientContext)
             std::cout << "recv failed: " << WSAGetLastError() << std::endl;
             return;
         }
-
     } while (status > 0);
 }
 

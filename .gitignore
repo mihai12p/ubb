@@ -14,3 +14,5 @@ sem4/iss/docs/proiect iss.docx
 **/out/production/*
 **/data*.in
 **/data*.out
+**/inputs/*.txt*
+**/output/*.txt*

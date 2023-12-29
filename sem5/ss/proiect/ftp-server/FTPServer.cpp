@@ -753,7 +753,7 @@ FTPServer::HandlePASV(_Inout_ CLIENT_CONTEXT& ClientContext)
         return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
     }
 
-    SOCKADDR_IN serverAddr = { .sin_family = AF_INET, .sin_port = htons((rand() % 5000) + 60001), .sin_addr = ClientContext.IPv4 };
+    SOCKADDR_IN serverAddr = { .sin_family = AF_INET, .sin_port = htons((rand() % 5000) + 60001), .sin_addr = 0UL };
     int status = bind(passiveSocket, reinterpret_cast<PSOCKADDR>(&serverAddr), sizeof(serverAddr));
     if (status == SOCKET_ERROR)
     {
@@ -768,7 +768,7 @@ FTPServer::HandlePASV(_Inout_ CLIENT_CONTEXT& ClientContext)
         return this->SendString(ClientContext, "451 Requested action aborted. Local error in processing.");
     }
 
-    ClientContext.DataIPv4 = serverAddr.sin_addr;
+    ClientContext.DataIPv4 = ClientContext.IPv4;
     ClientContext.DataPort = serverAddr.sin_port;
     ClientContext.DataSocket = passiveSocket;
     ClientContext.DataSocketType = DATASOCKET_TYPE::Passive;

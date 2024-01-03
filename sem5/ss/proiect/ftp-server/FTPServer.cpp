@@ -23,7 +23,7 @@ FTPServer::FTPServer()
 FTPServer::~FTPServer()
 {
     int status = closesocket(this->listenSocket);
-    if (!status)
+    if (status == SOCKET_ERROR)
     {
         const std::string& message = "closesocket failed with status " + std::to_string(WSAGetLastError());
         std::cout << message.c_str() << std::endl;

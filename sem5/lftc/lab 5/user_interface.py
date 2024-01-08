@@ -26,9 +26,12 @@ class UserInterface:
             file_name = input("File to be parsed: ")
             if file_name == "":
                 break
-            cls._print_parse_result(
-                parser.parse_file(os.path.join("files", "fip", file_name))
-            )
+            try:
+                cls._print_parse_result(
+                    parser.parse_file(os.path.join("files", "fip", file_name))
+                )
+            except FileNotFoundError:
+                print("Invalid file path, try again!")
 
     @classmethod
     def run(cls):
@@ -43,10 +46,12 @@ class UserInterface:
             try:
                 file_path = os.path.join("files", file_name)
                 grammar = Grammar.from_file(file_path)
-                parser = LR1Parser(grammar)
             except FileNotFoundError:
                 print("Invalid file path, try again!")
                 continue
+
+            parser = LR1Parser(grammar)
+            print(parser, end="\n\n")
 
             while True:
                 print("1. Parse some input strings")

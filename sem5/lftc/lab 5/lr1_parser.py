@@ -32,16 +32,6 @@ State = List[ExtendedProduction]
 
 
 class LR1Parser:
-    def _format_production(self, production: ExtendedProduction):
-        raw_production = self._grammar.raw_productions[production.idx]
-        before_point = " ".join(raw_production.transition[: production.point_idx])
-        after_point = " ".join(raw_production.transition[production.point_idx :])
-        lookahead = "/".join(production.lookahead)
-        return (
-            f"[{raw_production.non_terminal} -> {before_point} "
-            f".{'' if after_point == '' else ' '}{after_point}, {lookahead}]"
-        )
-
     def __init__(self, grammar: Grammar):
         self._grammar = grammar
         self._first_table = self._grammar.first_table()
@@ -55,31 +45,6 @@ class LR1Parser:
             self._canon_collection,
             self._table,
         ) = self._build_canon_collection_and_analysis_table()
-
-        print("Canon collection:")
-        for idx, canon_collection_elem in enumerate(self._canon_collection):
-            formatted_canon_collection_elem = list(
-                map(self._format_production, canon_collection_elem)
-            )
-            print(f"I{idx}: ({', '.join(formatted_canon_collection_elem)})")
-
-        print("\nAnalysis table:")
-        table = PrettyTable(["State", *self._all_symbols, "$"])
-        for idx, row in enumerate(self._table):
-            table.add_row(
-                [f"I{idx}"]
-                + list(
-                    map(
-                        lambda action: ""
-                        if action is None
-                        else "acc"
-                        if action[0] == "accept"
-                        else action[0][0] + str(action[1]),
-                        row.values(),
-                    )
-                )
-            )
-        print(table)
 
     @classmethod
     def _merge_arrays_unique(cls, array1: List, array2: List) -> List:
@@ -243,6 +208,18 @@ class LR1Parser:
             table.append(current_row)
         return canon_collection, table
 
+    def _output_lane_to_tokens(self, output_lane: List[int]) -> List[str]:
+        tokens = self._grammar.productions[self._grammar.starting_symbol][0].transition
+        for production_idx in output_lane:
+            production = self._grammar.raw_productions[production_idx]
+            for idx in range(len(tokens) - 1, -1, -1):
+                if tokens[idx] == production.non_terminal:
+                    tokens = tokens[:idx] + production.transition + tokens[idx + 1 :]
+                    break
+            else:
+                raise ValueError("Invalid output lane!")
+        return tokens
+
     def _parse(self, tokens: List[str]) -> bool:
         work_stack = ["$", 0]
         input_lane = tokens + ["$"]
@@ -253,6 +230,12 @@ class LR1Parser:
             if action is None:
                 return False
             elif action[0] == "accept":
+                new_tokens = self._output_lane_to_tokens(output_lane)
+                print(
+                    f"Input tokens:\t\t\t\t{tokens}\nTokens from output lane:\t{new_tokens}"
+                )
+                if tokens != new_tokens:
+                    raise ValueError("Invalid output lane!")
                 return True
             elif action[0] == "shift":
                 work_stack.append(input_lane.pop(0))
@@ -279,3 +262,40 @@ class LR1Parser:
                     continue
                 items += line.split(" ")
             return self._parse(items)
+
+    def _format_production(self, production: ExtendedProduction):
+        raw_production = self._grammar.raw_productions[production.idx]
+        before_point = " ".join(raw_production.transition[: production.point_idx])
+        after_point = " ".join(raw_production.transition[production.point_idx :])
+        lookahead = "/".join(production.lookahead)
+        return (
+            f"[{raw_production.non_terminal} -> {before_point} "
+            f".{'' if after_point == '' else ' '}{after_point}, {lookahead}]"
+        )
+
+    def __str__(self) -> str:
+        elems = ["Canon collection:"]
+        for idx, canon_collection_elem in enumerate(self._canon_collection):
+            formatted_canon_collection_elem = list(
+                map(self._format_production, canon_collection_elem)
+            )
+            elems.append(f"I{idx}: ({', '.join(formatted_canon_collection_elem)})")
+
+        elems.append("\nAnalysis table:")
+        table = PrettyTable(["State", *self._all_symbols, "$"])
+        for idx, row in enumerate(self._table):
+            table.add_row(
+                [f"I{idx}"]
+                + list(
+                    map(
+                        lambda action: ""
+                        if action is None
+                        else "acc"
+                        if action[0] == "accept"
+                        else action[0][0] + str(action[1]),
+                        row.values(),
+                    )
+                )
+            )
+        elems.append(str(table))
+        return "\n".join(elems)

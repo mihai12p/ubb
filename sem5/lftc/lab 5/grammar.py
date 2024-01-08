@@ -87,8 +87,14 @@ class Grammar(BaseModel):
             production = Production(
                 idx=len(raw_productions),
                 non_terminal=non_terminal,
-                transition=[token for token in line_split[1].split(" ") if token != ""],
+                transition=[
+                    token
+                    for token in line_split[1].split(" ")
+                    if token != "" and token != "%empty"
+                ],
             )
+            if len(production.transition) == 0:
+                raise ValueError("Invalid file! No ε-production allowed.")
             raw_productions.append(production)
             productions[non_terminal].append(production)
 
@@ -120,12 +126,15 @@ class Grammar(BaseModel):
         while changes_made:
             changes_made = False
             for non_terminal in self.non_terminals:
+                non_terminal_row = first_table[non_terminal]
                 for production in self.productions[non_terminal]:
                     transition = production.transition
-                    if len(transition) == 0 or transition[0] not in self.non_terminals:
+                    if transition[0] not in self.non_terminals:
                         continue
                     for token in first_table[transition[0]]:
-                        if token != "ε" and token not in first_table[non_terminal]:
-                            first_table[non_terminal].append(token)
+                        if token not in non_terminal_row:
+                            non_terminal_row.append(token)
                             changes_made = True
+        for non_terminal, first_row in first_table.items():
+            first_table[non_terminal] = sorted(first_row)
         return first_table

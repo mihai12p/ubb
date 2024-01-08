@@ -1,27 +1,47 @@
 from typing import Dict, List, Optional, Tuple
 
 from pydantic import BaseModel
+from prettytable import PrettyTable
 
-from grammar import Grammar, Production
+from grammar import Grammar
 
 
-class State(BaseModel):
-    production: Production
+class ExtendedProduction(BaseModel):
+    idx: int
     lookahead: List[str]
     point_idx: int = 0
 
-    def __eq__(self, other: "State") -> bool:
+    def __eq__(self, other: "ExtendedProduction") -> bool:
         return (
-            self.production == other.production
+            self.idx == other.idx
             and self.lookahead == other.lookahead
             and self.point_idx == other.point_idx
         )
 
     def __hash__(self) -> int:
-        return hash((self.production, tuple(self.lookahead), self.point_idx))
+        return hash(
+            (
+                self.idx,
+                tuple(self.lookahead),
+                self.point_idx,
+            )
+        )
+
+
+State = List[ExtendedProduction]
 
 
 class LR1Parser:
+    def _format_production(self, production: ExtendedProduction):
+        raw_production = self._grammar.raw_productions[production.idx]
+        before_point = " ".join(raw_production.transition[: production.point_idx])
+        after_point = " ".join(raw_production.transition[production.point_idx :])
+        lookahead = "/".join(production.lookahead)
+        return (
+            f"[{raw_production.non_terminal} -> {before_point} "
+            f".{'' if after_point == '' else ' '}{after_point}, {lookahead}]"
+        )
+
     def __init__(self, grammar: Grammar):
         self._grammar = grammar
         self._first_table = self._grammar.first_table()
@@ -31,123 +51,209 @@ class LR1Parser:
                 self._grammar.non_terminals + self._grammar.terminals,
             )
         )
-        print(self._all_symbols)
-        self._canon_collection, self._table = self._build_canon_collection()
-        for idx, canon_collection_elem in enumerate(self._canon_collection):
-            print(f"I{idx}: {canon_collection_elem}")
-        for idx, action in self._table.items():
-            print(f"I{idx}: {action}")
+        (
+            self._canon_collection,
+            self._table,
+        ) = self._build_canon_collection_and_analysis_table()
 
-    def _build_closure(self, state: State) -> List[State]:
+        print("Canon collection:")
+        for idx, canon_collection_elem in enumerate(self._canon_collection):
+            formatted_canon_collection_elem = list(
+                map(self._format_production, canon_collection_elem)
+            )
+            print(f"I{idx}: ({', '.join(formatted_canon_collection_elem)})")
+
+        print("\nAnalysis table:")
+        table = PrettyTable(["State", *self._all_symbols, "$"])
+        for idx, row in enumerate(self._table):
+            table.add_row(
+                [f"I{idx}"]
+                + list(
+                    map(
+                        lambda action: ""
+                        if action is None
+                        else "acc"
+                        if action[0] == "accept"
+                        else action[0][0] + str(action[1]),
+                        row.values(),
+                    )
+                )
+            )
+        print(table)
+
+    @classmethod
+    def _merge_arrays_unique(cls, array1: List, array2: List) -> List:
+        new_array, i, j = [], 0, 0
+        while i < len(array1) and j < len(array2):
+            if array1[i] < array2[j]:
+                new_array.append(array1[i])
+                i += 1
+            elif array1[i] > array2[j]:
+                new_array.append(array2[j])
+                j += 1
+            else:
+                new_array.append(array1[i])
+                i += 1
+                j += 1
+        new_array += array1[i:]
+        new_array += array2[j:]
+        return new_array
+
+    def _build_closure(self, productions: State) -> State:
         closure = []
-        new_items = [state]
+        new_items = productions
         while len(new_items) > 0:
             closure += new_items
             unverified_items = len(new_items)
             new_items = []
-            for item in closure[-unverified_items:]:
-                transition = item.production.transition
-                if item.point_idx >= len(transition):
+            for production in closure[-unverified_items:]:
+                transition = self._grammar.raw_productions[production.idx].transition
+                point_idx = production.point_idx
+
+                if point_idx == len(transition):
                     continue
-                next_symbol = transition[item.point_idx]
-                if next_symbol not in self._grammar.non_terminals:
+                current_symbol = transition[point_idx]
+                if current_symbol in self._grammar.terminals:
                     continue
-                after_next_symbol = (
-                    []
-                    if item.point_idx + 1 >= len(transition)
-                    else [transition[item.point_idx + 1]]
-                    if transition[item.point_idx + 1] in self._grammar.terminals
-                    else self._first_table[transition[item.point_idx + 1]]
-                )
-                next_lookahead = (
-                    item.lookahead
-                    if len(after_next_symbol) == 0
-                    else after_next_symbol
-                    if item.lookahead == ["$"]
-                    else list(set(item.lookahead + after_next_symbol))
-                )
-                for production in self._grammar.productions[next_symbol]:
-                    new_item = State(
-                        production=production,
+
+                if point_idx + 1 == len(transition):
+                    next_lookahead = production.lookahead
+                elif (
+                    next_symbol := transition[point_idx + 1]
+                ) in self._grammar.terminals:
+                    next_lookahead = [next_symbol]
+                else:
+                    next_lookahead = self._first_table[next_symbol]
+
+                for next_production in self._grammar.productions[current_symbol]:
+                    next_production = ExtendedProduction(
+                        idx=next_production.idx,
                         lookahead=next_lookahead,
                     )
-                    if new_item not in closure:
-                        new_items.append(new_item)
+                    if (
+                        next_production not in closure
+                        and next_production not in new_items
+                    ):
+                        new_items.append(next_production)
+        for i in range(len(closure)):
+            j = i + 1
+            while j < len(closure):
+                if (
+                    closure[i].idx == closure[j].idx
+                    and closure[i].point_idx == closure[j].point_idx
+                ):
+                    closure[i].lookahead = self._merge_arrays_unique(
+                        closure[i].lookahead, closure[j].lookahead
+                    )
+                    closure.pop(j)
+                else:
+                    j += 1
         return closure
 
-    def _build_canon_collection(
+    def _build_canon_collection_and_analysis_table(
         self,
-    ) -> (List[List[State]], Dict[int, Dict[str, Optional[Tuple[str, Optional[int]]]]]):
+    ) -> Tuple[List[State], List[Dict[str, Optional[Tuple[str, Optional[int]]]]]]:
         starting_symbol = self._grammar.starting_symbol
         canon_collection = [
             self._build_closure(
-                State(
-                    production=self._grammar.productions[starting_symbol][0],
-                    lookahead=["$"],
-                )
+                [
+                    ExtendedProduction(
+                        idx=self._grammar.productions[starting_symbol][0].idx,
+                        lookahead=["$"],
+                    )
+                ]
             )
         ]
-        table: Dict[int, Dict[str, Optional[Tuple[str, Optional[int]]]]] = {}
-        idx = 0
-        while idx < len(canon_collection):
-            states = canon_collection[idx]
-            table[idx] = {symbol: None for symbol in self._all_symbols}
-            table[idx]["$"] = None
-            for state in states:
-                transition = state.production.transition
-                if state.point_idx == len(transition):
-                    if state.production.non_terminal == starting_symbol:
-                        table[idx]["$"] = ("accept", None)
-                    else:
-                        for lookahead in state.lookahead:
-                            if table[idx][lookahead] is not None:
-                                if table[idx][lookahead][0] == "shift":
-                                    raise ValueError(
-                                        "The grammar is not LR(1)! There is a shift / reduce conflict!"
-                                    )
-                                else:
-                                    raise ValueError(
-                                        "The grammar is not LR(1)! There is a reduce / reduce conflict!"
-                                    )
-                            table[idx][lookahead] = ("reduce", state.production.idx)
-                else:
-                    symbol = state.production.transition[state.point_idx]
-                    goto = self._build_closure(
-                        State(
-                            production=state.production,
-                            lookahead=state.lookahead,
-                            point_idx=state.point_idx + 1,
-                        )
+        table: List[Dict[str, Optional[Tuple[str, Optional[int]]]]] = []
+        while (state_idx := len(table)) < len(canon_collection):
+            state = canon_collection[state_idx]
+            current_row = {}
+            for symbol in self._all_symbols:
+                symbol_states = []
+                reduce_production_idx = None
+                for production in state:
+                    transition, point_idx = (
+                        self._grammar.raw_productions[production.idx].transition,
+                        production.point_idx,
                     )
-                    if table[idx][symbol] is not None:
-                        if table[idx][symbol][0] == "reduce":
-                            raise ValueError(
-                                "The grammar is not LR(1)! There is a shift / reduce conflict!"
+                    if point_idx == len(transition):
+                        if symbol in production.lookahead:
+                            if reduce_production_idx is not None:
+                                raise ValueError(
+                                    "Invalid grammar! Reduce-reduce conflict."
+                                )
+                            reduce_production_idx = production.idx
+                        continue
+                    current_symbol = transition[point_idx]
+                    if current_symbol != symbol:
+                        continue
+                    if reduce_production_idx is not None:
+                        raise ValueError("Invalid grammar! Shift-reduce conflict.")
+                    for symbol_state in symbol_states:
+                        if (
+                            symbol_state.idx == production.idx
+                            and symbol_state.point_idx == point_idx + 1
+                        ):
+                            symbol_state.lookahead = self._merge_arrays_unique(
+                                symbol_state.lookahead, production.lookahead
                             )
-                        elif idx < table[idx][symbol][1]:
-                            canon_collection[table[idx][symbol][1]] += goto
-                        else:
-                            raise ValueError("There was an error in the algorithm!")
-                    elif goto in canon_collection:
-                        table[idx][symbol] = ("shift", canon_collection.index(goto))
+                            break
                     else:
-                        table[idx][symbol] = ("shift", len(canon_collection))
-                        canon_collection.append(goto)
+                        symbol_states.append(
+                            production.model_copy(
+                                update={
+                                    "point_idx": point_idx + 1,
+                                },
+                                deep=True,
+                            )
+                        )
+                if reduce_production_idx is not None:
+                    current_row[symbol] = ("reduce", reduce_production_idx)
+                elif len(symbol_states) > 0:
+                    if state_idx == 45:
+                        print(symbol_states)
+                    symbol_states = self._build_closure(symbol_states)
+                    for i, canon_collection_elem in enumerate(canon_collection):
+                        if canon_collection_elem == symbol_states:
+                            current_row[symbol] = ("shift", i)
+                            break
+                    else:
+                        current_row[symbol] = ("shift", len(canon_collection))
+                        canon_collection.append(symbol_states)
+                else:
+                    current_row[symbol] = None
 
-            idx += 1
+            dollar_value = None
+            for production in state:
+                transition, point_idx = (
+                    self._grammar.raw_productions[production.idx].transition,
+                    production.point_idx,
+                )
+                if point_idx == len(transition) and "$" in production.lookahead:
+                    if "$" in current_row:
+                        raise ValueError("Invalid grammar! Reduce-reduce conflict.")
+                    elif (
+                        self._grammar.raw_productions[production.idx].non_terminal
+                        == starting_symbol
+                    ):
+                        dollar_value = ("accept", None)
+                    else:
+                        dollar_value = ("reduce", production.idx)
+            current_row["$"] = dollar_value
+            table.append(current_row)
         return canon_collection, table
 
-    def parse_string(self, string: str):
+    def _parse(self, tokens: List[str]) -> bool:
         work_stack = ["$", 0]
-        input_lane = list(string) + ["$"]
+        input_lane = tokens + ["$"]
         output_lane = []
         while True:
             print(work_stack, input_lane, output_lane)
             action = self._table[work_stack[-1]][input_lane[0]]
             if action is None:
-                raise ValueError("The string is not accepted by the grammar!")
+                return False
             elif action[0] == "accept":
-                break
+                return True
             elif action[0] == "shift":
                 work_stack.append(input_lane.pop(0))
                 work_stack.append(action[1])
@@ -156,10 +262,20 @@ class LR1Parser:
                 for _ in range(2 * len(production.transition)):
                     work_stack.pop()
                 work_stack.append(production.non_terminal)
-                if work_stack[-2] == "$":
-                    work_stack.pop()
                 if self._table[work_stack[-2]][work_stack[-1]] is None:
-                    raise ValueError("The string is not accepted by the grammar!")
+                    return False
                 work_stack.append(self._table[work_stack[-2]][work_stack[-1]][1])
                 output_lane.insert(0, action[1])
-        print("The string is accepted by the grammar!")
+
+    def parse_string(self, string: str):
+        return self._parse(list(string))
+
+    def parse_file(self, file_path: str):
+        with open(file_path, "r") as file:
+            items = []
+            for line in file:
+                line = line.strip()
+                if line == "":
+                    continue
+                items += line.split(" ")
+            return self._parse(items)

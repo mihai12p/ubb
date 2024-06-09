@@ -44,17 +44,11 @@ public:
 
     _Requires_exclusive_lock_held_(LastNode->Mutex)
     VOID
-    EmplaceBack(_In_ const T& Data, _Inout_ Node<T>* LastNode)
+    EmplaceBack(_Inout_ T& Data, _Inout_ Node<T>* LastNode)
     {
-        if (this->DeletedIDs.Contains(Data.GetId()))
-        {
-            return;
-        }
-
         if (Data.GetScore() == -1)
         {
-            this->DeletedIDs.Emplace(Data.GetId());
-            return;
+            Data.SetBlacklisted();
         }
 
         Node<T>* newNode = new Node<T>(Data);
@@ -62,59 +56,64 @@ public:
         LastNode->Flink = newNode;
     }
 
-    _Requires_lock_not_held_(this->Head->Mutex)
     VOID
     Process(_Inout_ T& Data)
     {
-        Node<T>* previous = this->Head;
-        previous->Mutex.lock();
-
-        Node<T>* current = previous->Flink;
-        current->Mutex.lock();
+        std::unique_lock<std::mutex> lockCurrent(this->Head->Mutex);
+        Node<T>* current = this->Head;
+        Node<T>* prev = current;
 
         while (current != this->Tail)
         {
-            if (current->Data.GetId() == Data.GetId())
+            Node<T>* next = current->Flink;
+            if (next != this->Tail)
             {
-                if (Data.GetScore() == -1)
+                next->Mutex.lock();
+            }
+
+            if (current != this->Head && current->Data.GetId() == Data.GetId())
+            {
+                if (!current->Data.IsBlacklisted())
                 {
-                    this->DeletedIDs.Emplace(Data.GetId());
-                    previous->Flink = current->Flink;
-                    current->Mutex.unlock();
-                    delete current;
-                    previous->Mutex.unlock();
-                    return;
+                    if (Data.GetScore() == -1)
+                    {
+                        current->Data.SetBlacklisted();
+                    }
+                    else if (Data.GetScore() > 0)
+                    {
+                        current->Data.SetScore(current->Data.GetScore() + Data.GetScore());
+                    }
                 }
 
-                current->Data.SetScore(current->Data.GetScore() + Data.GetScore());
-
-                current->Mutex.unlock();
-                previous->Mutex.unlock();
+                if (next != this->Tail)
+                {
+                    next->Mutex.unlock();
+                }
                 return;
             }
 
-            previous->Mutex.unlock();
-            current->Flink->Mutex.lock();
-
-            previous = current;
-            current = current->Flink;
+            if (next != this->Tail)
+            {
+                lockCurrent.unlock(); // do not release the lock for the last element as we want to perform an update on it
+                lockCurrent = std::unique_lock<std::mutex>(next->Mutex, std::adopt_lock);
+            }
+            prev = current;
+            current = next;
         }
 
-        this->EmplaceBack(Data, previous);
-
-        current->Mutex.unlock();
-        previous->Mutex.unlock();
+        this->EmplaceBack(Data, prev);
     }
 
     _No_competing_thread_
     VOID
     GetResults(_Inout_ std::vector<T>& Results) const
     {
-        Node<T>* current = this->Head->Flink;
-        while (current != this->Tail)
+        Node<T>* current = this->Head;
+        while (current && current->Flink != this->Tail)
         {
-            Results.emplace_back(current->Data);
-            current = current->Flink;
+            Node<T>* next = current->Flink;
+            Results.emplace_back(next->Data);
+            current = next;
         }
 
         std::sort(Results.begin(), Results.end());
@@ -123,7 +122,7 @@ public:
 private:
     Node<T>* Head = nullptr;
     Node<T>* Tail = nullptr;
-    TSUnorderedSet<ULONG> DeletedIDs;
 };
+
 
 #endif//_LIST_HPP_

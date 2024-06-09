@@ -77,27 +77,4 @@ private:
     std::atomic<int> ActiveConsumers;
 };
 
-template <typename T>
-class TSUnorderedSet
-{
-public:
-    VOID
-    Emplace(_In_ const T& Value)
-    {
-        std::lock_guard<std::mutex> lock(this->Mutex);
-        this->USet.emplace(Value);
-    }
-
-    bool
-    Contains(_In_ const T& Value) const
-    {
-        std::lock_guard<std::mutex> lock(this->Mutex);
-        return this->USet.find(Value) != this->USet.cend();
-    }
-
-private:
-    std::unordered_set<T> USet;
-    mutable std::mutex Mutex;
-};
-
 #endif//_SYNCH_PRIMITIVE_HPP_

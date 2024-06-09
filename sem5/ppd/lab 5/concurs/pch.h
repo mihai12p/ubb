@@ -16,6 +16,5 @@
 #include <thread>
 #include <condition_variable>
 #include <queue>
-#include <unordered_set>
 
 #endif//_PCH_H_

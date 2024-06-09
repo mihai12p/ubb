@@ -20,6 +20,11 @@ PrintResults(_In_ const List<Participant>& Participants)
     Participants.GetResults(results);
     for (const Participant& participant : results)
     {
+        if (participant.GetScore() == -1 || participant.IsBlacklisted())
+        {
+            continue;
+        }
+
         fout << participant.GetId() << ' ' << participant.GetScore() << ' ' << participant.GetCountry() << '\n';
     }
     fout.flush();

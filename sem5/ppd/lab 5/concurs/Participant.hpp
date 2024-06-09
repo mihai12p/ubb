@@ -43,6 +43,18 @@ public:
         this->Country = NewCountry;
     }
 
+    bool
+    IsBlacklisted() const
+    {
+        return this->Blacklisted;
+    }
+
+    VOID
+    SetBlacklisted()
+    {
+        this->Blacklisted = true;
+    }
+
     bool operator<(_In_ const Participant& Other) const
     {
         return this->Score > Other.Score || (this->Score == Other.Score && this->Id < Other.Id); // decreasing order
@@ -52,6 +64,7 @@ private:
     int Id = -1;
     int Score = 0;
     int Country = 0;
+    bool Blacklisted = false;
 };
 
 #endif//_PARTICIPANT_HPP_

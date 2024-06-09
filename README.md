@@ -99,11 +99,6 @@
         </a>
       </li>
       <li>
-        <a href="https://github.com/mihai12p/ubb/tree/main/sem5/pdm">
-          :no_mobile_phones:  Programare pentru dispozitive mobile
-        </a>
-      </li>
-      <li>
         <a href="https://github.com/mihai12p/ubb/tree/main/sem5/ss">
           :shell:  Securitate software
         </a>
@@ -119,5 +114,7 @@
         </a>
       </li>
     </ul>
+  </li>
+  <li>:ledger: Semestrul :six:
   </li>
 </ul>

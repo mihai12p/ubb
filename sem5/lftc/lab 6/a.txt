@@ -1,0 +1,16 @@
+#include <iostream>
+
+int main()
+{
+    int a, b, c;
+
+    std::cin >> a;
+    std::cin >> b;
+
+    c = a + b * 3;
+
+    std::cout << std::endl;
+    std::cout << c;
+
+    return 0;
+}
